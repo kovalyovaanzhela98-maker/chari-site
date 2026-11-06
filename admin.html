@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>чари — заявки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F5F2F4; --card:#FFFFFF; --ink:#2B2330; --ink-2:#776B7C; --line:rgba(43,35,48,.10);
+  --pink:#F3709C; --pink-ink:#C9416F; --rose:#F6E7ED; --mist:#EAF1F4; --sage:#EEF2E1; --sand:#F4EEE6;
+  --s-new:#F3709C; --s-contacted:#7AB6CC; --s-waiting:#C9A44C; --s-ordered:#7FA300; --s-declined:#A79CAB;
+  --f:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif; --r:20px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px)}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15}
+:focus-visible{outline:2.5px solid var(--pink);outline-offset:2px;border-radius:8px}
+[hidden]{display:none!important}
+.wrap{max-width:1280px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-right,0px)) 0 max(20px,env(safe-area-inset-left,0px))}
+.muted{color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:99px;font-weight:600;white-space:nowrap}
+.btn-pink{background:var(--pink);color:#fff}.btn-pink:hover{background:var(--pink-ink)}
+.btn-ghost{background:var(--card);box-shadow:inset 0 0 0 1.5px var(--line)}.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn-sm{height:36px;padding:0 14px;font-size:14px}
+
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login form{background:var(--card);border-radius:28px;padding:36px 28px;width:min(400px,100%);display:grid;gap:14px;box-shadow:0 10px 30px rgba(43,35,48,.07)}
+.login svg{width:48px;height:48px}
+.login input{height:54px;border-radius:14px;border:0;background:var(--paper);padding:0 16px;font-size:16px}
+.login input:focus{outline:none;box-shadow:inset 0 0 0 2px var(--ink);background:#fff}
+.err{color:#C0104D;font-size:14px;min-height:1.4em}
+
+/* top */
+.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:64px}
+.top .logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px}
+.top .logo svg{width:32px;height:32px}
+.top .sp{margin-left:auto;display:flex;gap:8px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;background:var(--card)}
+.pill i{width:7px;height:7px;border-radius:50%}
+.demo{background:#FFF4D6;color:#7A5A00;font-size:13px;padding:10px 0;text-align:center}
+
+main{padding-block:24px 64px}
+h1.ttl{font-size:clamp(28px,4vw,40px);margin-bottom:4px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px}
+@media (max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.kpis{grid-template-columns:1fr 1fr}.kpi:last-child{grid-column:1/-1}
+  .top .wrap{height:auto;padding-block:10px;flex-wrap:wrap}.top .sp{margin-left:0;width:100%;flex-wrap:wrap}.top .sp .pill{margin-right:auto}
+  .tools input{width:100%}}
+.kpi{background:var(--card);border-radius:var(--r);padding:16px 18px;display:flex;flex-direction:column;gap:2px}
+.kpi span{font-size:13px;color:var(--ink-2)}
+.kpi b{font-size:30px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.15}
+.kpi small{font-size:12px;color:var(--ink-2)}
+.kpi small.up{color:#4F7A00}.kpi small.down{color:#B0305E}
+
+.row2{display:grid;grid-template-columns:1.6fr 1fr;gap:12px;margin-top:12px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+@media (max-width:1000px){.row2,.row3{grid-template-columns:1fr}}
+.panel{background:var(--card);border-radius:var(--r);padding:18px 20px;min-width:0}
+.panel h2{font-size:16px;margin-bottom:12px;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.panel h2 small{font-weight:500;color:var(--ink-2);font-size:13px}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{font-family:var(--f);font-size:10px;fill:var(--ink-2)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--ink-2);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) 40px;gap:8px;align-items:center;font-size:13px}
+.bar .t{position:relative;height:28px;border-radius:8px;background:var(--paper);overflow:hidden;display:flex;align-items:center}
+.bar .t i{position:absolute;inset:0 auto 0 0;border-radius:8px;background:var(--rose)}
+.bar .t span{position:relative;padding-left:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar b{text-align:right;font-variant-numeric:tabular-nums}
+.funnel{display:grid;gap:6px}
+.funnel div{display:grid;grid-template-columns:120px 1fr 36px;gap:10px;align-items:center;font-size:13px}
+.funnel i{display:block;height:22px;border-radius:6px}
+.empty{color:var(--ink-2);font-size:14px;padding:12px 0}
+
+/* table */
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:28px 0 12px}
+.tools h2{font-size:22px;margin-right:auto}
+.tools input,.tools select{height:40px;border-radius:99px;border:0;background:var(--card);padding:0 16px;font-size:14px;min-width:0}
+.tools input{width:220px}
+.tbl{background:var(--card);border-radius:var(--r);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;font-weight:600;color:var(--ink-2);padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.no{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+td .sub{display:block;font-size:12px;color:var(--ink-2)}
+td a{color:var(--pink-ink);text-decoration:none;font-weight:500}
+td a:hover{text-decoration:underline}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tags span{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--paper);white-space:nowrap}
+select.st{height:34px;border-radius:99px;border:0;padding:0 28px 0 12px;font-size:13px;font-weight:600;appearance:none;background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232B2330' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") no-repeat right 10px center;cursor:pointer}
+textarea.note{width:100%;min-width:160px;min-height:34px;border-radius:10px;border:0;background:var(--paper);padding:7px 10px;font-size:13px;resize:vertical}
+textarea.note:focus{outline:none;box-shadow:inset 0 0 0 1.5px var(--ink);background:#fff}
+.del{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--ink-2)}
+.del:hover{background:#FFE9F0;color:#C0104D}
+.cmt{max-width:260px;font-size:13px;color:var(--ink-2)}
+@media (max-width:820px){
+  table,thead,tbody,tr,td{display:block}
+  thead{display:none}
+  tr{padding:14px 16px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:6px 12px}
+  td{padding:0;border:0}
+  td.no{grid-column:1}td.act{grid-column:2;grid-row:1}
+  td.full{grid-column:1/-1}
+  .cmt{max-width:none}
+}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));translate:-50% 0;background:var(--ink);color:#fff;border-radius:99px;padding:10px 18px;font-weight:500;z-index:50;max-width:calc(100% - 32px)}
+.confirm{display:inline-flex;gap:6px;align-items:center;font-size:12px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="logo" viewBox="255 130 335 330"><path fill="#F3709C" d="M369.394 178.484C387.679 131.47 453.363 130.63 472.144 177.114C477.474 190.309 480.569 205.125 485.714 218.48C499.909 219.559 514.814 217.795 528.929 218.705C578.059 221.88 598.773 282.91 562.144 315.35L525.724 341.625V341.635L539.328 384.114C550.733 432.469 497.599 469.904 456.014 443.475L421.073 418.149L384.839 444.17C350.154 466.135 303.313 440.69 300.998 400.25C299.908 381.15 312.243 360.395 315.908 341.92L280.788 316.08C242.943 284.06 263.383 221.855 313.233 218.705C327.298 217.815 342.199 219.415 356.349 218.63C361.109 205.57 364.374 191.389 369.394 178.484Z"/><path fill="#CEECF6" d="M443.682 318.593L451.571 312.901C459.505 305.875 455.018 292.655 444.377 291.968C441.319 291.771 438.091 292.153 435.016 291.919C433.902 289.026 433.231 285.817 432.077 282.959C428.009 272.89 413.781 273.072 409.821 283.256C408.733 286.051 408.026 289.123 406.995 291.951C403.93 292.121 400.703 291.775 397.656 291.968C386.859 292.65 382.431 306.124 390.629 313.059L398.236 318.657C397.442 322.658 394.77 327.154 395.006 331.291C395.508 340.05 405.653 345.562 413.166 340.804L421.015 335.168L428.583 340.654C437.59 346.379 449.1 338.27 446.629 327.796L443.682 318.595V318.593Z"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<div class="login" id="login">
+  <form id="loginForm">
+    <svg><use href="#logo"/></svg>
+    <h1>Вход для команды</h1>
+    <p class="muted">Пароль — значение ADMIN_PASSWORD в настройках Vercel.</p>
+    <input id="pass" type="password" autocomplete="current-password" placeholder="Пароль" aria-label="Пароль">
+    <p class="err" id="lerr"></p>
+    <button class="btn btn-pink" type="submit">Войти</button>
+    <button class="btn btn-ghost" type="button" id="demoBtn">Посмотреть на демо-данных</button>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <div class="demo" id="demoBar" hidden>Демо-режим: заявки и цифры ниже придуманы для примера. Настоящие появятся после подключения на Vercel.</div>
+  <div class="top"><div class="wrap">
+    <span class="logo"><svg><use href="#logo"/></svg>чари · заявки</span>
+    <div class="sp">
+      <span class="pill" id="tgPill"><i></i><span></span></span>
+      <button class="btn btn-ghost btn-sm" id="refresh">Обновить</button>
+      <button class="btn btn-ghost btn-sm" id="csv">CSV</button>
+      <button class="btn btn-ghost btn-sm" id="logout">Выйти</button>
+    </div>
+  </div></div>
+  <main class="wrap">
+    <h1 class="ttl">Предзаявки</h1>
+    <p class="muted" id="updated"></p>
+    <div class="kpis" id="kpis"></div>
+    <div class="row2">
+      <div class="panel chart"><h2>Заявки и визиты <small>30 дней</small></h2><div id="daily"></div><div class="legend"><span><i style="background:#E9E3EB"></i>визиты</span><span><i style="background:var(--pink)"></i>заявки</span></div></div>
+      <div class="panel"><h2>Статусы <small>воронка</small></h2><div class="funnel" id="funnel"></div></div>
+    </div>
+    <div class="row3">
+      <div class="panel"><h2>Города</h2><div class="bars" id="bCity"></div></div>
+      <div class="panel"><h2>Откуда пришли <small>заявки</small></h2><div class="bars" id="bSrc"></div></div>
+      <div class="panel"><h2>Что интересно</h2><div class="bars" id="bWant"></div></div>
+    </div>
+    <div class="row3">
+      <div class="panel"><h2>Что кладут в корзину <small>набор и стикеры</small></h2><div class="bars" id="bItems"></div></div>
+      <div class="panel"><h2>Доставка</h2><div class="bars" id="bShip"></div></div>
+      <div class="panel"><h2>Откуда визиты</h2><div class="bars" id="bVsrc"></div></div>
+    </div>
+
+    <div class="tools">
+      <h2>Все заявки <span class="muted" id="cnt" style="font-weight:500;font-size:16px"></span></h2>
+      <input id="q" type="search" placeholder="Поиск: имя, ник, телефон" aria-label="Поиск">
+      <select id="fStatus" aria-label="Статус"><option value="">Все статусы</option></select>
+      <select id="fCity" aria-label="Город"><option value="">Все города</option></select>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>№</th><th>Когда</th><th>Кто</th><th>Контакт</th><th>Город</th><th>Интерес</th><th>Комментарий</th><th>Статус</th><th>Заметка</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const LIVE=location.protocol==='https:'&&!/claude|claudeusercontent|anthropic/.test(location.hostname);
+const ST={new:'Новая',contacted:'Написали',waiting:'Ждёт запуска',ordered:'Оформил',declined:'Отказ'};
+const WANT={club:'Подписка',stickers:'Стикеры',gift:'Подарок'};
+const ss={get(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}},del(k){try{sessionStorage.removeItem(k)}catch(e){}}};
+let token=ss.get('chari-admin'), demo=false, DATA=null;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(t){$('.toast')?.remove();const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600);}
+const day=d=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Minsk',year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
+
+async function api(method,body,qs=''){
+  const r=await fetch('/api/leads'+qs,{method,headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){ const e=new Error(j.error||'Ошибка '+r.status); e.code=r.status; throw e; }
+  return j;
+}
+function demoData(){
+  const names=['Аня','Лера','Катя','Миша','Даша','Оля','Ника','Саша','Полина','Женя','Вика','Маша','Ира','Таня'];
+  const cities=['Витебск','Минск','Минск','Гомель','Витебск','Гродно','Брест','Новополоцк','Минск','Могилёв'];
+  const srcs=['instagram.com','instagram.com','прямой заход','t.me','instagram.com','tiktok.com'];
+  const ships=['Европочта','Европочта','Белпочта','Пока не знаю'];
+  const items=[['club01','Набор для отправки · выпуск №01'],['p1','Момо не в духе'],['p9','Зузу на удалёнке'],['p7','Тото и сериал'],['p14','Кики поёт']];
+  const stats=['new','new','new','contacted','waiting','waiting','ordered','declined'];
+  const leads=[]; let seed=7; const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;
+  for(let i=1;i<=38;i++){ const d=new Date(Date.now()-Math.floor(rnd()*26)*864e5-rnd()*864e5);
+    const tg=rnd()>.3; leads.push({no:i,created:d.toISOString(),status:stats[Math.floor(rnd()*stats.length)],name:names[i%names.length]+' (пример)',
+      telegram:tg?'@example_'+i:'',phone:tg&&rnd()>.6?'':'+375 29 000-00-'+String(i).padStart(2,'0'),city:cities[Math.floor(rnd()*cities.length)],delivery:ships[Math.floor(rnd()*ships.length)],
+      want:rnd()>.25?(rnd()>.6?['club','stickers']:['club']):['stickers'],items:rnd()>.5?[items[Math.floor(rnd()*items.length)],items[Math.floor(rnd()*items.length)]].map(([id,n])=>({id,n,p:3})):[],
+      comment:rnd()>.7?'Пример комментария':'',source:srcs[Math.floor(rnd()*srcs.length)],note:''}); }
+  leads.sort((a,b)=>b.no-a.no);
+  const views={}; for(let i=29;i>=0;i--){ views[day(new Date(Date.now()-i*864e5))]=Math.round(30+rnd()*60+(29-i)*2); }
+  return {leads,views,vsrc:{'instagram.com':820,'прямой заход':310,'t.me':140,'tiktok.com':95},telegram:true};
+}
+
+async function load(){
+  try{
+    DATA=demo?(DATA||demoData()):await api('GET');
+    $('#login').hidden=true; $('#app').hidden=false; $('#demoBar').hidden=!demo; render();
+    $('#updated').textContent='Обновлено '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){
+    if(e.code===401){ ss.del('chari-admin'); token=null; showLogin('Неверный пароль'); }
+    else if(e.code===503){ showLogin('Хранилище не подключено: добавьте Upstash Redis в Vercel (см. инструкцию)'); }
+    else showLogin(e.message||'Не удалось загрузить');
+  }
+}
+function showLogin(m){ $('#app').hidden=true; $('#login').hidden=false; $('#lerr').textContent=m||''; }
+
+/* ------- rendering ------- */
+function count(arr,fn){ const m={}; arr.forEach(x=>{ [].concat(fn(x)).forEach(k=>{ if(k) m[k]=(m[k]||0)+1; }); }); return Object.entries(m).sort((a,b)=>b[1]-a[1]); }
+function bars(el,entries,label=k=>k){ const max=Math.max(1,...entries.map(e=>e[1])); $(el).innerHTML=entries.length?entries.slice(0,6).map(([k,v])=>`<div class="bar"><div class="t"><i style="width:${v/max*100}%"></i><span>${esc(label(k))}</span></div><b>${v}</b></div>`).join(''):'<p class="empty">Пока нет данных</p>'; }
+function render(){
+  const L=DATA.leads, now=Date.now();
+  const in7=L.filter(l=>now-new Date(l.created)<7*864e5).length, prev7=L.filter(l=>{const a=now-new Date(l.created);return a>=7*864e5&&a<14*864e5}).length;
+  const days=Object.keys(DATA.views); const v7=days.slice(-7).reduce((a,d)=>a+DATA.views[d],0);
+  const conv=v7?(in7/v7*100):0; const clubP=L.length?Math.round(L.filter(l=>(l.want||[]).includes('club')).length/L.length*100):0;
+  const today=day(new Date()); const tdy=L.filter(l=>day(new Date(l.created))===today).length;
+  const delta=in7-prev7;
+  $('#kpis').innerHTML=[
+    ['Всего заявок',L.length,`сегодня +${tdy}`],
+    ['За 7 дней',in7,`<small class="${delta>=0?'up':'down'}">${delta>=0?'+':''}${delta} к прошлой неделе</small>`],
+    ['Визиты за 7 дней',v7.toLocaleString('ru-RU'),'уникальные заходы на сайт'],
+    ['Конверсия',conv.toFixed(1).replace('.',',')+'%','визит → заявка, 7 дней'],
+    ['Хотят подписку',clubP+'%','от всех заявок'],
+  ].map(([t,v,s])=>`<div class="kpi"><span>${t}</span><b>${v}</b>${s.startsWith('<small')?s:`<small>${s}</small>`}</div>`).join('');
+
+  // daily chart
+  const W=640,H=200,P={l:30,r:8,t:10,b:22}; const n=days.length; const bw=(W-P.l-P.r)/n;
+  const lc={}; L.forEach(l=>{const d=day(new Date(l.created)); lc[d]=(lc[d]||0)+1;});
+  const maxV=Math.max(1,...days.map(d=>DATA.views[d])), maxL=Math.max(1,...days.map(d=>lc[d]||0));
+  const nice=m=>{const p=Math.pow(10,Math.floor(Math.log10(m)));return Math.ceil(m/p)*p;}; const yV=nice(maxV), yL=Math.max(2,nice(maxL));
+  const ih=H-P.t-P.b;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Визиты и заявки по дням">`;
+  [0,.5,1].forEach(f=>{const y=P.t+ih*(1-f); svg+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y}" y2="${y}" stroke="rgba(43,35,48,.08)"/><text x="${P.l-6}" y="${y+3}" text-anchor="end">${Math.round(yL*f)}</text>`;});
+  days.forEach((d,i)=>{ const x=P.l+i*bw; const hv=DATA.views[d]/yV*ih, hl=(lc[d]||0)/yL*ih;
+    svg+=`<rect x="${x+1}" y="${P.t+ih-hv}" width="${bw-2}" height="${hv}" rx="2" fill="#E9E3EB"><title>${d}: ${DATA.views[d]} визитов</title></rect>`;
+    if(hl) svg+=`<rect x="${x+bw*.22}" y="${P.t+ih-hl}" width="${bw*.56}" height="${hl}" rx="2" fill="#F3709C"><title>${d}: ${lc[d]} заявок</title></rect>`;
+    if(i%7===0||i===n-1) svg+=`<text x="${x+bw/2}" y="${H-6}" text-anchor="middle">${d.slice(8)}.${d.slice(5,7)}</text>`; });
+  svg+=`</svg>`; $('#daily').innerHTML=svg+`<p class="muted" style="font-size:12px;margin-top:4px">Шкала слева — заявки; визиты показаны в своём масштабе (максимум ${maxV} в день).</p>`;
+
+  // funnel
+  const sc={}; L.forEach(l=>sc[l.status]=(sc[l.status]||0)+1); const mx=Math.max(1,...Object.values(sc));
+  $('#funnel').innerHTML=Object.keys(ST).map(k=>`<div><span>${ST[k]}</span><i style="width:${(sc[k]||0)/mx*100}%;min-width:4px;background:var(--s-${k})"></i><b>${sc[k]||0}</b></div>`).join('');
+
+  bars('#bCity',count(L,l=>l.city));
+  bars('#bSrc',count(L,l=>l.source));
+  bars('#bWant',count(L,l=>l.want||[]),k=>({club:'Подписка на выпуски',stickers:'Стикеры поштучно',gift:'Подарок другу'})[k]||k);
+  bars('#bItems',count(L,l=>(l.items||[]).map(i=>i.n)));
+  bars('#bShip',count(L,l=>l.delivery));
+  bars('#bVsrc',Object.entries(DATA.vsrc||{}).sort((a,b)=>b[1]-a[1]));
+
+  // filters
+  const fs=$('#fStatus'), fc=$('#fCity'); const sv=fs.value, cv=fc.value;
+  fs.innerHTML='<option value="">Все статусы</option>'+Object.entries(ST).map(([k,v])=>`<option value="${k}">${v} · ${sc[k]||0}</option>`).join(''); fs.value=sv;
+  fc.innerHTML='<option value="">Все города</option>'+count(L,l=>l.city).map(([k,v])=>`<option>${esc(k)}</option>`).join(''); fc.value=cv;
+  $('#tgPill').innerHTML=`<i style="background:${DATA.telegram?'#7FA300':'#C0104D'}"></i><span>${DATA.telegram?'Telegram подключён':'Telegram не подключён'}</span>`;
+  rows();
+}
+function rows(){
+  const q=$('#q').value.trim().toLowerCase(), fs=$('#fStatus').value, fc=$('#fCity').value;
+  const list=DATA.leads.filter(l=>(!fs||l.status===fs)&&(!fc||l.city===fc)&&(!q||[l.name,l.telegram,l.phone,l.comment].join(' ').toLowerCase().includes(q)));
+  $('#cnt').textContent=`· ${list.length}`;
+  $('#rows').innerHTML=list.length?list.map(l=>{
+    const d=new Date(l.created); const tg=l.telegram?`<a href="https://t.me/${esc(l.telegram.slice(1))}" target="_blank" rel="noopener">${esc(l.telegram)}</a>`:''; const ph=l.phone?`<a href="tel:${esc(l.phone.replace(/[^\d+]/g,''))}">${esc(l.phone)}</a>`:'';
+    return `<tr data-no="${esc(l.no)}">
+      <td class="no">№${esc(l.no)}</td>
+      <td class="full"><span>${d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})}</span><span class="sub">${d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})}</span></td>
+      <td class="full"><b>${esc(l.name)}</b><span class="sub">${esc(l.source)}</span></td>
+      <td class="full">${tg}${tg&&ph?'<br>':''}${ph}</td>
+      <td class="full">${esc(l.city)}<span class="sub">${esc(l.delivery)}</span></td>
+      <td class="full"><div class="tags">${(l.want||[]).map(w=>`<span>${WANT[w]||esc(w)}</span>`).join('')}${(l.items||[]).map(i=>`<span>♥ ${esc(i.n)}</span>`).join('')}</div></td>
+      <td class="full cmt">${esc(l.comment)||'—'}</td>
+      <td class="full"><select class="st" data-st aria-label="Статус заявки №${esc(l.no)}" style="box-shadow:inset 3px 0 0 var(--s-${l.status})">${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${k===l.status?'selected':''}>${v}</option>`).join('')}</select></td>
+      <td class="full"><textarea class="note" data-note rows="1" placeholder="Заметка" aria-label="Заметка к заявке №${esc(l.no)}">${esc(l.note)}</textarea></td>
+      <td class="act"><button class="del" data-del aria-label="Удалить заявку №${esc(l.no)}"><svg width="14" height="14"><use href="#i-x"/></svg></button></td>
+    </tr>`;}).join(''):`<tr><td colspan="10" class="empty" style="padding:24px">${DATA.leads.length?'Ничего не найдено':'Заявок пока нет — они появятся здесь и придут в Telegram.'}</td></tr>`;
+}
+
+/* ------- actions ------- */
+async function patch(no,body){
+  const l=DATA.leads.find(x=>String(x.no)===String(no)); if(!l) return;
+  const old={...l}; Object.assign(l,body);
+  if(demo){ render(); toast('Сохранено (демо)'); return; }
+  try{ await api('PATCH',{no,...body}); render(); toast('Сохранено'); }catch(e){ Object.assign(l,old); render(); toast('Не сохранилось: '+e.message); }
+}
+document.addEventListener('change',e=>{ const tr=e.target.closest('tr[data-no]'); if(!tr) return;
+  if(e.target.matches('[data-st]')) patch(tr.dataset.no,{status:e.target.value});
+  if(e.target.matches('[data-note]')) patch(tr.dataset.no,{note:e.target.value}); });
+document.addEventListener('click',async e=>{
+  const d=e.target.closest('[data-del]'); if(d){ const td=d.parentElement; const no=d.closest('tr').dataset.no;
+    td.innerHTML=`<span class="confirm">Удалить? <button class="btn btn-pink btn-sm" data-yes="${no}">Да</button><button class="btn btn-ghost btn-sm" data-cancel>Нет</button></span>`; return; }
+  if(e.target.closest('[data-cancel]')){ rows(); return; }
+  const y=e.target.closest('[data-yes]'); if(y){ const no=y.dataset.yes;
+    if(!demo){ try{ await api('DELETE',null,'?no='+encodeURIComponent(no)); }catch(err){ toast('Не удалилось: '+err.message); return; } }
+    DATA.leads=DATA.leads.filter(l=>String(l.no)!==String(no)); render(); toast('Заявка удалена'); }
+});
+['q','fStatus','fCity'].forEach(id=>$('#'+id).addEventListener('input',rows));
+$('#refresh').onclick=()=>{ if(demo){ toast('В демо данные не меняются'); return; } load(); };
+$('#logout').onclick=()=>{ ss.del('chari-admin'); token=null; demo=false; DATA=null; showLogin(''); };
+$('#csv').onclick=()=>{
+  const head=['№','Дата','Имя','Telegram','Телефон','Город','Доставка','Интерес','Корзина','Комментарий','Источник','Статус','Заметка'];
+  const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const lines=[head.map(q).join(';')].concat(DATA.leads.map(l=>[l.no,new Date(l.created).toLocaleString('ru-RU'),l.name,l.telegram,l.phone,l.city,l.delivery,(l.want||[]).map(w=>WANT[w]).join(', '),(l.items||[]).map(i=>i.n).join(', '),l.comment,l.source,ST[l.status],l.note].map(q).join(';')));
+  const url=URL.createObjectURL(new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'}));
+  const a=document.createElement('a'); a.href=url; a.download=`chari-zayavki-${day(new Date())}.csv`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+$('#loginForm').addEventListener('submit',e=>{ e.preventDefault(); const p=$('#pass').value; if(!p){ $('#lerr').textContent='Введите пароль'; return; }
+  if(!LIVE){ $('#lerr').textContent='Это превью: настоящий вход заработает на сайте в Vercel. Посмотрите демо.'; return; }
+  token=p; ss.set('chari-admin',p); demo=false; load(); });
+$('#demoBtn').onclick=()=>{ demo=true; DATA=null; load(); };
+if(token&&LIVE) load();
+</script>
+</body>
+</html>

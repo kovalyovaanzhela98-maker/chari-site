@@ -1,0 +1,597 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="чари — почтовый клуб стикеров. Конверт со стикерами и приятными мелочами раз в месяц по Беларуси."><meta property="og:title" content="чари — почтовый клуб стикеров"><link rel="icon" href="img/straw-hoodie.webp"><title>чари — почтовый клуб стикеров</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,800;1,900&family=Onest:wght@400;500;600;700&family=Marck+Script&display=swap">
+<style>
+/* Стиль набора: винный лист с крестиком и лучами, зелёный конверт, постер с повторяющейся прописью, карточка с красной штриховкой, жирный курсив.
+   Цвета — розовый чари и комплементарные к нему: винный, тёмно-зелёный; бренд-аква для прописи, лайм — точечно. */
+:root{
+  --pink:#F3709C; --blush:#FAC2DF; --blush-2:#FDE6F0; --aqua:#8CEDF6; --lime:#9DC502; --slate:#657187; --ink:#030303;
+  --wine:#3D0B1F; --wine-2:#55142D; --forest:#21423A; --forest-2:#2D5A4C; --stone:#ECE9E4; --cream:#FBF5EC; --card:#FFFFFF;
+  --f:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --disp:'Exo 2','Arial Black',system-ui,sans-serif;
+  --script:'Marck Script','Brush Script MT',cursive;
+  --gut:max(20px,env(safe-area-inset-left,0px)); --gutr:max(20px,env(safe-area-inset-right,0px));
+  --cross:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M7 7l8 8M15 7l-8 8' stroke='%23FAC2DF' stroke-opacity='.13' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.lock{overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+img{max-width:100%;display:block}
+h1,h2,h3{margin:0;font-family:var(--disp);font-style:italic;font-weight:900;line-height:.98;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2.5px solid var(--aqua);outline-offset:3px;border-radius:8px}
+[hidden]{display:none!important}
+.wrap{max-width:1200px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gutr)}
+.muted{color:var(--slate)}
+.tag{display:inline-block;font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.02em;background:var(--pink);color:var(--ink);padding:4px 12px;border-radius:6px}
+
+/* фоны из набора */
+.bg-wine{background-color:var(--wine);background-image:var(--cross),repeating-conic-gradient(from 0deg at 50% 50%,rgba(250,194,223,.05) 0 9deg,transparent 9deg 18deg);color:var(--cream)}
+.bg-forest{background:var(--forest);color:var(--cream)}
+.bg-stone{background:var(--stone)}
+.hatch{position:relative}
+.hatch::before,.hatch::after{content:"";position:absolute;top:0;bottom:0;width:clamp(30px,6vw,90px);background:repeating-linear-gradient(90deg,var(--pink) 0 2px,transparent 2px 9px);opacity:.75;pointer-events:none}
+.hatch::before{left:0;-webkit-mask:linear-gradient(90deg,#000,#0000);mask:linear-gradient(90deg,#000,#0000)}
+.hatch::after{right:0;-webkit-mask:linear-gradient(-90deg,#000,#0000);mask:linear-gradient(-90deg,#000,#0000)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 28px;border-radius:99px;font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;font-size:16px;letter-spacing:.02em;white-space:nowrap;text-decoration:none;transition:transform .15s,background .2s,color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn-pink{background:var(--pink);color:var(--ink)}
+.btn-pink:hover{background:#F7899F}
+.btn-ghost{border:2px solid currentColor}
+.btn-ghost:hover{background:rgba(250,194,223,.12)}
+.btn-ink{background:var(--ink);color:var(--cream)}
+.btn-lime{background:var(--lime);color:var(--ink)}
+.btn-sm{height:42px;padding:0 18px;font-size:14px}
+.btn-block{width:100%}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.iconbtn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(251,245,236,.1);border:1.5px solid rgba(251,245,236,.4);color:var(--cream)}
+.iconbtn svg{width:20px;height:20px}
+
+/* header на винном */
+header{position:sticky;top:0;z-index:60;padding-top:env(safe-area-inset-top,0px);background:var(--wine);color:var(--cream);border-bottom:1px solid rgba(250,194,223,.15)}
+header .wrap{display:flex;align-items:center;height:68px;gap:16px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex:none}
+.logo .star{width:40px;height:40px;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.logo:hover .star{transform:rotate(72deg)}
+.logo .word{height:21px;width:auto}
+nav.main{display:flex;gap:4px;margin-inline:auto}
+nav.main a{text-decoration:none;font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.03em;padding:8px 14px;border-radius:99px}
+nav.main a:hover{background:rgba(250,194,223,.14)}
+.hr{display:flex;gap:8px;align-items:center;margin-left:auto}
+.cartbtn{position:relative}
+.cartbtn .n{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;padding:0 5px;border-radius:99px;background:var(--pink);color:var(--ink);font-size:11px;font-weight:700;display:grid;place-items:center}
+.cartbtn .n:empty{display:none}
+.burger{display:none}
+@media (max-width:860px){nav.main{display:none}.burger{display:grid}.hr .btn{display:none}}
+@media (max-width:370px){.logo .word{display:none}}
+.sheet{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) var(--gutr) calc(24px + env(safe-area-inset-bottom,0px)) var(--gut);animation:fade .2s ease-out}
+@keyframes fade{from{opacity:0}}
+.sheet .top{display:flex;justify-content:space-between;align-items:center;height:52px}
+.sheet nav{display:flex;flex-direction:column;margin-top:20px}
+.sheet nav a{font-family:var(--disp);font-style:italic;font-weight:900;text-transform:uppercase;font-size:30px;text-decoration:none;padding:12px 0;border-bottom:1px solid rgba(250,194,223,.2)}
+.sheet .bottom{margin-top:auto;display:grid;gap:12px}
+
+/* HERO */
+.hero .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(24px,4vw,56px);align-items:center;padding-block:clamp(40px,6vw,88px)}
+.hero h1{font-size:clamp(46px,6.6vw,96px);margin-top:20px}
+.hero h1 .pk{color:var(--pink);display:block}
+.hero .script{font-family:var(--script);font-size:clamp(28px,3vw,40px);color:var(--aqua);line-height:1;margin-top:14px;transform:rotate(-3deg);transform-origin:left}
+.hero .lead{font-size:clamp(17px,1.5vw,19px);color:rgba(251,245,236,.8);max-width:44ch;margin-top:20px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hero .facts{display:flex;gap:8px 18px;flex-wrap:wrap;margin-top:24px;font-size:14px;color:rgba(251,245,236,.65)}
+.hero .facts span::before{content:"✕ ";color:var(--pink);font-weight:700}
+/* раскладка набора как на картинке */
+.set{position:relative;aspect-ratio:1/.9}
+.set .env{position:absolute;left:18%;top:26%;width:70%;aspect-ratio:1.42;background:var(--forest-2);border-radius:4px;overflow:hidden;box-shadow:0 30px 50px -20px rgba(0,0,0,.6)}
+.set .env::before{content:"";position:absolute;left:0;right:0;top:0;height:60%;background:#27503F;clip-path:polygon(0 0,100% 0,50% 100%)}
+.set .it{position:absolute;box-shadow:0 20px 34px -14px rgba(0,0,0,.6)}
+.set .a{left:0;top:6%;width:32%;z-index:3}
+.set .b{left:36%;top:0;width:28%;z-index:2}
+.set .c{right:0;top:12%;width:24%;z-index:2}
+.set .d{left:30%;bottom:2%;width:28%;z-index:4}
+.set .s1{position:absolute;right:4%;top:48%;width:30%;z-index:5;filter:drop-shadow(0 10px 12px rgba(0,0,0,.45))}
+.set .s2{position:absolute;left:0;bottom:4%;width:24%;z-index:5;filter:drop-shadow(0 10px 12px rgba(0,0,0,.45))}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.set{max-width:560px;width:100%;justify-self:center}}
+@media (max-width:520px){.hero .cta .btn{flex:1 1 100%}}
+
+/* лента с прописью, как постер */
+.band{background:var(--pink);overflow:hidden;white-space:nowrap;padding:12px 0}
+.band .tr{display:inline-flex;align-items:center;gap:30px;animation:run 44s linear infinite;padding-left:30px}
+.band b{font-family:var(--script);font-weight:400;font-size:clamp(36px,4.6vw,58px);line-height:1;color:var(--aqua);-webkit-text-stroke:1.2px var(--wine);paint-order:stroke fill}
+.band i{font-style:normal;color:var(--wine);font-size:22px}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* секции */
+.sec{padding-block:clamp(56px,8vw,104px)}
+.sh{margin-bottom:clamp(24px,3.5vw,40px)}
+.sh h2{font-size:clamp(38px,5.4vw,72px);margin-top:14px}
+.sh p{max-width:46ch;margin-top:12px}
+
+/* что в конверте — светлая карточка со штриховкой */
+.inside{display:grid;grid-template-columns:1.35fr .65fr;gap:clamp(20px,3vw,36px);align-items:stretch}
+@media (max-width:900px){.inside{grid-template-columns:1fr}}
+.photo{position:relative;border-radius:6px;overflow:hidden;box-shadow:0 30px 50px -24px rgba(61,11,31,.45)}
+.photo > img{width:100%;aspect-ratio:1448/1086;object-fit:cover}
+.pin{position:absolute;z-index:3;translate:-50% -50%;display:flex;align-items:center;gap:6px;background:var(--cream);color:var(--ink);border-radius:99px;padding:4px 12px 4px 5px;font-weight:700;font-size:13px;white-space:nowrap;box-shadow:0 6px 14px rgba(0,0,0,.25)}
+.pin i{width:20px;height:20px;border-radius:50%;background:var(--pink);display:grid;place-items:center;font-style:normal;font-size:11px}
+.plist{display:none}
+@media (max-width:640px){.pin{display:none}.plist{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.plist span{background:var(--card);border-radius:99px;padding:4px 12px;font-size:13px;font-weight:600}}
+.coupon{position:relative;background:var(--wine);color:var(--cream);border-radius:6px;display:flex;flex-direction:column;overflow:hidden;background-image:var(--cross)}
+.coupon .top{padding:26px 24px 20px}
+.coupon h3{font-size:clamp(28px,2.8vw,38px);margin-top:12px}
+.coupon ol{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:9px}
+.coupon li{display:flex;gap:10px;align-items:center;font-weight:500}
+.coupon li i{font-style:normal;font-family:var(--disp);font-weight:800;width:24px;height:24px;flex:none;border-radius:50%;background:var(--pink);color:var(--ink);display:grid;place-items:center;font-size:12px}
+.coupon li.g i{background:var(--lime)}
+.coupon .cut{height:0;border-top:2px dashed rgba(250,194,223,.45);margin:0 18px}
+.coupon .bot{padding:20px 24px 24px;margin-top:auto;display:grid;gap:14px}
+.coupon .pr{font-family:var(--disp);font-style:italic;font-weight:900;font-size:clamp(36px,3.6vw,48px);line-height:1;color:var(--pink)}
+.coupon .pr small{font-family:var(--f);font-style:normal;font-weight:500;font-size:15px;color:rgba(251,245,236,.7)}
+.coupon .note{font-size:13px;color:rgba(251,245,236,.65)}
+.coupon .clubBtn .btn{width:100%}
+
+/* каталог */
+.sgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,24px);row-gap:clamp(24px,3vw,36px);align-items:stretch;grid-auto-flow:dense}
+@media (max-width:980px){.sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.sgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;row-gap:22px}}
+.st{display:flex;flex-direction:column;gap:12px;min-width:0}
+.st .im{position:relative;aspect-ratio:1;border-radius:6px;overflow:hidden;background-image:var(--cross)}
+.st:nth-child(4n+1) .im{background-color:var(--wine)}.st:nth-child(4n+2) .im{background-color:var(--forest)}.st:nth-child(4n+3) .im{background-color:var(--wine-2)}.st:nth-child(4n+4) .im{background-color:var(--forest-2)}
+.st .im img{position:absolute;left:12%;top:12%;width:76%;height:76%;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.4));transition:transform .45s cubic-bezier(.3,1.4,.5,1)}
+.st:hover .im img{transform:rotate(-5deg) scale(1.06)}
+.st .holo{position:absolute;left:10px;top:10px;z-index:2}
+.st .row{display:flex;align-items:center;gap:10px}
+.st .nm{flex:1;min-width:0}
+.st .nm b{display:block;font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;font-size:15px;line-height:1.15}
+.st .nm span{font-size:14px;color:var(--slate)}
+.plus{width:42px;height:42px;flex:none;border-radius:50%;background:var(--pink);display:grid;place-items:center;transition:transform .2s,background .2s}
+.plus:hover{transform:rotate(90deg)}
+.plus svg{width:18px;height:18px}
+.plus[aria-pressed="true"]{background:var(--lime);transform:none}
+.st.big{grid-column:span 2;grid-row:span 2}
+.st.big .im{aspect-ratio:auto;flex:1;min-height:300px;background-color:var(--forest)!important;background-image:none}
+.st.big .im .env{position:absolute;left:14%;top:24%;width:72%;aspect-ratio:1.42;background:var(--forest-2);border-radius:4px;overflow:hidden}
+.st.big .im .env::before{content:"";position:absolute;left:0;right:0;top:0;height:60%;background:#27503F;clip-path:polygon(0 0,100% 0,50% 100%)}
+.st.big .im img{position:absolute;object-fit:cover;height:auto;filter:none;box-shadow:0 16px 26px -12px rgba(0,0,0,.6)}
+.st.big .im .a{left:6%;top:8%;width:30%}
+.st.big .im .b{left:38%;top:4%;width:26%}
+.st.big .im .c{left:68%;top:12%;width:24%}
+.st.big .im .d{left:36%;top:64%;width:30%}
+.st.big:hover .im img{transform:none}
+.st.big .im .tag{position:absolute;right:12px;bottom:12px;z-index:3}
+.st.big .nm b{font-size:clamp(22px,2.2vw,28px)}
+.st.big .row{flex-wrap:wrap}
+@media (max-width:640px){.st.big{grid-row:span 1}.st.big .im{min-height:0;aspect-ratio:1.1}.st.big .row .clubBtn,.st.big .row .clubBtn .btn{width:100%}}
+
+/* faq — постер: розовый с повторяющейся прописью */
+.poster{background:var(--pink);position:relative;overflow:hidden}
+.poster .bgtext{position:absolute;inset:-20px 0 0 0;font-family:var(--script);font-size:clamp(60px,9vw,130px);line-height:1.05;color:var(--aqua);opacity:.4;white-space:nowrap;pointer-events:none;user-select:none}
+.poster .bgtext div:nth-child(even){padding-left:12%}
+.faqw{position:relative;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,5vw,72px);align-items:start}
+@media (max-width:860px){.faqw{grid-template-columns:1fr}}
+.faq details{background:var(--card);border-radius:6px;margin-bottom:10px}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:18px 20px;font-weight:700;font-size:17px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{width:32px;height:32px;border-radius:50%;background:var(--stone);flex:none;display:grid;place-items:center;transition:transform .25s;font-style:normal;font-size:18px}
+.faq details[open] summary i{transform:rotate(45deg);background:var(--pink)}
+.faq details p{padding:0 20px 20px;color:#3A3F4C}
+
+/* финал */
+.final{text-align:center;position:relative}
+.final h2{font-size:clamp(40px,6vw,84px);max-width:14ch;margin:0 auto}
+.final h2 span{color:var(--pink)}
+.final p{color:rgba(251,245,236,.8);margin:18px auto 30px;max-width:42ch}
+.final .s1,.final .s2{position:absolute;width:clamp(80px,10vw,140px);filter:drop-shadow(0 10px 12px rgba(0,0,0,.45))}
+.final .s1{left:5%;top:14%;transform:rotate(-10deg)}.final .s2{right:5%;bottom:12%;transform:rotate(9deg)}
+@media (max-width:640px){.final .s1,.final .s2{display:none}}
+
+/* apply */
+.apply{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:clamp(20px,4vw,48px);padding-block:clamp(28px,4vw,56px) clamp(56px,8vw,96px);align-items:start}
+@media (max-width:980px){.apply{grid-template-columns:1fr}.side{order:-1}}
+.apply h1{font-size:clamp(38px,5.4vw,70px);margin-top:16px}
+.form{position:relative;margin-top:28px;background:var(--card);border-radius:6px;padding:clamp(22px,3.5vw,40px);box-shadow:0 30px 50px -30px rgba(61,11,31,.35)}
+.fs{border:0;padding:0;margin:0 0 24px}
+.fs legend{font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;font-size:18px;margin-bottom:12px;padding:0}
+.fs legend span{font-family:var(--f);font-style:normal;font-weight:400;text-transform:none;font-size:14px;color:var(--slate);margin-left:6px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg .full{grid-column:1/-1}
+@media (max-width:560px){.fg{grid-template-columns:1fr}}
+.fld{position:relative;display:block}
+.fld input,.fld select,.fld textarea{width:100%;border-radius:10px;border:1.5px solid #D3CEC6;background:#fff;font:inherit;font-size:16px;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.fld input,.fld select{height:58px;padding:22px 14px 6px}
+.fld textarea{min-height:96px;padding:26px 14px 10px;resize:vertical}
+.fld select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23030303' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--wine);box-shadow:0 0 0 4px var(--blush)}
+.fld label{position:absolute;left:15px;top:18px;font-size:16px;color:var(--slate);pointer-events:none;transition:all .15s}
+.fld input:focus + label,.fld input:not(:placeholder-shown) + label,.fld textarea:focus + label,.fld textarea:not(:placeholder-shown) + label,.fld select + label{top:7px;font-size:12px;font-weight:600}
+.fld input::placeholder,.fld textarea::placeholder{color:transparent}
+.fld input:focus::placeholder,.fld textarea:focus::placeholder{color:#AEB4C2}
+.fld [aria-invalid="true"]{border-color:#C2185B;background:#FFF0F5}
+.err{display:block;color:#B0144F;font-size:13px;font-weight:600;margin-top:6px}
+.err:empty{display:none}
+.hint{font-size:13px;color:var(--slate);margin-top:8px}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:15px;cursor:pointer}
+.check input{width:22px;height:22px;accent-color:var(--pink);flex:none;margin:1px 0 0}
+.check.small{font-size:14px;color:var(--slate)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.side{position:sticky;top:92px;display:grid;gap:14px}
+@media (max-width:980px){.side{position:static}}
+.sbox{background:var(--wine);background-image:var(--cross);color:var(--cream);border-radius:6px;padding:22px}
+.sbox h3{font-size:24px;margin-bottom:14px}
+.cl{display:grid;gap:10px}
+.cl .row{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center}
+.cl img{width:48px;height:48px;object-fit:contain;background:var(--wine-2);border-radius:6px;padding:3px}
+.cl img.cv{object-fit:cover;padding:0}
+.cl b{font-weight:600;font-size:14px;display:block;line-height:1.25}
+.cl small{color:rgba(251,245,236,.65);font-size:12px}
+.cl .x{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--cream)}
+.cl .x:hover{background:rgba(250,194,223,.15)}
+.cl .x svg{width:14px;height:14px}
+.sbox .muted,.sbox .hint{color:rgba(251,245,236,.7)}
+.total{display:flex;justify-content:space-between;border-top:2px dashed rgba(250,194,223,.4);margin-top:12px;padding-top:12px;font-weight:700}
+.done{text-align:center;padding:clamp(40px,7vw,80px) 20px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.done img{width:150px;transform:rotate(-6deg)}
+.done h1{font-size:clamp(42px,6vw,80px)}
+
+footer{background:var(--forest);color:var(--cream)}
+.fbig{font-family:var(--disp);font-style:italic;font-weight:900;color:var(--pink);font-size:clamp(80px,22vw,300px);line-height:.85;text-align:center;padding-top:.25em;letter-spacing:-.02em;user-select:none}
+.fwrap{display:flex;justify-content:space-between;align-items:center;gap:16px 24px;flex-wrap:wrap;padding-block:24px calc(24px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(251,245,236,.2);margin-top:16px;font-size:14px}
+.fwrap .links{display:flex;gap:8px 22px;flex-wrap:wrap}
+.fwrap .links a{text-decoration:none;font-weight:600}
+.fwrap .links a:hover{text-decoration:underline}
+.ig{display:inline-flex;align-items:center;gap:6px}
+.ig svg{width:18px;height:18px}
+body.has-mbar footer{padding-bottom:76px}
+
+.mbar{display:none}
+@media (max-width:860px){
+  .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:55;gap:10px;align-items:center;background:var(--ink);color:#fff;border-radius:99px;padding:8px 8px 8px 20px;transform:translateY(160%);transition:transform .3s}
+  .mbar.on{transform:none}
+  .mbar p{font-size:14px;line-height:1.25;flex:1;font-weight:600}
+  .mbar p span{display:block;font-weight:400;font-size:12px;opacity:.7}
+  body:not(.has-mbar) .mbar{display:none}
+}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:100;background:var(--ink);color:#fff;border-radius:99px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:12px;animation:up .3s cubic-bezier(.3,1.5,.5,1);max-width:calc(100% - 32px);font-weight:600;font-size:15px}
+@keyframes up{from{transform:translateY(16px);opacity:0}}
+.toast button{background:var(--pink);color:var(--ink);border-radius:99px;height:36px;padding:0 14px;font-weight:700;white-space:nowrap}
+@media (max-width:860px){body.has-mbar .toast{bottom:calc(80px + env(safe-area-inset-bottom,0px))}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="logo" viewBox="255 130 335 330">
+      <path fill="#F3709C" stroke="#030303" stroke-width="9" d="M369.394 178.484C387.679 131.47 453.363 130.63 472.144 177.114C477.474 190.309 480.569 205.125 485.714 218.48C499.909 219.559 514.814 217.795 528.929 218.705C578.059 221.88 598.773 282.91 562.144 315.35L525.724 341.625V341.635L539.328 384.114C550.733 432.469 497.599 469.904 456.014 443.475L421.073 418.149L384.839 444.17C350.154 466.135 303.313 440.69 300.998 400.25C299.908 381.15 312.243 360.395 315.908 341.92L280.788 316.08C242.943 284.06 263.383 221.855 313.233 218.705C327.298 217.815 342.199 219.415 356.349 218.63C361.109 205.57 364.374 191.389 369.394 178.484Z"/>
+      <g fill="#CEECF6">
+      <path d="M443.682 318.593L451.571 312.901C459.505 305.875 455.018 292.655 444.377 291.968C441.319 291.771 438.091 292.153 435.016 291.919C433.902 289.026 433.231 285.817 432.077 282.959C428.009 272.89 413.781 273.072 409.821 283.256C408.733 286.051 408.026 289.123 406.995 291.951C403.93 292.121 400.703 291.775 397.656 291.968C386.859 292.65 382.431 306.124 390.629 313.059L398.236 318.657C397.442 322.658 394.77 327.154 395.006 331.291C395.508 340.05 405.653 345.562 413.166 340.804L421.015 335.168L428.583 340.654C437.59 346.379 449.1 338.27 446.629 327.796L443.682 318.595V318.593Z"/>
+      <path d="M364.737 372.274C366.517 374.075 370.387 388.648 371.091 392.038C372.146 397.07 373.99 406.899 373.031 411.526C370.632 423.114 354.322 423.007 345.761 418.423C344.461 417.005 341.646 397.315 341.486 393.925C341.294 389.906 341.678 374.193 344.759 372.583C347.84 370.973 362.349 369.843 364.737 372.274Z"/>
+      <path d="M361.475 364.268C352.829 374.747 333.854 359.342 349.631 352.946C359.524 348.938 367.551 356.901 361.475 364.268Z"/>
+      <path d="M506.208 379.088C494.588 380.932 490.985 391.348 488.725 401.582C485.687 415.334 490.697 424.022 471.124 420.323C464.195 419.011 458.129 414.001 458.289 406.411C458.396 401.496 459.846 391.486 460.635 386.295C461.37 381.465 462.127 373.715 466.349 370.688C474.141 365.08 478.022 372.852 485.484 371.732C489.077 371.199 492.531 367.084 495.995 366.189C503.34 364.291 507.413 372.766 506.197 379.088H506.208Z"/>
+      <path d="M517.964 267.765C508.604 260.783 501.131 273.149 492.954 269.897C487.016 267.531 490.524 262.424 493.935 259.184C504.809 248.886 537.291 252.585 539.317 269.332C539.903 274.204 539.05 280.195 539.317 285.334C539.594 290.888 542.888 300.664 538.72 306.09C533.23 313.232 522.1 305.908 516.29 305.162C510.832 304.469 505.949 306.537 500.353 306.175C485.535 305.216 481.782 287.53 494.17 279.652C500.8 275.441 510.491 275.803 516.205 270.772C517.282 269.823 518.444 269.738 517.974 267.765H517.964ZM509.137 283.948C505.822 284.705 501.504 288.724 503.54 292.274C513.337 301.698 523.625 280.664 509.137 283.948Z"/>
+      <path d="M391.667 170.115C395.025 166.544 405.237 167.013 406.293 172.535C406.911 175.797 404.832 185.477 409.171 186.798C421.324 184.784 436.739 182.385 446.174 192.353C455.352 202.054 451.568 214.153 451.046 225.762C450.96 227.66 452.367 229.739 452.154 232.116C451.259 242.116 434.245 241.711 427.635 238.608C414.629 232.5 428.744 198.727 413.243 198.791C393.436 198.866 416.761 237.34 399.374 238.139C393.074 238.427 390.814 235.997 390.281 230.133C389.034 216.264 389.097 189.581 390.281 175.669C390.43 173.91 390.419 171.447 391.667 170.125V170.115Z"/>
+      <path d="M299.107 295.808C288.852 285.553 287.552 264.552 300.323 255.672C310.877 248.337 333.253 249.702 341.366 260.48C348.05 269.349 341.92 272.952 332.784 270.127C328.776 268.891 324.565 259.659 318.392 265.213C315.748 267.601 312.444 286.854 314.181 289.807C318.819 297.685 331.526 285.201 336.824 284.679C349.425 283.442 343.146 295.915 336.579 300.456C326.324 307.556 307.732 304.433 299.107 295.808Z"/>
+      </g>
+    </symbol>
+    <symbol id="word" viewBox="205 238 432 122">
+      <path d="M617.882 278.249C620.387 280.784 625.832 301.289 626.822 306.059C628.307 313.139 630.902 326.969 629.552 333.479C626.177 349.784 603.227 349.634 591.182 343.184C589.352 341.189 585.392 313.484 585.167 308.714C584.897 303.059 585.437 280.949 589.772 278.684C594.107 276.419 614.522 274.829 617.882 278.249Z"/>
+      <path d="M613.292 266.986C601.127 281.731 574.427 260.056 596.627 251.056C610.547 245.416 621.842 256.621 613.292 266.986Z"/>
+      <path d="M568.325 293.476C551.975 296.071 546.905 310.726 543.725 325.126C539.45 344.476 546.5 356.701 518.96 351.496C509.21 349.651 500.675 342.601 500.9 331.921C501.05 325.006 503.09 310.921 504.2 303.616C505.235 296.821 506.3 285.916 512.24 281.656C523.205 273.766 528.665 284.701 539.165 283.126C544.22 282.376 549.08 276.586 553.955 275.326C564.29 272.656 570.02 284.581 568.31 293.476H568.325Z"/>
+      <path d="M452.245 296.875C439.075 287.05 428.56 304.45 417.055 299.875C408.7 296.545 413.635 289.36 418.435 284.8C433.735 270.31 479.44 275.515 482.29 299.08C483.115 305.935 481.915 314.365 482.29 321.595C482.68 329.41 487.315 343.165 481.45 350.8C473.725 360.85 458.065 350.545 449.89 349.495C442.21 348.52 435.34 351.43 427.465 350.92C406.615 349.57 401.335 324.685 418.765 313.6C428.095 307.675 441.729 308.185 449.77 301.105C451.284 299.77 452.92 299.65 452.26 296.875H452.245ZM439.825 319.645C435.16 320.71 429.085 326.365 431.95 331.36C445.735 344.62 460.21 315.025 439.825 319.645Z"/>
+      <path d="M306.528 243.051C311.253 238.026 325.623 238.686 327.108 246.456C327.978 251.046 325.053 264.666 331.158 266.526C348.258 263.691 369.948 260.316 383.223 274.341C396.138 287.991 390.813 305.016 390.078 321.351C389.958 324.021 391.938 326.946 391.638 330.291C390.378 344.361 366.438 343.791 357.138 339.426C338.838 330.831 358.698 283.311 336.888 283.401C309.018 283.506 341.838 337.641 317.373 338.766C308.508 339.171 305.328 335.751 304.578 327.501C302.823 307.986 302.913 270.441 304.578 250.866C304.788 248.391 304.773 244.926 306.528 243.066V243.051Z"/>
+      <path d="M223.365 332.176C208.935 317.746 207.105 288.196 225.075 275.701C239.925 265.381 271.41 267.301 282.825 282.466C292.23 294.946 283.605 300.016 270.75 296.041C265.11 294.301 259.185 281.311 250.5 289.126C246.78 292.486 242.13 319.576 244.575 323.731C251.1 334.816 268.98 317.251 276.435 316.516C294.165 314.776 285.33 332.326 276.09 338.716C261.66 348.706 235.5 344.311 223.365 332.176Z"/>
+    </symbol>
+    
+<symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+<symbol id="i-arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></symbol>
+</defs></svg>
+
+<header id="hdr">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="чари — на главную">
+      <svg class="star" aria-hidden="true"><use href="#logo"/></svg>
+      <svg class="word" viewBox="205 238 432 122" fill="#FBF5EC" aria-hidden="true"><use href="#word" x="205" y="238" width="432" height="122"/></svg>
+    </a>
+    <nav class="main" aria-label="Разделы">
+      <a href="#box">Что в конверте</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <div class="hr">
+      <a class="iconbtn cartbtn" href="#apply" aria-label="Корзина"><svg><use href="#i-bag"/></svg><span class="n" id="cartN"></span></a>
+      <a class="btn btn-pink btn-sm" href="#apply">Оставить заявку</a>
+      <button class="iconbtn burger" id="menuBtn" aria-label="Меню"><svg><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<div id="v-home">
+  <section class="hero bg-wine">
+    <div class="wrap">
+      <div>
+        <span class="tag">выпуск №01 · скоро</span>
+        <h1>Почтовый клуб <span class="pk">стикеров</span></h1>
+        <p class="script">письма, а не счета</p>
+        <p class="lead">Раз в месяц — конверт со стикерами и приятными мелочами. Собираем первый выпуск и записываем тех, кто хочет его получить.</p>
+        <div class="cta">
+          <a class="btn btn-pink" href="#box">Что в конверте <svg width="18" height="18"><use href="#i-arr"/></svg></a>
+          <a class="btn btn-ghost" href="#apply">Оставить заявку</a>
+        </div>
+        <div class="facts"><span>без оплаты</span><span>только Беларусь</span><span>+3 стикера первым</span></div>
+      </div>
+      <div class="set" aria-label="Набор чари">
+        <div class="env" aria-hidden="true"></div>
+        <img class="it a" src="img/sheet2.webp" alt="Лист стикеров">
+        <img class="it b" src="img/poster.webp" alt="Постер A5">
+        <img class="it c" src="img/sudoku.webp" alt="Карточка судоку">
+        <img class="it d" src="img/card21.webp" alt="Карточка «21 день челлендж»">
+        <img class="s1" src="img/boardgame.webp" alt="">
+        <img class="s2" src="img/singer.webp" alt="">
+      </div>
+    </div>
+  </section>
+
+  <div class="band" aria-hidden="true"><div class="tr" id="band"></div></div>
+
+  <section class="sec bg-stone hatch" id="box">
+    <div class="wrap">
+      <div class="sh"><span class="tag">набор для отправки</span><h2>Что в конверте</h2><p class="muted">Каждый месяц — новый выпуск. Вот как выглядит первый.</p></div>
+      <div class="inside">
+        <div>
+          <div class="photo">
+            <img src="img/flatlay.webp" alt="Набор чари на столе: стикерпак, письмо, конверт с марками, закладка и календарик">
+            <span class="pin" style="left:17%;top:28%"><i>1</i>Стикерпак</span>
+            <span class="pin" style="left:46%;top:30%"><i>2</i>Письмо</span>
+            <span class="pin" style="left:80%;top:9%"><i>3</i>Конверт с открыткой</span>
+            <span class="pin" style="left:70%;top:86%"><i>4</i>Закладка</span>
+            <span class="pin" style="left:89%;top:91%"><i>5</i>Календарик</span>
+          </div>
+          <div class="plist"><span>Стикерпак</span><span>Письмо</span><span>Конверт с открыткой</span><span>Закладка</span><span>Календарик</span></div>
+        </div>
+        <div class="coupon">
+          <div class="top">
+            <span class="tag">№01 · ноябрь</span>
+            <h3>Конверт месяца</h3>
+            <ol>
+              <li><i>1</i>Лист виниловых стикеров</li>
+              <li><i>2</i>Письмо от чари</li>
+              <li><i>3</i>Открытка</li>
+              <li><i>4</i>Календарик на месяц</li>
+              <li><i>5</i>Закладка</li>
+              <li class="g"><i>+</i>3 стикера в подарок первым</li>
+            </ol>
+          </div>
+          <div class="cut"></div>
+          <div class="bot">
+            <div class="pr"><span style="font-family:var(--f);font-style:normal;font-weight:600">≈</span>25 BYN <small>/ месяц</small></div>
+            <span class="clubBtn"></span>
+            <p class="note">Доставка по Беларуси. Оплата после запуска, сейчас только бронь.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="catalog">
+    <div class="wrap">
+      <div class="sh"><span class="tag">предзаказ</span><h2>Каталог</h2><p class="muted">Набор целиком или стикеры поштучно. Виниловые, не боятся воды.</p></div>
+      <div id="stickers"><div class="sgrid" id="sgrid"></div></div>
+    </div>
+  </section>
+
+  <section class="sec poster" id="faq">
+    <div class="bgtext" aria-hidden="true"><div>письма письма</div><div>стикеры стикеры</div><div>чари чари чари</div><div>открытки открытки</div><div>письма письма</div></div>
+    <div class="wrap faqw">
+      <div><span class="tag" style="background:var(--ink);color:var(--pink)">FAQ</span><h2 style="margin-top:14px;font-size:clamp(38px,5.4vw,72px)">Вопросы</h2><p style="margin-top:12px">Не нашли ответ — пишите в <a href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener" style="font-weight:700">Instagram</a>.</p></div>
+      <div class="faq" id="faqList"></div>
+    </div>
+  </section>
+
+  <section class="sec bg-wine final">
+    <img class="s1" src="img/puppy-tablet.webp" alt="">
+    <img class="s2" src="img/grumpy-cat.webp" alt="">
+    <div class="wrap">
+      <h2>Хочешь <span>первый</span> конверт?</h2>
+      <p>Оставь заявку — напишем, когда откроем запись. Бесплатно и ни к чему не обязывает.</p>
+      <a class="btn btn-pink" href="#apply">Оставить заявку <svg width="18" height="18"><use href="#i-arr"/></svg></a>
+    </div>
+  </section>
+</div>
+
+<div id="v-apply" hidden>
+  <div class="bg-stone">
+  <div class="wrap apply" id="applyMain">
+    <div>
+      <span class="tag">предзаявка · без оплаты</span>
+      <h1>Заявка на первый выпуск</h1>
+      <p class="muted" style="margin-top:12px;max-width:52ch">Мы пока не отправляем — собираем очередь. Оставь контакты, и мы напишем, когда откроем запись.</p>
+      <form class="form" id="form" novalidate>
+        <div class="hp" aria-hidden="true"><label>Сайт<input id="website" tabindex="-1" autocomplete="off"></label></div>
+        <fieldset class="fs">
+          <legend>Как с тобой связаться</legend>
+          <div class="fg">
+            <div class="fld full"><input id="name" autocomplete="given-name" placeholder="Аня" maxlength="60"><label for="name">Имя</label><span class="err" id="e-name"></span></div>
+            <div class="fld"><input id="tg" autocomplete="off" placeholder="@anya" maxlength="40"><label for="tg">Telegram</label><span class="err" id="e-tg"></span></div>
+            <div class="fld"><input id="phone" type="tel" autocomplete="tel" placeholder="+375 29 123-45-67" maxlength="22"><label for="phone">Телефон</label><span class="err" id="e-phone"></span></div>
+          </div>
+          <p class="hint">Достаточно Telegram или телефона.</p>
+        </fieldset>
+        <fieldset class="fs">
+          <legend>Куда <span>пока только Беларусь</span></legend>
+          <div class="fg">
+            <div class="fld"><select id="city"><option selected>Минск</option><option>Витебск</option><option>Гомель</option><option>Могилёв</option><option>Гродно</option><option>Брест</option><option>Другой город</option></select><label for="city">Город</label></div>
+            <div class="fld"><select id="ship"><option>Европочта</option><option>Белпочта</option><option>Пока не знаю</option></select><label for="ship">Доставка</label></div>
+            <div class="fld full" id="cityOtherBox" hidden><input id="cityOther" placeholder="Новополоцк" maxlength="40"><label for="cityOther">Какой город</label><span class="err" id="e-cityOther"></span></div>
+            <div class="fld full"><textarea id="comment" placeholder="Например: побольше котиков" maxlength="500"></textarea><label for="comment">Пожелания (необязательно)</label></div>
+          </div>
+        </fieldset>
+        <label class="check" style="margin-bottom:14px"><input type="checkbox" id="gift"><span>Это подарок</span></label>
+        <label class="check small"><input type="checkbox" id="consent"><span>Согласен на обработку моих данных, чтобы со мной связались по заявке. <span class="err" id="e-consent"></span></span></label>
+        <button class="btn btn-pink btn-block" type="submit" id="sendBtn" style="margin-top:22px;height:58px;font-size:17px">Отправить заявку</button>
+        <p class="hint" style="text-align:center" id="sendNote"></p>
+      </form>
+    </div>
+    <aside class="side">
+      <div class="sbox"><h3>Корзина</h3><div class="cl" id="cartList"></div></div>
+    </aside>
+  </div>
+  <div class="wrap done" id="applyDone" hidden>
+    <img src="img/stamp-cloud.webp" alt="">
+    <h1>Ты в очереди!</h1>
+    <p class="hint" id="previewNote" hidden>Это превью сайта: заявка никуда не отправилась. На настоящем сайте она придёт в Telegram и в админку.</p>
+    <p class="muted" style="max-width:46ch">Заявка №<span id="doneNo"></span>. Напишем <span id="doneHow"></span>, когда откроем запись. А пока заглядывай в Instagram — там показываем, как собираем первый выпуск.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center"><a class="btn btn-pink" href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener"><svg width="18" height="18"><use href="#i-ig"/></svg>@chari.mail_club</a><a class="btn btn-ink" href="#home">На главную</a></div>
+  </div>
+  </div>
+</div>
+</main>
+
+<div class="mbar" id="mbar"><p id="mbarT"></p><a class="btn btn-pink btn-sm" href="#apply">Заявка</a></div>
+
+<footer>
+  <div class="wrap"><div class="fbig" aria-hidden="true">ЧАРИ</div></div>
+  <div class="wrap fwrap">
+    <a class="logo" href="#home" aria-label="чари"><svg class="star"><use href="#logo"/></svg><svg class="word" viewBox="205 238 432 122" fill="#FBF5EC"><use href="#word" x="205" y="238" width="432" height="122"/></svg></a>
+    <span>делаем повседневность теплее ♡</span>
+    <div class="links"><a class="ig" href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg>@chari.mail_club</a><a href="#faq">Вопросы</a><a href="admin.html">Вход для команды</a></div>
+  </div>
+</footer>
+<div id="layer"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const IMG=n=>`img/${n}.webp`;
+const LIVE=location.protocol==='https:'&&!/claude|claudeusercontent|anthropic/.test(location.hostname);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+const CLUB={id:'club01',n:'Набор для отправки · выпуск №01',img:'flatlay',p:25,per:'месяц',club:1};
+const ST=[
+  ['p1','Момо не в духе','straw-hoodie',3],['p2','Момо на созвоне','straw-laptop',4,1],['p3','Биби играет','orange-gamer',3],['p4','Биби читает','orange-reader',3],
+  ['p5','Пуф-повар','mushroom-chef',3],['p6','Книжная башня','book-tower',4],['p7','Тото и сериал','puppy-tablet',3],['p8','Настолка','boardgame',4],
+  ['p9','Зузу на удалёнке','grumpy-cat',3],['p10','Луми гуляет','bunny-leaf',3],['p11','На остановке','bus-stop',4,1],['p12','Дождик','bus-stop-2',4],
+  ['p13','Пижамный день','pajama',3],['p14','Кики поёт','singer',3],
+].map(([id,n,img,p,holo])=>({id,n,img,p,holo}));
+const ALL=[CLUB,...ST];
+const FAQ=[
+  ['Вы уже отправляете конверты?','Пока нет — собираем первый выпуск. Когда откроем запись, напишем всем, кто оставил заявку.'],
+  ['Заявка — это оплата?','Нет. Заявка ни к чему не обязывает: про оплату расскажем перед запуском, передумать можно в любой момент.'],
+  ['Куда доставляете?','Пока только по Беларуси — Европочтой или Белпочтой.'],
+  ['Можно в подарок?','Конечно. В заявке отметь «Это подарок» — адрес получателя уточним перед отправкой.'],
+];
+let cart=store.get('chari-cart2',[]).filter(id=>ALL.some(p=>p.id===id));
+
+const bw=['письма','стикеры','открытки','чари','календарики'];
+const one=bw.map(w=>`<b>${w}</b><i>✕</i>`).join('');
+$('#band').innerHTML=one+one+one+one;
+$('#faqList').innerHTML=FAQ.map(([q,a],i)=>`<details ${i===0?'open':''}><summary>${q}<i>+</i></summary><p>${a}</p></details>`).join('');
+
+function clubBtn(){ const on=cart.includes(CLUB.id); return `<button type="button" class="btn ${on?'btn-lime':'btn-pink'}" data-add="${CLUB.id}" aria-pressed="${on}">${on?'<svg width="18" height="18"><use href="#i-check"/></svg>В корзине':'<svg width="18" height="18"><use href="#i-bag"/></svg>В корзину'}</button>`; }
+function plus(x){ const on=cart.includes(x.id); return `<button type="button" class="plus" data-add="${x.id}" aria-pressed="${on}" aria-label="${on?'Убрать из корзины':'В корзину'}: ${x.n}"><svg><use href="#${on?'i-check':'i-plus'}"/></svg></button>`; }
+function render(){
+  $$('.clubBtn').forEach(e=>e.innerHTML=clubBtn());
+  const big=`<article class="st big"><div class="im"><div class="env"></div><img class="a" src="img/sheet2.webp" alt=""><img class="b" src="img/poster.webp" alt=""><img class="c" src="img/sudoku.webp" alt=""><img class="d" src="img/card21.webp" alt="Набор для отправки"><span class="tag">≈25 BYN / мес</span></div><div class="row"><div class="nm"><b>Набор для отправки</b><span>стикеры и приятные мелочи раз в месяц</span></div><span class="clubBtn">${clubBtn()}</span></div></article>`;
+  $('#sgrid').innerHTML=big+ST.map(x=>`<article class="st"><div class="im">${x.holo?'<span class="tag holo" style="font-size:11px;padding:2px 8px">голография</span>':''}<img loading="lazy" src="${IMG(x.img)}" alt="${x.n}"></div><div class="row"><div class="nm"><b>${x.n}</b><span>${x.p} BYN</span></div>${plus(x)}</div></article>`).join('');
+}
+function renderCart(){
+  const items=cart.map(id=>ALL.find(p=>p.id===id)), sum=items.reduce((t,x)=>t+x.p,0);
+  $('#cartN').textContent=items.length||'';
+  $('#cartList').innerHTML=items.length?items.map(x=>`<div class="row"><img ${x.club?'class="cv"':''} src="${IMG(x.img)}" alt=""><div><b>${x.n}</b><small>${x.club?'≈':''}${x.p} BYN${x.per?' / '+x.per:''}</small></div><button type="button" class="x" data-add="${x.id}" aria-label="Убрать ${x.n}"><svg><use href="#i-x"/></svg></button></div>`).join('')+`<div class="total"><span>Итого</span><span>≈${sum} BYN</span></div><p class="hint">Оплата после запуска — сейчас только бронь.</p>`
+    :`<p class="muted" style="font-size:14px">Пока пусто — можно оставить заявку и так. Или загляни в <a href="#catalog" style="font-weight:600">каталог</a>.</p>`;
+  $('#mbarT').innerHTML=items.length?`В корзине ${items.length} <span>≈${sum} BYN · оплата после запуска</span>`:`Выпуск №01 скоро <span>займи место в очереди</span>`;
+}
+function upd(){ store.set('chari-cart2',cart); render(); renderCart(); }
+
+let tt;function toast(html){clearTimeout(tt);$('.toast')?.remove();const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.innerHTML=html;document.body.appendChild(t);tt=setTimeout(()=>t.remove(),2600);}
+
+let lastFocus=null;
+function closeLayer(){ if(!$('#layer').innerHTML) return; $('#layer').innerHTML=''; document.body.classList.remove('lock'); lastFocus?.focus?.(); }
+$('#menuBtn').addEventListener('click',()=>{ lastFocus=document.activeElement;
+  $('#layer').innerHTML=`<div class="sheet bg-wine" role="dialog" aria-modal="true" aria-label="Меню"><div class="top"><a class="logo" href="#home" data-close><svg class="star"><use href="#logo"/></svg></a><button class="iconbtn" data-close aria-label="Закрыть"><svg><use href="#i-x"/></svg></button></div>
+  <nav><a href="#box" data-close>Что в конверте</a><a href="#catalog" data-close>Каталог</a><a href="#faq" data-close>Вопросы</a><a href="#apply" data-close>Корзина${cart.length?' · '+cart.length:''}</a></nav>
+  <div class="bottom"><a class="btn btn-pink btn-block" href="#apply" data-close>Оставить заявку</a><a class="btn btn-ghost btn-block" href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener"><svg width="18" height="18"><use href="#i-ig"/></svg>@chari.mail_club</a></div></div>`;
+  document.body.classList.add('lock'); $('#layer .iconbtn').focus(); });
+
+const city=$('#city');
+city.addEventListener('change',()=>{ $('#cityOtherBox').hidden=city.value!=='Другой город'; });
+$('#phone').addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^\d+\-\s()]/g,'');});
+function setErr(id,m){ const el=$('#'+id); if(el) el.setAttribute('aria-invalid',!!m); $('#e-'+id).textContent=m||''; return !m; }
+function validate(){
+  let ok=true;
+  const name=$('#name').value.trim(), tg=$('#tg').value.trim(), ph=$('#phone').value.replace(/\D/g,'');
+  ok=setErr('name',name.length<2?'Как к тебе обращаться?':'')&&ok;
+  const tgOk=!tg||/^@?[A-Za-z0-9_]{4,32}$/.test(tg), phOk=!ph||/^375\d{9}$|^80\d{9}$/.test(ph);
+  let eTg='', ePh='';
+  if(!tg&&!ph) eTg='Укажи Telegram или телефон';
+  if(!tgOk) eTg='Ник латиницей, например @anya_chari';
+  if(!phOk) ePh='Белорусский номер: +375 29 123-45-67';
+  ok=setErr('tg',eTg)&&ok; ok=setErr('phone',ePh)&&ok;
+  if(city.value==='Другой город') ok=setErr('cityOther',$('#cityOther').value.trim().length<2?'Напиши город':'')&&ok;
+  const c=$('#consent').checked; $('#e-consent').textContent=c?'':'Нужно согласие, чтобы мы могли написать'; ok=c&&ok;
+  return ok;
+}
+['name','tg','phone','cityOther'].forEach(id=>$('#'+id).addEventListener('input',()=>{ if($('#'+id).getAttribute('aria-invalid')==='true') validate(); }));
+function src(){ try{ let s=sessionStorage.getItem('chari-src'); if(!s){ const u=new URLSearchParams(location.search).get('utm_source'); const r=document.referrer&&!document.referrer.includes(location.host)?new URL(document.referrer).hostname.replace(/^www\./,''):''; s=u||r||'прямой заход'; sessionStorage.setItem('chari-src',s);} return s; }catch(e){ return 'неизвестно'; } }
+src();
+$('#form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!validate()){ const el=$('[aria-invalid="true"]')||$('#consent'); el.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(()=>el.focus({preventScroll:true}),300); return; }
+  const tg=$('#tg').value.trim();
+  const hasSt=cart.some(id=>id!==CLUB.id), want=[];
+  if(cart.includes(CLUB.id)||!hasSt) want.push('club'); if(hasSt) want.push('stickers'); if($('#gift').checked) want.push('gift');
+  const data={name:$('#name').value.trim(),telegram:tg?(tg.startsWith('@')?tg:'@'+tg):'',phone:$('#phone').value.trim(),
+    city:city.value==='Другой город'?$('#cityOther').value.trim():city.value,delivery:$('#ship').value,want,
+    items:cart.map(id=>{const p=ALL.find(x=>x.id===id);return {id,n:p.n,p:p.p}}),comment:$('#comment').value.trim(),source:src(),website:$('#website').value};
+  const b=$('#sendBtn'); b.disabled=true; b.textContent='Отправляем…'; $('#sendNote').textContent='';
+  let no=null;
+  if(LIVE){
+    try{ const r=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}); const j=await r.json().catch(()=>({}));
+      if(!r.ok) throw new Error(j.error||'Не получилось отправить'); no=j.no;
+    }catch(err){ b.disabled=false; b.textContent='Отправить заявку'; $('#sendNote').textContent=(err.message||'Ошибка сети')+'. Попробуй ещё раз или напиши нам в Instagram.'; return; }
+  } else no='превью';
+  $('#doneNo').textContent=no||'—'; $('#previewNote').hidden=LIVE;
+  $('#doneHow').textContent=data.telegram?`в Telegram ${data.telegram}`:'по телефону';
+  cart=[]; upd(); $('#form').reset(); $('#cityOtherBox').hidden=true;
+  b.disabled=false; b.textContent='Отправить заявку';
+  $('.toast')?.remove(); $('#applyMain').hidden=true; $('#applyDone').hidden=false; scrollTo(0,0);
+});
+
+document.addEventListener('click',e=>{
+  const t=e.target, a=t.closest('[data-add]');
+  if(a){ const id=a.dataset.add, had=cart.includes(id); cart=had?cart.filter(x=>x!==id):[...cart,id]; upd();
+    if(!had) toast(`<span>Добавили в корзину</span><button type="button" data-goapply>Корзина</button>`); return; }
+  if(t.closest('[data-goapply]')){ $('.toast')?.remove(); location.hash='apply'; return; }
+  if(t.closest('[data-close]')) closeLayer();
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLayer(); });
+addEventListener('scroll',()=>{ $('#mbar').classList.toggle('on',route.cur==='home'&&(scrollY>420||cart.length>0)); },{passive:true});
+
+const VIEWS=['home','apply'];
+function route(){
+  const h=(location.hash||'#home').slice(1);
+  const el=!VIEWS.includes(h)&&document.getElementById(h);
+  const anchor=el&&$('#v-home').contains(el)?h:null;
+  const v=h==='apply'?'apply':'home';
+  route.cur=v; VIEWS.forEach(n=>$('#v-'+n).hidden=n!==v);
+  document.body.classList.toggle('has-mbar',v==='home');
+  $('#mbar').classList.toggle('on',v==='home'&&(scrollY>420||cart.length>0));
+  if(v==='apply'){ $('#applyMain').hidden=false; $('#applyDone').hidden=true; }
+  closeLayer(); $('.toast')?.remove();
+  if(anchor) requestAnimationFrame(()=>document.getElementById(anchor).scrollIntoView({behavior:'smooth'}));
+  else scrollTo(0,0);
+}
+addEventListener('hashchange',route);
+upd(); route();
+if(LIVE){ try{ navigator.sendBeacon('/api/track',new Blob([JSON.stringify({src:src()})],{type:'application/json'})); }catch(e){} }
+</script>
+</body></html>
