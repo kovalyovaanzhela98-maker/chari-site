@@ -1,8 +1,10 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="чари — почтовый клуб стикеров. Конверт со стикерами и приятными мелочами раз в месяц по Беларуси."><meta property="og:title" content="чари — почтовый клуб стикеров"><link rel="icon" href="img/straw-hoodie.webp"><title>чари — почтовый клуб стикеров</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="чари — почтовый клуб стикеров. Конверт со стикерами и маленькими ритуалами раз в месяц по Беларуси."><meta property="og:title" content="чари — почтовый клуб стикеров"><link rel="icon" href="img/straw-hoodie.webp"><title>чари — почтовый клуб стикеров</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preload" as="image" href="img/set-frame.webp" imagesrcset="img/set-frame-800.webp 800w, img/set-frame.webp 1400w" imagesizes="(max-width:900px) 92vw, 640px" fetchpriority="high">
+<link rel="preload" as="font" href="fonts/leotaro.woff2" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,800;1,900&family=Onest:wght@400;500;600;700&family=Marck+Script&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,800;1,900&family=Manrope:wght@400;500;600;700&family=Onest:wght@400;500;600;700&family=Marck+Script&display=swap">
 <style>
 /* Стиль набора: винный лист с крестиком и лучами, зелёный конверт, постер с повторяющейся прописью, карточка с красной штриховкой, жирный курсив.
    Цвета — розовый чари и комплементарные к нему: винный, тёмно-зелёный; бренд-аква для прописи, лайм — точечно. */
@@ -55,53 +57,127 @@ p{margin:0}
 .iconbtn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(251,245,236,.1);border:1.5px solid rgba(251,245,236,.4);color:var(--cream)}
 .iconbtn svg{width:20px;height:20px}
 
-/* header на винном */
-header{position:sticky;top:0;z-index:60;padding-top:env(safe-area-inset-top,0px);background:var(--wine);color:var(--cream);border-bottom:1px solid rgba(250,194,223,.15)}
-header .wrap{display:flex;align-items:center;height:68px;gap:16px}
+/* шапка: тонкая, текстом, как на макете-референсе */
+header{position:fixed;left:0;right:0;top:0;z-index:60;padding-top:env(safe-area-inset-top,0px);color:#fff;transition:background .3s,color .3s,box-shadow .3s}
+header.scrolled{background:rgba(251,245,236,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);box-shadow:0 1px 0 rgba(3,3,3,.06)}
+header .wrap{display:flex;align-items:center;height:72px;gap:28px;max-width:none;padding-inline:max(28px,env(safe-area-inset-left,0px)) max(28px,env(safe-area-inset-right,0px))}
 .logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex:none}
-.logo .star{width:40px;height:40px;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.logo .star{width:36px;height:36px;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
 .logo:hover .star{transform:rotate(72deg)}
-.logo .word{height:21px;width:auto}
-nav.main{display:flex;gap:4px;margin-inline:auto}
-nav.main a{text-decoration:none;font-family:var(--disp);font-style:italic;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.03em;padding:8px 14px;border-radius:99px}
-nav.main a:hover{background:rgba(250,194,223,.14)}
-.hr{display:flex;gap:8px;align-items:center;margin-left:auto}
-.cartbtn{position:relative}
-.cartbtn .n{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;padding:0 5px;border-radius:99px;background:var(--pink);color:var(--ink);font-size:11px;font-weight:700;display:grid;place-items:center}
-.cartbtn .n:empty{display:none}
+.logo .word{height:24px;width:auto}
+nav.main{display:flex;gap:30px;margin-left:clamp(20px,6vw,90px)}
+nav.main a{text-decoration:none;font-size:14px;font-weight:500;opacity:.9;position:relative}
+nav.main a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .25s}
+nav.main a:hover::after{transform:scaleX(1)}
+.hr{display:flex;gap:10px;align-items:center;margin-left:auto}
+.pillbtn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:99px;background:#fff;color:var(--ink);font-size:14px;font-weight:600;text-decoration:none;position:relative}
+.pillbtn svg{width:17px;height:17px}
+.pillbtn .n{min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--pink);font-size:11px;font-weight:700;display:grid;place-items:center}
+.pillbtn .n:empty{display:none}
+.pillbtn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+header.scrolled .pillbtn{background:var(--ink);color:#fff}
+header.scrolled .pillbtn.ghost{background:transparent;color:var(--ink)}
+.iconbtn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.iconbtn svg{width:20px;height:20px}
 .burger{display:none}
-@media (max-width:860px){nav.main{display:none}.burger{display:grid}.hr .btn{display:none}}
-@media (max-width:370px){.logo .word{display:none}}
+@media (max-width:860px){nav.main{display:none}.burger{display:grid}.hr .ghost{display:none}header .wrap{padding-inline:max(18px,env(safe-area-inset-left,0px)) max(18px,env(safe-area-inset-right,0px))}}
+
+#v-apply{padding-top:72px}
 .sheet{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) var(--gutr) calc(24px + env(safe-area-inset-bottom,0px)) var(--gut);animation:fade .2s ease-out}
+.sheet .iconbtn{color:var(--cream)}
 @keyframes fade{from{opacity:0}}
 .sheet .top{display:flex;justify-content:space-between;align-items:center;height:52px}
 .sheet nav{display:flex;flex-direction:column;margin-top:20px}
 .sheet nav a{font-family:var(--disp);font-style:italic;font-weight:900;text-transform:uppercase;font-size:30px;text-decoration:none;padding:12px 0;border-bottom:1px solid rgba(250,194,223,.2)}
 .sheet .bottom{margin-top:auto;display:grid;gap:12px}
 
-/* HERO */
-.hero .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(24px,4vw,56px);align-items:center;padding-block:clamp(40px,6vw,88px)}
-.hero h1{font-size:clamp(46px,6.6vw,96px);margin-top:20px}
-.hero h1 .pk{color:var(--pink);display:block}
-.hero .script{font-family:var(--script);font-size:clamp(28px,3vw,40px);color:var(--aqua);line-height:1;margin-top:14px;transform:rotate(-3deg);transform-origin:left}
-.hero .lead{font-size:clamp(17px,1.5vw,19px);color:rgba(251,245,236,.8);max-width:44ch;margin-top:20px}
-.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.hero .facts{display:flex;gap:8px 18px;flex-wrap:wrap;margin-top:24px;font-size:14px;color:rgba(251,245,236,.65)}
-.hero .facts span::before{content:"✕ ";color:var(--pink);font-weight:700}
-/* раскладка набора как на картинке */
-.set{position:relative;aspect-ratio:1/.9}
-.set .env{position:absolute;left:18%;top:26%;width:70%;aspect-ratio:1.42;background:var(--forest-2);border-radius:4px;overflow:hidden;box-shadow:0 30px 50px -20px rgba(0,0,0,.6)}
-.set .env::before{content:"";position:absolute;left:0;right:0;top:0;height:60%;background:#27503F;clip-path:polygon(0 0,100% 0,50% 100%)}
-.set .it{position:absolute;box-shadow:0 20px 34px -14px rgba(0,0,0,.6)}
-.set .a{left:0;top:6%;width:32%;z-index:3}
-.set .b{left:36%;top:0;width:28%;z-index:2}
-.set .c{right:0;top:12%;width:24%;z-index:2}
-.set .d{left:30%;bottom:2%;width:28%;z-index:4}
-.set .s1{position:absolute;right:4%;top:48%;width:30%;z-index:5;filter:drop-shadow(0 10px 12px rgba(0,0,0,.45))}
-.set .s2{position:absolute;left:0;bottom:4%;width:24%;z-index:5;filter:drop-shadow(0 10px 12px rgba(0,0,0,.45))}
-@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.set{max-width:560px;width:100%;justify-self:center}}
-@media (max-width:520px){.hero .cta .btn{flex:1 1 100%}}
+/* HERO: оборот почтовой открытки. Leotaro — главный, Manrope — второстепенный. тихо, воздушно */
+@font-face{font-family:'Leotaro';src:url(fonts/leotaro.woff2) format('woff2');font-display:swap}
+header{color:var(--ink);font-family:'Manrope',var(--f)}
+header .pillbtn{font-family:'Manrope',var(--f)}
+.pillbtn{background:var(--ink);color:#fff}
+.hero{--paper:#F8F2E9;overflow:hidden;--ln:rgba(61,11,31,.22);position:relative;min-height:max(100svh,700px);background:var(--paper);color:var(--wine);font-family:'Manrope',var(--f);isolation:isolate;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.55;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .35 0 0 0 0 .3 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.pcard{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;min-height:inherit;padding:calc(110px + env(safe-area-inset-top,0px)) clamp(20px,5vw,80px) clamp(40px,7vh,72px)}
 
+.msg{padding-right:clamp(24px,5vw,80px);display:flex;flex-direction:column;justify-content:center}
+.lab{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--wine);opacity:.65}
+.hero h1{font-family:'Leotaro',serif;font-weight:400;font-style:normal;text-transform:none;letter-spacing:-.01em;line-height:.98;font-size:clamp(50px,6.3vw,112px);margin-top:22px;color:var(--wine)}
+.hero h1 span{display:block;color:var(--pink);white-space:nowrap}
+.msg .t{margin-top:26px;font-size:clamp(16px,1.3vw,19px);line-height:1.6;color:#4A3540;max-width:38ch}
+.msg .cta{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:34px}
+.msg .go{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 28px;border-radius:99px;background:var(--wine);color:#fff;text-decoration:none;font-weight:600;font-size:16px;transition:background .2s,transform .2s}
+.msg .go:hover{background:var(--pink);color:var(--ink);transform:translateY(-2px)}
+.msg .go svg{width:18px;height:18px}
+.msg .ln{font-weight:600;font-size:15px;text-decoration:none;color:var(--wine);border-bottom:1px solid var(--ln);padding-bottom:3px}
+.setcol{position:relative;display:grid;place-items:center;padding-block:clamp(10px,4vh,40px)}
+.setcol img.set{height:auto;position:relative;z-index:3;width:min(100%,640px,74vh);filter:drop-shadow(0 26px 34px rgba(61,11,31,.22));animation:hov 9s ease-in-out infinite}
+@keyframes hov{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(.5deg)}}
+.shp{position:absolute;z-index:0;pointer-events:none;user-select:none}
+.shp.burst{z-index:1;width:min(118%,820px);left:50%;top:52%;translate:-50% -50%;opacity:.9;animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shp.lime{width:clamp(70px,7vw,110px);right:-1%;top:4%;transform:rotate(12deg);z-index:4;animation:tw 5s ease-in-out infinite}
+.shp.ast{width:clamp(60px,6vw,96px);left:4%;bottom:6%;transform:rotate(-10deg);z-index:4;animation:tw 6s ease-in-out infinite -2s}
+.shp.mint{z-index:2;width:clamp(130px,13vw,200px);left:-6%;top:12%;transform:rotate(-14deg)}
+@keyframes tw{0%,100%{scale:1}50%{scale:1.12}}
+.shp.bg1{width:clamp(36px,3vw,48px);left:44%;top:16%;transform:rotate(20deg)}
+.shp.bg2{width:clamp(40px,3.4vw,56px);left:6%;bottom:9%;transform:rotate(-8deg);opacity:.9}
+@media (max-width:900px){
+  .pcard{grid-template-columns:1fr;padding:100px 20px 40px;gap:40px}
+  .pcard::before{display:none}
+  .msg{padding-right:0}
+  .setcol{margin-top:8px}
+  .shp.mint{left:-8%;top:6%}.shp.lime{right:0}.shp.bg1,.shp.bg2{display:none}
+}
+
+/* варианты фона */
+.hero.vA{background:#D4FF00}
+.hero.vA::after{opacity:.35}
+.hero.vA .shp.mint,.hero.vA .shp.lime,.hero.vA .shp.bg1{display:none}
+.hero.vA h1 span{color:#FF0A8C}
+.hero.vA .msg .t{color:#2A1A20}
+.hero.vA .lab{color:#2A1A20;opacity:.8}
+.hero.vA .shp.burst{opacity:1}
+
+.hero.vB{background:#0090FF;color:#fff}
+.hero.vB::after{opacity:.25}
+.hero.vB h1{color:#fff}.hero.vB h1 span{color:#D4FF00}
+.hero.vB .lab,.hero.vB .msg .t{color:#fff;opacity:.9}
+.hero.vB .msg .go{background:#D4FF00;color:#030303}
+.hero.vB .msg .ln{color:#fff;border-color:rgba(255,255,255,.5)}
+.hero.vB .shp.burst,.hero.vB .shp.ast,.hero.vB .shp.mint,.hero.vB .shp.bg1{display:none}
+.hero.vB .pixstar{display:block}
+.pixstar{display:none;position:absolute;z-index:1;left:50%;top:50%;translate:-50% -50%;width:min(120%,860px);aspect-ratio:1;
+  background:#D4FF00;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 61 37 100 38 68 60 80 100 50 75 20 100 32 60 0 38 39 37Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 61 37 100 38 68 60 80 100 50 75 20 100 32 60 0 38 39 37Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  animation:spin 90s linear infinite}
+.pixstar i{position:absolute;inset:0;background-image:radial-gradient(#A8C800 32%,transparent 34%);background-size:22px 22px}
+
+.hero.vC{background:#FF0A8C}
+.hero.vC::after{opacity:.25}
+.hero.vC .xrays{display:block}
+.hero.vC h1{color:#030303}.hero.vC h1 span{color:#fff}
+.hero.vC .lab,.hero.vC .msg .t{color:#030303;opacity:.85}
+.hero.vC .msg .go{background:#030303;color:#fff}
+.hero.vC .msg .ln{color:#030303}
+.hero.vC .shp.burst,.hero.vC .shp.bg1,.hero.vC .shp.mint{display:none}
+.xrays{display:none;position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath d='M6 6l8 8M14 6l-8 8' stroke='%23D4FF00' stroke-width='3.4'/%3E%3C/svg%3E");background-size:20px 20px;
+  -webkit-mask:repeating-conic-gradient(from 0deg at 72% 52%,#000 0 9deg,transparent 9deg 22.5deg),linear-gradient(90deg,transparent 46%,#000 62%);-webkit-mask-composite:source-in;
+  mask:repeating-conic-gradient(from 0deg at 72% 52%,#000 0 9deg,transparent 9deg 22.5deg),linear-gradient(90deg,transparent 46%,#000 62%);mask-composite:intersect;opacity:.9}
+.xrays::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 52%,transparent 0 28%,#FF0A8C 70%);opacity:.0}
+@media (max-width:900px){.xrays{-webkit-mask:repeating-conic-gradient(from 0deg at 50% 74%,#000 0 9deg,transparent 9deg 22.5deg),linear-gradient(180deg,transparent 50%,#000 58%);-webkit-mask-composite:source-in;mask:repeating-conic-gradient(from 0deg at 50% 74%,#000 0 9deg,transparent 9deg 22.5deg),linear-gradient(180deg,transparent 50%,#000 58%);mask-composite:intersect}}
+
+/* шапка на синем */
+header{color:#fff}
+header .pillbtn{background:#fff;color:var(--ink)}
+header .pillbtn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.85)}
+header .iconbtn{color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.85)}
+header.scrolled{background:rgba(0,144,255,.9);color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.15)}
+header.scrolled .pillbtn{background:#fff;color:var(--ink)}
+header.scrolled .pillbtn.ghost{background:transparent;color:#fff}
+.logo .star{width:40px;height:39px}
 /* лента с прописью, как постер */
 .band{background:var(--pink);overflow:hidden;white-space:nowrap;padding:12px 0}
 .band .tr{display:inline-flex;align-items:center;gap:30px;animation:run 44s linear infinite;padding-left:30px}
@@ -287,6 +363,15 @@ body.has-mbar footer{padding-bottom:76px}
       <path d="M223.365 332.176C208.935 317.746 207.105 288.196 225.075 275.701C239.925 265.381 271.41 267.301 282.825 282.466C292.23 294.946 283.605 300.016 270.75 296.041C265.11 294.301 259.185 281.311 250.5 289.126C246.78 292.486 242.13 319.576 244.575 323.731C251.1 334.816 268.98 317.251 276.435 316.516C294.165 314.776 285.33 332.326 276.09 338.716C261.66 348.706 235.5 344.311 223.365 332.176Z"/>
     </symbol>
     
+<symbol id="logo2" viewBox="0 0 240 233"><path d="M81.125 26.8145C94.8387 -8.44671 144.102 -9.07735 158.188 25.7861C162.185 35.6824 164.506 46.7943 168.364 56.8105C179.01 57.6205 190.189 56.2971 200.775 56.9795C237.623 59.3607 253.16 105.133 225.688 129.463L198.372 149.169V149.177L208.576 181.036C217.13 217.302 177.279 245.379 146.09 225.557L119.885 206.562L92.708 226.078C66.6943 242.552 31.5644 223.468 29.8281 193.138C29.0107 178.813 38.2619 163.247 41.0107 149.391L14.6709 130.011C-13.7129 105.996 1.61738 59.342 39.0049 56.9795C49.5535 56.312 60.7284 57.5116 71.3408 56.9229C74.9108 47.1279 77.36 36.4932 81.125 26.8145Z" fill="#F3709C"/>
+<path d="M136.842 131.895L142.758 127.627C148.709 122.357 145.344 112.442 137.362 111.926C135.069 111.779 132.648 112.065 130.342 111.89C129.506 109.72 129.003 107.313 128.137 105.17C125.087 97.6183 114.416 97.7548 111.445 105.392C110.63 107.489 110.099 109.793 109.326 111.914C107.027 112.042 104.607 111.782 102.322 111.926C94.2238 112.438 90.9032 122.543 97.0512 127.745L102.757 131.943C102.161 134.944 100.157 138.316 100.334 141.419C100.71 147.988 108.32 152.122 113.954 148.554L119.841 144.327L125.517 148.441C132.273 152.735 140.905 146.653 139.052 138.798L136.842 131.897V131.895Z" fill="white"/>
+<path d="M77.6322 172.156C78.9674 173.508 81.8698 184.437 82.3974 186.98C83.189 190.754 84.5722 198.125 83.8526 201.595C82.0536 210.286 69.8207 210.206 63.4005 206.768C62.425 205.705 60.3143 190.937 60.1943 188.395C60.0504 185.381 60.3383 173.595 62.6489 172.388C64.9596 171.181 75.8412 170.333 77.6322 172.156Z" fill="white"/>
+<path d="M75.1858 166.152C68.7015 174.011 54.4698 162.458 66.3029 157.661C73.7226 154.654 79.7431 160.627 75.1858 166.152Z" fill="white"/>
+<path d="M183.736 177.267C175.021 178.65 172.319 186.461 170.623 194.137C168.345 204.451 172.103 210.967 157.423 208.193C152.226 207.209 147.677 203.451 147.797 197.759C147.877 194.073 148.964 186.565 149.556 182.671C150.107 179.05 150.675 173.237 153.841 170.966C159.686 166.761 162.596 172.589 168.193 171.75C170.887 171.35 173.478 168.264 176.076 167.592C181.585 166.169 184.639 172.525 183.728 177.267H183.736Z" fill="white"/>
+<path d="M192.553 93.7746C185.533 88.5376 179.928 97.8122 173.796 95.3737C169.342 93.5987 171.973 89.7689 174.531 87.3383C182.686 79.6148 207.048 82.3892 208.567 94.9499C209.007 98.6038 208.367 103.097 208.567 106.951C208.775 111.117 211.246 118.448 208.12 122.518C204.002 127.875 195.655 122.382 191.297 121.822C187.204 121.303 183.542 122.854 179.344 122.582C168.231 121.862 165.416 108.598 174.707 102.689C179.68 99.5312 186.948 99.8031 191.233 96.0293C192.041 95.3177 192.912 95.2537 192.561 93.7746H192.553ZM185.933 105.912C183.446 106.479 180.208 109.493 181.735 112.156C189.083 119.224 196.798 103.449 185.933 105.912Z" fill="white"/>
+<path d="M97.8298 20.5367C100.348 17.8582 108.008 18.21 108.799 22.3516C109.263 24.7982 107.704 32.058 110.958 33.0494C120.073 31.5383 131.634 29.7393 138.71 37.215C145.594 44.4908 142.756 53.5655 142.364 62.2724C142.3 63.6956 143.355 65.2547 143.195 67.0377C142.524 74.5373 129.763 74.2335 124.806 71.9068C115.052 67.3255 125.638 41.9962 114.012 42.0442C99.157 42.1002 116.651 70.9554 103.61 71.555C98.8852 71.7709 97.1902 69.948 96.7904 65.5505C95.855 55.1486 95.9029 35.1362 96.7904 24.7023C96.9023 23.383 96.8943 21.5361 97.8298 20.5447V20.5367Z" fill="white"/>
+<path d="M28.4104 114.807C20.7189 107.115 19.7434 91.3645 29.3219 84.7044C37.2373 79.2036 54.0195 80.227 60.104 88.3103C65.1171 94.9624 60.5198 97.6649 53.6678 95.5461C50.6615 94.6186 47.5033 87.6947 42.874 91.8602C40.8912 93.6512 38.4126 108.091 39.7158 110.306C43.1938 116.214 52.7243 106.852 56.698 106.46C66.1485 105.532 61.4392 114.887 56.5141 118.293C48.8226 123.618 34.8787 121.275 28.4104 114.807Z" fill="white"/></symbol>
+<symbol id="i-spk" viewBox="0 0 24 24"><path d="M12 1c1 6.2 3.6 9.6 11 11-7.4 1.4-10 4.8-11 11-1-6.2-3.6-9.6-11-11 7.4-1.4 10-4.8 11-11Z" fill="currentColor"/></symbol>
 <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
 <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
 <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -299,8 +384,8 @@ body.has-mbar footer{padding-bottom:76px}
 <header id="hdr">
   <div class="wrap">
     <a class="logo" href="#home" aria-label="чари — на главную">
-      <svg class="star" aria-hidden="true"><use href="#logo"/></svg>
-      <svg class="word" viewBox="205 238 432 122" fill="#FBF5EC" aria-hidden="true"><use href="#word" x="205" y="238" width="432" height="122"/></svg>
+      
+      <svg class="word" viewBox="205 238 432 122" fill="currentColor" aria-hidden="true"><use href="#word" x="205" y="238" width="432" height="122"/></svg>
     </a>
     <nav class="main" aria-label="Разделы">
       <a href="#box">Что в конверте</a>
@@ -308,8 +393,8 @@ body.has-mbar footer{padding-bottom:76px}
       <a href="#faq">Вопросы</a>
     </nav>
     <div class="hr">
-      <a class="iconbtn cartbtn" href="#apply" aria-label="Корзина"><svg><use href="#i-bag"/></svg><span class="n" id="cartN"></span></a>
-      <a class="btn btn-pink btn-sm" href="#apply">Оставить заявку</a>
+      <a class="pillbtn ghost" href="#apply">Оставить заявку</a>
+      <a class="pillbtn cartbtn" href="#apply" aria-label="Корзина"><svg><use href="#i-bag"/></svg><span class="n" id="cartN"></span></a>
       <button class="iconbtn burger" id="menuBtn" aria-label="Меню"><svg><use href="#i-menu"/></svg></button>
     </div>
   </div>
@@ -317,27 +402,23 @@ body.has-mbar footer{padding-bottom:76px}
 
 <main>
 <div id="v-home">
-  <section class="hero bg-wine">
-    <div class="wrap">
-      <div>
-        <span class="tag">выпуск №01 · скоро</span>
-        <h1>Почтовый клуб <span class="pk">стикеров</span></h1>
-        <p class="script">письма, а не счета</p>
-        <p class="lead">Раз в месяц — конверт со стикерами и приятными мелочами. Собираем первый выпуск и записываем тех, кто хочет его получить.</p>
-        <div class="cta">
-          <a class="btn btn-pink" href="#box">Что в конверте <svg width="18" height="18"><use href="#i-arr"/></svg></a>
-          <a class="btn btn-ghost" href="#apply">Оставить заявку</a>
-        </div>
-        <div class="facts"><span>без оплаты</span><span>только Беларусь</span><span>+3 стикера первым</span></div>
+  <section class="hero vB">
+    <div class="xrays" aria-hidden="true"></div>
+    <img class="shp bg1" src="img/sh-lime.webp" alt="" aria-hidden="true">
+    <div class="pcard">
+      <div class="msg">
+        <p class="lab">чари · почтовый клуб стикеров</p>
+        <h1>Выдохни. <span>Тебе письмо</span></h1>
+        <p class="t">Раз в месяц — конверт со стикерами и маленькими ритуалами, чтобы отложить телефон и побыть с собой.</p>
+        <div class="cta"><a class="go" href="#apply">Хочу конверт <svg><use href="#i-arr"/></svg></a><a class="ln" href="#box">Что внутри</a></div>
       </div>
-      <div class="set" aria-label="Набор чари">
-        <div class="env" aria-hidden="true"></div>
-        <img class="it a" src="img/sheet2.webp" alt="Лист стикеров">
-        <img class="it b" src="img/poster.webp" alt="Постер A5">
-        <img class="it c" src="img/sudoku.webp" alt="Карточка судоку">
-        <img class="it d" src="img/card21.webp" alt="Карточка «21 день челлендж»">
-        <img class="s1" src="img/boardgame.webp" alt="">
-        <img class="s2" src="img/singer.webp" alt="">
+      <div class="setcol">
+        <div class="pixstar" aria-hidden="true"><i></i></div>
+        <img class="shp burst" src="img/sh-burst.webp" alt="" aria-hidden="true">
+        <img class="shp mint" src="img/sh-mint.webp" alt="" aria-hidden="true">
+        <img class="set" src="img/set-frame.webp" srcset="img/set-frame-800.webp 800w, img/set-frame.webp 1400w" sizes="(max-width:900px) 92vw, 640px" width="1400" height="1482" fetchpriority="high" decoding="async" alt="Набор чари: письмо, лист стикеров, постер «диджитал детокс», судоку, карточка «21 день», стикеры и конверт">
+        <img class="shp lime" src="img/sh-lime.webp" alt="" aria-hidden="true">
+        <img class="shp ast" src="img/sh-ast.webp" alt="" aria-hidden="true">
       </div>
     </div>
   </section>
@@ -462,7 +543,7 @@ body.has-mbar footer{padding-bottom:76px}
 <footer>
   <div class="wrap"><div class="fbig" aria-hidden="true">ЧАРИ</div></div>
   <div class="wrap fwrap">
-    <a class="logo" href="#home" aria-label="чари"><svg class="star"><use href="#logo"/></svg><svg class="word" viewBox="205 238 432 122" fill="#FBF5EC"><use href="#word" x="205" y="238" width="432" height="122"/></svg></a>
+    <a class="logo" href="#home" aria-label="чари"><svg class="word" viewBox="205 238 432 122" fill="#FBF5EC"><use href="#word" x="205" y="238" width="432" height="122"/></svg></a>
     <span>делаем повседневность теплее ♡</span>
     <div class="links"><a class="ig" href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg>@chari.mail_club</a><a href="#faq">Вопросы</a><a href="admin.html">Вход для команды</a></div>
   </div>
@@ -517,7 +598,7 @@ let tt;function toast(html){clearTimeout(tt);$('.toast')?.remove();const t=docum
 let lastFocus=null;
 function closeLayer(){ if(!$('#layer').innerHTML) return; $('#layer').innerHTML=''; document.body.classList.remove('lock'); lastFocus?.focus?.(); }
 $('#menuBtn').addEventListener('click',()=>{ lastFocus=document.activeElement;
-  $('#layer').innerHTML=`<div class="sheet bg-wine" role="dialog" aria-modal="true" aria-label="Меню"><div class="top"><a class="logo" href="#home" data-close><svg class="star"><use href="#logo"/></svg></a><button class="iconbtn" data-close aria-label="Закрыть"><svg><use href="#i-x"/></svg></button></div>
+  $('#layer').innerHTML=`<div class="sheet bg-wine" role="dialog" aria-modal="true" aria-label="Меню"><div class="top"><a class="logo" href="#home" data-close><svg class="word" viewBox="205 238 432 122" fill="currentColor"><use href="#word" x="205" y="238" width="432" height="122"/></svg></a><button class="iconbtn" data-close aria-label="Закрыть"><svg><use href="#i-x"/></svg></button></div>
   <nav><a href="#box" data-close>Что в конверте</a><a href="#catalog" data-close>Каталог</a><a href="#faq" data-close>Вопросы</a><a href="#apply" data-close>Корзина${cart.length?' · '+cart.length:''}</a></nav>
   <div class="bottom"><a class="btn btn-pink btn-block" href="#apply" data-close>Оставить заявку</a><a class="btn btn-ghost btn-block" href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener"><svg width="18" height="18"><use href="#i-ig"/></svg>@chari.mail_club</a></div></div>`;
   document.body.classList.add('lock'); $('#layer .iconbtn').focus(); });
@@ -574,7 +655,7 @@ document.addEventListener('click',e=>{
   if(t.closest('[data-close]')) closeLayer();
 });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLayer(); });
-addEventListener('scroll',()=>{ $('#mbar').classList.toggle('on',route.cur==='home'&&(scrollY>420||cart.length>0)); },{passive:true});
+addEventListener('scroll',()=>{ $('#hdr').classList.toggle('scrolled',scrollY>20||route.cur!=='home'); $('#mbar').classList.toggle('on',route.cur==='home'&&(scrollY>420||cart.length>0)); },{passive:true});
 
 const VIEWS=['home','apply'];
 function route(){
@@ -583,6 +664,7 @@ function route(){
   const anchor=el&&$('#v-home').contains(el)?h:null;
   const v=h==='apply'?'apply':'home';
   route.cur=v; VIEWS.forEach(n=>$('#v-'+n).hidden=n!==v);
+  $('#hdr').classList.toggle('scrolled',scrollY>20||v!=='home');
   document.body.classList.toggle('has-mbar',v==='home');
   $('#mbar').classList.toggle('on',v==='home'&&(scrollY>420||cart.length>0));
   if(v==='apply'){ $('#applyMain').hidden=false; $('#applyDone').hidden=true; }
