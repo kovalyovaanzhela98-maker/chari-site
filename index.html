@@ -644,6 +644,28 @@ footer{background:var(--blue);color:#fff}
   .cm{max-width:94%}.cm .bub{font-size:14px}
 }
 @media (prefers-reduced-motion:reduce){.cm,.typing i{animation:none}}
+
+/* розовый фон чата: еле заметная текстура и пара элементов коллекции */
+.chatsec{position:relative;isolation:isolate;color:var(--ink);background-color:#FAC2DF;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M10 10l8 8M18 10l-8 8' stroke='%23E89BC2' stroke-opacity='.35' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
+.chatsec::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .25 0 0 0 0 .4 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.chatsec .chatw{position:relative;z-index:1}
+.chathead h2{color:var(--ink)}
+.chathead p{color:#4A2B3C}
+.chathead a{color:var(--ink);text-decoration-color:var(--blue);text-decoration-thickness:2px;text-underline-offset:3px}
+.chat{box-shadow:0 30px 60px -30px rgba(140,40,90,.45)}
+.chatdeco{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.chatdeco>*{position:absolute;user-select:none}
+.cd1{width:clamp(56px,6vw,90px);left:5%;top:12%;transform:rotate(-12deg);animation:fl2 7s ease-in-out infinite}
+.cd2{width:clamp(48px,5vw,74px);left:40%;bottom:10%;transform:rotate(14deg);animation:fl2 8s ease-in-out infinite -3s}
+.cd3{width:clamp(70px,8vw,120px);right:3%;top:6%;opacity:.9;transform:rotate(10deg);animation:fl2 9s ease-in-out infinite -5s}
+.cd4{width:26px;left:30%;top:18%;opacity:.9;animation:tw2 3.4s ease-in-out infinite}
+.cd5{width:18px;right:44%;bottom:22%;opacity:.9;animation:tw2 4s ease-in-out infinite -1.5s}
+.cd6{width:clamp(110px,12vw,170px);left:6%;bottom:6%;transform:rotate(-8deg);filter:drop-shadow(0 10px 14px rgba(140,40,90,.25))}
+@keyframes fl2{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@keyframes tw2{0%,100%{scale:.7;opacity:.5}50%{scale:1.15;opacity:1}}
+@media (max-width:900px){.cd6,.cd2,.cd5{display:none}.cd1{left:auto;right:6%;top:3%}.cd3{right:auto;left:auto;right:28%;top:1%;width:54px}.cd4{left:auto;right:30%;top:12%}}
+@media (prefers-reduced-motion:reduce){.chatdeco>*{animation:none}}
 </style></head><body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="logo" viewBox="255 130 335 330">
@@ -774,6 +796,12 @@ footer{background:var(--blue);color:#fff}
   </section>
 
   <section class="sec chatsec" id="faq">
+    <div class="chatdeco" aria-hidden="true">
+      <img class="cd1" src="img/sh-lime.webp" alt=""><img class="cd2" src="img/sh-ast.webp" alt=""><img class="cd3" src="img/sh-mint.webp" alt="">
+      <svg class="cd4" viewBox="0 0 24 24"><path d="M12 1c1 6.2 3.6 9.6 11 11-7.4 1.4-10 4.8-11 11-1-6.2-3.6-9.6-11-11 7.4-1.4 10-4.8 11-11Z" fill="#fff"/></svg>
+      <svg class="cd5" viewBox="0 0 24 24"><path d="M12 1c1 6.2 3.6 9.6 11 11-7.4 1.4-10 4.8-11 11-1-6.2-3.6-9.6-11-11 7.4-1.4 10-4.8 11-11Z" fill="#fff"/></svg>
+      <img class="cd6" src="img/c-wizard.webp" alt="">
+    </div>
     <div class="wrap chatw">
       <div class="chathead">
         <h2>Спроси у чари</h2>
