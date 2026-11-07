@@ -546,6 +546,42 @@ footer{background:var(--blue);color:#fff}
 .pi.big .setimg{max-width:92%;max-height:94%}
 .mim .blob{inset:auto!important;left:-4%!important;top:4%!important;width:108%!important;height:92%!important}
 .mim img{max-width:88%;max-height:92%}
+
+/* подпись большой карточки набора: всё в одной аккуратной плашке */
+.bigfoot{margin-top:18px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;padding-top:18px;border-top:1.5px solid rgba(3,3,3,.1)}
+.bf-l{flex:1 1 260px;min-width:0}
+.bf-k{font-size:12px;font-weight:600;color:#5A6170;letter-spacing:.02em}
+.bf-n{display:block;font-weight:700;font-size:clamp(20px,1.8vw,24px);line-height:1.2;margin-top:4px}
+.bf-d{font-size:14px;line-height:1.45;color:#5A6170;margin-top:6px;max-width:42ch}
+.bf-r{display:grid;justify-items:end;gap:8px;flex:none}
+.bf-p{font-weight:700;font-size:clamp(24px,2.2vw,30px);line-height:1;color:var(--blue)}
+.bf-p small{font-size:14px;font-weight:500;color:#5A6170;margin-left:4px}
+.bf-r .btn{height:44px;padding:0 22px;font-size:15px}
+.bf-s{font-size:12px;color:#5A6170}
+@media (max-width:640px){.bf-r{justify-items:start;width:100%}.bf-r .btn{width:100%}}
+
+/* единая анатомия карточки: картинка → название → описание → цена + кнопка */
+.pi{display:flex;flex-direction:column}
+.pinfo{display:flex;flex-direction:column;flex:1;margin-top:16px}
+.pinfo .pn{font-weight:700;font-size:16px;line-height:1.3;font-family:var(--f);-webkit-line-clamp:1;min-height:1.3em}
+.pinfo .pd{margin-top:6px;font-size:13px;line-height:1.45;color:#5A6170;height:2.9em;-webkit-line-clamp:2}
+.pbuy{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px}
+.pinfo .pp{font-weight:700;font-size:16px;color:var(--ink);font-family:var(--f);white-space:nowrap}
+.pinfo .pp small{font-weight:500;font-size:13px;color:#5A6170}
+.addb{height:40px;padding:0 16px;border-radius:99px;background:var(--blue);color:#fff;font-weight:600;font-size:14px;white-space:nowrap;transition:background .2s}
+.addb:hover{background:#0078D6}
+.addb.on{background:var(--lime2);color:var(--ink)}
+.pi.big .pinfo .pn{font-size:22px}
+.pi.big .pinfo .pd{font-size:14px;height:auto;-webkit-line-clamp:3;max-width:56ch}
+.pi.big .pinfo .pp{font-size:22px}
+.pi.big .addb{height:40px}
+.pi.on .pim::after{display:none}
+@media (max-width:640px){.pbuy{flex-direction:column;align-items:stretch;gap:8px}.addb{width:100%}.pinfo .pd{font-size:12px}}
+
+.pi.big .pinfo{flex:none}
+.pi.big .pim{flex:1 1 auto}
+.pi.big .pinfo .pn,.pi.big .pinfo .pp{font-family:var(--f)!important;font-weight:700!important}
+.pi.big .pinfo .pp small{font-family:var(--f)}
 </style></head><body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="logo" viewBox="255 130 335 330">
@@ -805,15 +841,17 @@ function render(){
   $$('.clubBtn').forEach(e=>e.innerHTML=clubBtn());
   const onC=cart.includes(CLUB.id);
   const big=`<article class="pi big"><div class="pim">${blobSvg(2,TINT['set-frame-800'],'b-big')}<img class="setimg" src="img/set-frame-800.webp" loading="lazy" alt="Набор для отправки"></div>
-    <p class="pd">Конверт раз в месяц: лист стикеров, письмо, постер, судоку, карточка «21 день» и +3 стикера первым. По отдельности — 63 BYN.</p>
-    <div class="prow"><b class="pn">Набор для отправки</b><span class="pp">50 BYN<small> / мес</small></span></div>
-    <div class="pact"><button type="button" class="btn ${onC?'btn-lime':'btn-pink'}" data-add="${CLUB.id}" aria-pressed="${onC}">${onC?'В корзине':'В корзину'}</button><a class="pl" href="#box">что внутри ↑</a></div></article>`;
+    <div class="pinfo">
+      <b class="pn">Набор для отправки</b>
+      <p class="pd">Подписка: каждый месяц лист стикеров, письмо, постер, судоку и карточка «21 день». По отдельности — 63 BYN.</p>
+      <div class="pbuy"><span class="pp">50 BYN<small> / месяц</small></span><button type="button" class="addb ${onC?'on':''}" data-add="${CLUB.id}" aria-pressed="${onC}">${onC?'✓ В корзине':'В корзину'}</button></div>
+    </div></article>`;
   $('#sgrid').innerHTML=big+ST.map((x,i)=>{const on=cart.includes(x.id);return `<article class="pi${on?' on':''}">
     <div class="pim">${blobSvg(i+3,TINT[x.img]||BCOL[i%BCOL.length])}<img loading="lazy" class="${x.kind==='стикер'?'stk':'card'}" src="${IMG(x.img)}" alt="${x.n}">
-      <div class="hov"><button type="button" class="hb" data-open="${x.id}">Открыть</button><button type="button" class="hb add" data-add="${x.id}" aria-pressed="${on}">${on?'✓ В корзине':'В корзину'}</button></div>
-      ${plus(x)}</div>
-    <p class="pd">${x.d}</p>
-    <div class="prow"><b class="pn">${x.n}</b><span class="pp">${x.p} BYN</span></div></article>`}).join('');
+      <div class="hov"><button type="button" class="hb" data-open="${x.id}">Открыть</button></div>
+      </div>
+    <div class="pinfo"><b class="pn">${x.n}</b><p class="pd">${x.d}</p>
+    <div class="pbuy"><span class="pp">${x.p} BYN</span><button type="button" class="addb ${on?'on':''}" data-add="${x.id}" aria-pressed="${on}">${on?'✓ В корзине':'В корзину'}</button></div></div></article>`}).join('');
 }
 function openItem(id){
   const x=ST.find(p=>p.id===id); if(!x) return; lastFocus=document.activeElement; const on=cart.includes(x.id);
