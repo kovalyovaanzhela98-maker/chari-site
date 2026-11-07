@@ -73,12 +73,12 @@ export async function botApi(method, body) {
 export async function ensureClientBot(host) {
   if (!clientBotOn() || !hasStore() || !host) return '';
   const url = `https://${host}/api/tgbot`;
-  const sig = 'v2|' + url + '|' + hookSecret();
+  const sig = 'v3|' + url + '|' + hookSecret();
   const [cur, name] = await redis(['GET', 'cb:hook'], ['GET', 'cb:name']);
   if (cur === sig && name) return name;
   const me = await botApi('getMe');
   const hook = await botApi('setWebhook', { url, secret_token: hookSecret(), allowed_updates: ['message', 'callback_query'], drop_pending_updates: true });
-  await botApi('setMyCommands', { commands: [{ command: 'status', description: 'Мои заказы' }, { command: 'cancel', description: 'Отменить заявку' }] });
+  await botApi('setMyCommands', { commands: [{ command: 'myorders', description: 'Мои заказы' }, { command: 'cancel', description: 'Отменить заявку' }] });
   await botApi('setChatMenuButton', { menu_button: { type: 'commands' } });
   if (!me.ok || !hook.ok) return '';
   await redis(['SET', 'cb:hook', sig], ['SET', 'cb:name', me.result.username]);

@@ -9,9 +9,13 @@ const send = (chat_id, text, extra = {}) => botApi('sendMessage', { chat_id, tex
 
 async function leadOfChat(chat) {
   const [no] = await redis(['GET', `chat:${chat}`]);
-  if (!no) return null;
-  const [cur] = await redis(['HGET', 'leads', String(no)]);
-  return cur ? JSON.parse(cur) : null;
+  if (no) { const [cur] = await redis(['HGET', 'leads', String(no)]); if (cur) return JSON.parse(cur); }
+  // запасной путь: ищем последнюю заявку, к которой этот человек подключал бота
+  const [raw] = await redis(['HGETALL', 'leads']);
+  let best = null;
+  for (let i = 0; i < (raw || []).length; i += 2) { try { const l = JSON.parse(raw[i + 1]); if (String(l.clientChat) === String(chat) && (!best || Number(l.no) > Number(best.no))) best = l; } catch {} }
+  if (best) await redis(['SET', `chat:${chat}`, String(best.no)]);
+  return best;
 }
 function card(lead) {
   const items = (lead.items || []).map((i) => esc(i.n)).join(', ');
@@ -58,7 +62,7 @@ export default async function handler(req, res) {
     const who = m.from?.username ? '@' + m.from.username : (m.from?.first_name || 'без ника');
     const text = String(m.text || '').trim();
     const low = text.toLowerCase().replace(/@\w+$/, '');
-    const isStatus = /^\/(status|orders?|my|zakaz\w*|zayavk\w*|moi\w*)$/.test(low) || /^(мои?|моя)\s+(заказ|заявк)/.test(low);
+    const isStatus = /^\/(status|orders?|myorders?|my_?orders?|my|zakaz\w*|zayavk\w*|moi\w*)$/.test(low) || /^(мои?|моя)\s+(заказ|заявк)/.test(low);
     const isCancel = /^\/(cancel|otmen\w*)$/.test(low) || /^отмен/.test(low);
     const st = text.match(/^\/start(?:\s+([A-Za-z0-9_-]{6,64}))?$/);
 
