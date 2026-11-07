@@ -666,6 +666,33 @@ footer{background:var(--blue);color:#fff}
 @keyframes tw2{0%,100%{scale:.7;opacity:.5}50%{scale:1.15;opacity:1}}
 @media (max-width:900px){.cd6,.cd2,.cd5{display:none}.cd1{left:auto;right:6%;top:3%}.cd3{right:auto;left:auto;right:28%;top:1%;width:54px}.cd4{left:auto;right:30%;top:12%}}
 @media (prefers-reduced-motion:reduce){.chatdeco>*{animation:none}}
+
+/* финальный призыв: лавандовый фон, стикеры вокруг, белая карточка в центре */
+.final2{position:relative;overflow:hidden;isolation:isolate;padding:clamp(110px,14vw,180px) 16px;background-color:#EEE6FB;
+  background-image:radial-gradient(rgba(130,100,200,.16) 1.2px,transparent 1.4px);background-size:22px 22px}
+.final2::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.45;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .55 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.f2stk{position:absolute;inset:0;z-index:1}
+.fsk{position:absolute;width:clamp(78px,8.5vw,128px);height:auto;transform:rotate(var(--r));cursor:grab;touch-action:none;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 8px 12px rgba(80,50,140,.18));transition:filter .2s,scale .2s}
+.fsk:hover{scale:1.06}.fsk:active{cursor:grabbing;filter:drop-shadow(0 16px 20px rgba(80,50,140,.28))}
+.f2card{position:relative;z-index:2;max-width:620px;margin:0 auto;background:#fff;border-radius:32px;padding:clamp(84px,8vw,100px) clamp(24px,4vw,56px) clamp(36px,5vw,56px);text-align:center;box-shadow:0 30px 70px -30px rgba(80,50,140,.4)}
+.f2load{position:absolute;left:50%;top:0;translate:-50% -55%;width:clamp(180px,20vw,230px);rotate:-3deg;filter:drop-shadow(0 8px 12px rgba(80,50,140,.18))}
+.f2card h2{font-size:clamp(38px,4.6vw,62px);line-height:1.02;color:var(--ink)}
+.f2card p{margin:16px auto 0;color:#565C6B;font-size:17px;max-width:40ch}
+.f2perks{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.f2perks li{height:34px;padding:0 14px;border-radius:99px;background:#F3EEFC;color:#5B3FA8;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.f2perks li::before{content:"✓";font-weight:800}
+.f2btn{margin-top:28px;height:58px;padding:0 40px;font-size:17px;background:var(--blue);color:#fff}
+.f2note{display:block;margin-top:12px;font-size:13px;color:#7A8090}
+.f2hint{position:absolute;z-index:2;left:50%;bottom:28px;translate:-50% 0;font-size:13px;font-weight:600;color:#7A62C4;opacity:.8}
+@media (max-width:860px){
+  .final2{padding:150px 16px 170px}
+  .fsk{width:74px}
+  .fsk4,.fsk5,.fsk9,.fsk10,.fsk11,.fsk3{display:none}
+  .fsk0{left:2%!important;top:3%!important}.fsk1{left:auto!important;right:3%!important;top:auto!important;bottom:3%!important}
+  .fsk2{left:auto!important;right:4%!important;top:4%!important}.fsk6{left:3%!important;top:auto!important;bottom:5%!important}
+  .fsk7{left:auto!important;right:24%!important;top:auto!important;bottom:2%!important}.fsk8{left:24%!important;top:auto!important;bottom:1%!important}
+  .f2hint{display:none}
+}
 </style></head><body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="logo" viewBox="255 130 335 330">
@@ -815,15 +842,17 @@ footer{background:var(--blue);color:#fff}
     </div>
   </section>
 
-  <section class="sec bg-wine final">
-    <img class="s1" src="img/puppy-tablet.webp" alt="">
-    <img class="s2" src="img/grumpy-cat.webp" alt="">
-    <img class="fn-star" src="img/sh-lime.webp" alt="" aria-hidden="true">
-    <div class="wrap">
-      <h2>Хочешь <span>первый</span> конверт?</h2>
-      <p>Оставь заявку — напишем, когда откроем запись. Бесплатно и ни к чему не обязывает.</p>
-      <a class="btn btn-pink" href="#apply">Оставить заявку <svg width="18" height="18"><use href="#i-arr"/></svg></a>
+  <section class="final2" id="join">
+    <div class="f2stk" aria-hidden="true"><img class="fsk fsk0" src="img/chill/s01.webp" alt="" draggable="false" style="left:4%;top:10%;--r:-10deg"><img class="fsk fsk1" src="img/chill/s15.webp" alt="" draggable="false" style="left:16%;top:70%;--r:8deg"><img class="fsk fsk2" src="img/chill/s07.webp" alt="" draggable="false" style="left:30%;top:2%;--r:-6deg"><img class="fsk fsk3" src="img/chill/s12.webp" alt="" draggable="false" style="left:2%;top:48%;--r:12deg"><img class="fsk fsk4" src="img/chill/s09.webp" alt="" draggable="false" style="left:82%;top:6%;--r:10deg"><img class="fsk fsk5" src="img/chill/s18.webp" alt="" draggable="false" style="left:86%;top:40%;--r:-12deg"><img class="fsk fsk6" src="img/chill/s16.webp" alt="" draggable="false" style="left:76%;top:70%;--r:6deg"><img class="fsk fsk7" src="img/chill/s08.webp" alt="" draggable="false" style="left:93%;top:76%;--r:-8deg"><img class="fsk fsk8" src="img/chill/s11.webp" alt="" draggable="false" style="left:60%;top:84%;--r:-4deg"><img class="fsk fsk9" src="img/chill/s05.webp" alt="" draggable="false" style="left:28%;top:82%;--r:9deg"><img class="fsk fsk10" src="img/chill/s13.webp" alt="" draggable="false" style="left:76%;top:16%;--r:14deg"><img class="fsk fsk11" src="img/chill/s03.webp" alt="" draggable="false" style="left:58%;top:4%;--r:-10deg"></div>
+    <div class="f2card">
+      <img class="f2load" src="img/chill/s17.webp" alt="" aria-hidden="true">
+      <h2>Займи место в&nbsp;первом выпуске</h2>
+      <p>Конверт со стикерами и маленькими ритуалами — раз в месяц. Оставь заявку, и мы напишем первым.</p>
+      <ul class="f2perks"><li>бесплатно</li><li>без оплаты сейчас</li><li>+3 стикера первым</li></ul>
+      <a class="btn btn-pink f2btn" href="#apply">Оставить заявку</a>
+      <span class="f2note">займёт минуту · можно передумать</span>
     </div>
+    <span class="f2hint" aria-hidden="true">стикеры можно потаскать ✦</span>
   </section>
 </div>
 
@@ -1122,5 +1151,11 @@ if(LIVE){ try{ navigator.sendBeacon('/api/track',new Blob([JSON.stringify({src:s
   asked.add(0); add(`<div class="bub">${esc(FAQ[0][0])}</div>`,'me'); bot(0,FAQ[0][1],true);
   renderChips();
 })();
+
+/* стикеры в финальном блоке можно таскать */
+document.querySelectorAll('.fsk').forEach(el=>{let sx,sy,ox=0,oy=0;
+  el.addEventListener('pointerdown',e=>{el.setPointerCapture(e.pointerId);sx=e.clientX-ox;sy=e.clientY-oy;el.style.zIndex=5;});
+  el.addEventListener('pointermove',e=>{if(!el.hasPointerCapture(e.pointerId))return;ox=e.clientX-sx;oy=e.clientY-sy;el.style.translate=`${ox}px ${oy}px`;});
+  el.addEventListener('pointerup',e=>el.releasePointerCapture(e.pointerId));});
 </script>
 </body></html>
