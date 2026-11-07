@@ -2,7 +2,7 @@
 import { redis, hasStore, telegram, esc, readJson, clientBotOn, hookSecret, botApi, ensureClientBot } from './_lib.js';
 import { cardSig } from './card.js';
 
-const SITE = 'https://chari-site.vercel.app';
+const SITE = 'https://chari.by';
 const IG = 'https://www.instagram.com/chari.mail_club/';
 
 const sceneUrl = (k, no = '') => `${SITE}/api/card?scene=${k}${no ? '&no=' + no : ''}&v=1`;

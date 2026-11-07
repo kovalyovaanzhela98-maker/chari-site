@@ -95,14 +95,14 @@ async function ensurePack(bot, host) {
 export async function ensureClientBot(host) {
   if (!clientBotOn() || !hasStore() || !host) return '';
   const url = `https://${host}/api/tgbot`;
-  const sig = 'v6|' + url + '|' + hookSecret();
+  const sig = 'v7|' + url + '|' + hookSecret();
   const [cur, name, stk] = await redis(['GET', 'cb:hook'], ['GET', 'cb:name'], ['GET', 'cb:stk']);
   if (cur === sig && name) { if (!stk) await ensurePack(name, host).catch((e) => console.error('pack', e.message)); return name; }
   const me = await botApi('getMe');
   const hook = await botApi('setWebhook', { url, secret_token: hookSecret(), allowed_updates: ['message', 'callback_query'], drop_pending_updates: true });
   // меню со слэш-командами не нужно: внизу у клиента постоянные кнопки «Мои заявки» / «Отменить заявку»
   await botApi('deleteMyCommands', {});
-  await botApi('setChatMenuButton', { menu_button: { type: 'web_app', text: 'Сайт', web_app: { url: 'https://chari-site.vercel.app' } } });
+  await botApi('setChatMenuButton', { menu_button: { type: 'web_app', text: 'Сайт', web_app: { url: 'https://chari.by' } } });
   if (!me.ok || !hook.ok) return '';
   await redis(['SET', 'cb:hook', sig], ['SET', 'cb:name', me.result.username]);
   await ensurePack(me.result.username, host).catch((e) => console.error('pack', e.message));
