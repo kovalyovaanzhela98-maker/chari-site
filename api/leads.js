@@ -1,7 +1,7 @@
 // /api/leads — админка: GET список и аналитика, PATCH статус/заметка, DELETE заявка. Нужен ADMIN_PASSWORD.
-import { redis, hasStore, isAdmin, minskDate, readJson, clip, tgConfigured } from './_lib.js';
+import { redis, hasStore, isAdmin, minskDate, readJson, clip, tgConfigured, ensureClientBot } from './_lib.js';
 
-const STATUSES = ['new', 'contacted', 'waiting', 'ordered', 'declined'];
+const STATUSES = ['new', 'contacted', 'waiting', 'confirmed', 'ordered', 'declined'];
 
 export default async function handler(req, res) {
   if (!isAdmin(req)) return res.status(401).json({ error: 'Неверный пароль' });
@@ -9,6 +9,7 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
+      try { await ensureClientBot(String(req.headers['x-forwarded-host'] || req.headers.host || '')); } catch (e) { console.error('clientbot', e.message); }
       const days = [...Array(30)].map((_, i) => minskDate(new Date(Date.now() - (29 - i) * 864e5)));
       const [raw, views, vsrc] = await redis(['HGETALL', 'leads'], ['MGET', ...days.map((d) => `views:${d}`)], ['HGETALL', 'vsrc']);
       const leads = [];

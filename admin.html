@@ -13,7 +13,7 @@
 :root{
   --bg:#FBF8F2; --card:#FFFFFF; --ink:#030303; --ink-2:#6B6760; --line:#ECE6DC; --soft:#F4EFE7;
   --blue:#0090FF; --pink:#FF0088; --pink-d:#D6006F; --aqua:#96FFFB; --lime:#D4FF00; --green:#88D000;
-  --s-new:#FF0088; --s-contacted:#0090FF; --s-waiting:#F2A900; --s-ordered:#5FA800; --s-declined:#A8A29A;
+  --s-new:#FF0088; --s-contacted:#0090FF; --s-waiting:#F2A900; --s-confirmed:#5FA800; --s-declined:#A8A29A;
   --f:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif; --r:20px;
   color-scheme:light;
 }
@@ -102,6 +102,7 @@ button.kpi:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
 .lead .contact{font-size:18px;font-weight:800;overflow-wrap:anywhere}
 .lead .contact a{color:inherit;text-decoration:none}
 .lead .contact a:hover{color:var(--blue)}
+.lead .cxl{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#B0144F;background:#FFE3EE;border-radius:99px;padding:3px 9px;width:max-content}
 .lead .bot{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#0A6B68;background:#D9FFFE;border-radius:99px;padding:3px 9px;width:max-content}
 .lead .info{display:grid;gap:6px;font-size:14px}
 .lead .info .k{color:var(--ink-2)}
@@ -111,14 +112,22 @@ button.kpi:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
 .lead .act .btn{width:100%}
 select.st{width:100%;height:40px;border-radius:12px;border:1.5px solid var(--line);padding:0 34px 0 12px;font-size:14px;font-weight:700;appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23030303' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;cursor:pointer}
 select.st:focus{outline:none;border-color:var(--blue)}
-.lead .foot{grid-column:1/-1;display:flex;gap:10px;align-items:center;border-top:1.5px dashed var(--line);padding-top:12px}
-textarea.note{flex:1;min-height:40px;height:40px;border-radius:12px;border:1.5px solid transparent;background:var(--soft);padding:9px 12px;font-size:14px;resize:vertical}
+.lead .foot{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;border-top:1.5px dashed var(--line);padding-top:12px}
+textarea.note{flex:1;min-height:42px;height:42px;max-height:none;overflow:hidden;border-radius:12px;border:1.5px solid transparent;background:var(--soft);padding:10px 12px;font-size:14px;line-height:1.45;resize:none;field-sizing:content}
 textarea.note:focus{outline:none;border-color:var(--blue);background:#fff}
 .del{flex:none;height:40px;padding:0 12px;border-radius:12px;color:var(--ink-2);font-size:13px;font-weight:700}
 .del:hover{background:#FFE6F2;color:#C0104D}
 .confirm{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:700;flex:none}
 @media (max-width:860px){.lead{grid-template-columns:1fr 1fr}.lead .act{grid-column:1/-1;grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.lead{grid-template-columns:1fr;padding:16px}.lead .act{grid-template-columns:1fr}.lead .foot{flex-wrap:wrap}}
+/* статус: точка + лёгкая заливка */
+select.st{padding-left:32px;background-image:var(--dot),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23030303' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat,no-repeat;background-position:12px center,right 12px center;background-size:10px 10px,12px 8px;border-color:transparent;background-color:var(--tint)}
+select.st[data-s="new"]{--tint:#FFE3F1;--dot:radial-gradient(circle,#FF0088 4.5px,transparent 5px)}
+select.st[data-s="contacted"]{--tint:#E1F1FF;--dot:radial-gradient(circle,#0090FF 4.5px,transparent 5px)}
+select.st[data-s="waiting"]{--tint:#FFF3CF;--dot:radial-gradient(circle,#F2A900 4.5px,transparent 5px)}
+select.st[data-s="confirmed"]{--tint:#E6F6D2;--dot:radial-gradient(circle,#5FA800 4.5px,transparent 5px)}
+select.st[data-s="declined"]{--tint:#EFECE7;--dot:radial-gradient(circle,#A8A29A 4.5px,transparent 5px)}
+select.st:hover{border-color:rgba(3,3,3,.25)}
 .empty{background:var(--card);border-radius:var(--r);padding:32px 20px;text-align:center;color:var(--ink-2);font-size:15px}
 .empty b{display:block;color:var(--ink);font-size:18px;margin-bottom:4px}
 
@@ -212,7 +221,7 @@ textarea.note:focus{outline:none;border-color:var(--blue);background:#fff}
 <script>
 const $=s=>document.querySelector(s);
 const LIVE=location.protocol==='https:'&&!/claude|claudeusercontent|anthropic/.test(location.hostname);
-const ST={new:'Новая',contacted:'Написали',waiting:'Ждёт запуска',ordered:'Оформил',declined:'Отказ'};
+const ST={new:'Новая',contacted:'Написали',waiting:'Ждёт запуска',confirmed:'Подтвердил',declined:'Отказ'};
 const WANT={club:'Подписка',stickers:'Стикеры',gift:'Подарок'};
 const ss={get(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}},del(k){try{sessionStorage.removeItem(k)}catch(e){}}};
 let token=ss.get('chari-admin'), demo=false, DATA=null, tab='new';
@@ -235,13 +244,14 @@ function demoData(){
   const srcs=['instagram.com','instagram.com','прямой заход','t.me','instagram.com','tiktok.com'];
   const ships=['Европочта','Европочта','Белпочта','Пока не знаю'];
   const items=[['club01','Набор для отправки · выпуск №01',50],['k1','Котик с какао',5],['k3','Лягушка-путешественник',5],['o2','Открытка «Тёплое»',8]];
-  const stats=['new','new','new','contacted','waiting','waiting','ordered','declined'];
+  const stats=['new','new','new','contacted','waiting','waiting','confirmed','declined'];
   const leads=[]; let seed=7; const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;
   for(let i=1;i<=24;i++){ const d=new Date(Date.now()-Math.floor(rnd()*20)*864e5-rnd()*864e5); const tg=rnd()>.35;
     leads.push({no:i,created:d.toISOString(),status:stats[Math.floor(rnd()*stats.length)],telegram:tg?'@primer_'+i:'',email:tg?'':'primer'+i+'@mail.ru',
       city:cities[Math.floor(rnd()*cities.length)],delivery:ships[Math.floor(rnd()*ships.length)],want:['club'],
       items:rnd()>.4?[items[0],items[1+Math.floor(rnd()*3)]].map(([id,n,p])=>({id,n,p})):[],source:srcs[Math.floor(rnd()*srcs.length)],note:'',clientChat:rnd()>.6?1:0}); }
   leads.sort((a,b)=>b.no-a.no);
+  Object.assign(leads[1],{status:'declined',clientCancelled:true,clientChat:1,cancelledAt:new Date(Date.now()-3600e3).toISOString()});
   const views={}; for(let i=29;i>=0;i--){ views[day(new Date(Date.now()-i*864e5))]=Math.round(20+rnd()*40+(29-i)); }
   return {leads,views,vsrc:{'instagram.com':620,'прямой заход':210,'t.me':90,'tiktok.com':45},telegram:true};
 }
@@ -249,6 +259,7 @@ function demoData(){
 async function load(){
   try{
     DATA=demo?(DATA||demoData()):await api('GET');
+    DATA.leads.forEach(l=>{ if(l.status==='ordered') l.status='confirmed'; if(!ST[l.status]) l.status='new'; });
     $('#login').hidden=true; $('#app').hidden=false; $('#demoBar').hidden=!demo;
     if(!DATA.leads.some(l=>l.status==='new')&&tab==='new') tab='all';
     render();
@@ -316,7 +327,7 @@ function list(){
       <div class="who">
         <span class="meta">№${esc(l.no)} · ${when(l.created)}</span>
         <span class="contact">${contact}</span>${extra}
-        ${l.clientChat?'<span class="bot">✓ подключил бота</span>':''}
+        ${l.clientCancelled?`<span class="cxl">✖ отменил сам в боте${l.cancelledAt?' · '+when(l.cancelledAt):''}</span>`:l.clientChat?'<span class="bot">✓ подключил бота</span>':''}
       </div>
       <div class="info">
         <div><span class="k">Куда:</span> <b>${esc(l.city)}</b>${l.delivery?' · '+esc(l.delivery):''}</div>
@@ -324,13 +335,14 @@ function list(){
       </div>
       <div class="act">
         ${write}
-        <select class="st" data-st aria-label="Статус заявки №${esc(l.no)}">${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${k===l.status?'selected':''}>${v}</option>`).join('')}</select>
+        <select class="st" data-st data-s="${esc(l.status)}" aria-label="Статус заявки №${esc(l.no)}">${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${k===l.status?'selected':''}>${v}</option>`).join('')}</select>
       </div>
       <div class="foot">
         <textarea class="note" data-note rows="1" placeholder="Заметка для себя: о чём договорились…" aria-label="Заметка к заявке №${esc(l.no)}">${esc(l.note)}</textarea>
         <span class="dz"><button class="del" data-del type="button">Удалить</button></span>
       </div>
     </article>`;}).join('');
+  requestAnimationFrame(growAll);
 }
 
 async function patch(no,body){
@@ -340,7 +352,7 @@ async function patch(no,body){
   try{ await api('PATCH',{no,...body}); render(); toast('Сохранено'); }catch(e){ Object.assign(l,old); render(); toast('Не сохранилось: '+e.message); }
 }
 document.addEventListener('change',e=>{ const a=e.target.closest('[data-no]'); if(!a) return;
-  if(e.target.matches('[data-st]')) patch(a.dataset.no,{status:e.target.value});
+  if(e.target.matches('[data-st]')){ e.target.dataset.s=e.target.value; } if(e.target.matches('[data-st]')) patch(a.dataset.no,{status:e.target.value});
   if(e.target.matches('[data-note]')) patch(a.dataset.no,{note:e.target.value}); });
 document.addEventListener('click',async e=>{
   const t=e.target.closest('[data-tab]'); if(t){ tab=t.dataset.tab; render(); if(t.classList.contains('kpi')) $('#lh').scrollIntoView({behavior:'smooth',block:'start'}); return; }
@@ -352,6 +364,9 @@ document.addEventListener('click',async e=>{
     DATA.leads=DATA.leads.filter(l=>String(l.no)!==String(no)); render(); toast('Заявка удалена'); }
 });
 $('#q').addEventListener('input',list);
+const grow=t=>{ t.style.height='auto'; t.style.height=(t.scrollHeight+3)+'px'; };
+document.addEventListener('input',e=>{ if(e.target.matches('textarea.note')) grow(e.target); });
+const growAll=()=>document.querySelectorAll('textarea.note').forEach(grow);
 $('#refresh').onclick=()=>{ if(demo){ toast('В примере данные не меняются'); return; } load().then(()=>toast('Обновлено')); };
 $('#logout').onclick=()=>{ ss.del('chari-admin'); token=null; demo=false; DATA=null; $('#pass').value=''; showLogin(''); };
 $('#csv').onclick=()=>{
