@@ -27,7 +27,8 @@ export async function telegram(text) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id, text, parse_mode: 'HTML', disable_web_page_preview: true }),
-    }).then((r) => r.ok).catch(() => false)));
+    }).then(async (r) => { if (!r.ok) { const j = await r.json().catch(() => ({})); console.error('telegram_fail', r.status, j.description || ''); } return r.ok; })
+      .catch((e) => { console.error('telegram_net', e.message); return false; })));
   return res.some(Boolean);
 }
 
