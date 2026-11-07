@@ -1,5 +1,6 @@
 // POST /api/lead — принять предзаявку: сохранить и прислать в Telegram.
-import { redis, hasStore, telegram, tgConfigured, esc, clip, readJson } from './_lib.js';
+import crypto from 'node:crypto';
+import { redis, hasStore, telegram, tgConfigured, esc, clip, readJson, clientBotOn, ensureClientBot } from './_lib.js';
 
 const WANT = { club: 'Подписка на выпуски', stickers: 'Стикеры поштучно', gift: 'Подарок другу' };
 const CITIES = ['Минск', 'Витебск', 'Гомель', 'Могилёв', 'Гродно', 'Брест'];
@@ -67,5 +68,14 @@ export default async function handler(req, res) {
   const sent = await telegram(lines.join('\n'));
   if (!sent && !hasStore()) return res.status(500).json({ error: 'Не получилось отправить заявку' });
 
-  return res.status(200).json({ ok: true, no });
+  // Ссылка на бота для клиента: по ней человек получит подтверждение заявки.
+  let bot = '', start = '';
+  if (clientBotOn() && hasStore() && lead.no && String(no) === String(lead.no)) {
+    try {
+      bot = await ensureClientBot(String(req.headers['x-forwarded-host'] || req.headers.host || ''));
+      if (bot) { start = crypto.randomBytes(9).toString('base64url'); await redis(['SET', `start:${start}`, String(no), 'EX', 60 * 86400]); }
+    } catch (e) { console.error('clientbot', e.message); bot = ''; start = ''; }
+  }
+
+  return res.status(200).json({ ok: true, no, bot, start });
 }

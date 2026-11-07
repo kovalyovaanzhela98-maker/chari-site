@@ -55,3 +55,30 @@ export function isAdmin(req) {
 }
 
 export const clip = (v, n) => String(v ?? '').trim().slice(0, n);
+
+// Бот для клиентов: подтверждение заявки человеку в Telegram.
+export const clientBotOn = () => Boolean(process.env.TELEGRAM_CLIENT_BOT_TOKEN);
+export const hookSecret = () => crypto.createHash('sha256').update('chari-hook:' + (process.env.TELEGRAM_CLIENT_BOT_TOKEN || '')).digest('hex').slice(0, 48);
+export async function botApi(method, body) {
+  try {
+    const r = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_CLIENT_BOT_TOKEN}/${method}`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!j.ok) console.error('clientbot_fail', method, j.description || r.status);
+    return j;
+  } catch (e) { console.error('clientbot_net', method, e.message); return { ok: false }; }
+}
+// Подключает вебхук один раз (и после смены адреса/токена) и возвращает ник бота.
+export async function ensureClientBot(host) {
+  if (!clientBotOn() || !hasStore() || !host) return '';
+  const url = `https://${host}/api/tgbot`;
+  const sig = url + '|' + hookSecret();
+  const [cur, name] = await redis(['GET', 'cb:hook'], ['GET', 'cb:name']);
+  if (cur === sig && name) return name;
+  const me = await botApi('getMe');
+  const hook = await botApi('setWebhook', { url, secret_token: hookSecret(), allowed_updates: ['message'], drop_pending_updates: true });
+  if (!me.ok || !hook.ok) return '';
+  await redis(['SET', 'cb:hook', sig], ['SET', 'cb:name', me.result.username]);
+  return me.result.username;
+}
