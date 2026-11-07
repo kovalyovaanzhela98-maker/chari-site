@@ -120,10 +120,11 @@ export default async function handler(req, res) {
       else await send(chat, `Привет! Это чари — почтовый клуб стикеров 💌\nОставить заявку на первый выпуск: ${SITE}\nА пока мы в Instagram: ${IG}`);
       return ok();
     }
-    if (isStatus && hasStore()) { await showOrders(chat, uname); return ok(); }
+    console.log('tgbot_msg', JSON.stringify(low.slice(0, 40)), hasStore());
+    if ((isStatus || low.startsWith('/')) && !isCancel && hasStore()) { await showOrders(chat, uname); return ok(); }
     if (isCancel && hasStore()) { await askCancel(chat, uname); return ok(); }
 
-    await telegram(`💬 Сообщение в боте для клиентов от ${esc(who)}:\n${esc(text || '[не текст]')}`);
+    if (!low.startsWith('/')) await telegram(`💬 Сообщение в боте для клиентов от ${esc(who)}:\n${esc(text || '[не текст]')}`);
     await send(chat, 'Спасибо, сообщение получили 💌 Ответим совсем скоро.\nТвои заявки — по команде /myorders.');
   } catch (e) { console.error('tgbot', e.message); }
   return ok();
