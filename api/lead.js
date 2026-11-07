@@ -54,7 +54,7 @@ export default async function handler(req, res) {
   if (!no) { no = Date.now().toString(36).slice(-5).toUpperCase(); lead.no = no; }
 
   const lines = [
-    `🌸 <b>Новая заявка №${esc(no)}</b>`,
+    `✿ <b>Новая заявка №${esc(no)}</b>`,
     `<b>${esc(lead.name || lead.telegram || lead.email)}</b>`,
     lead.telegram && `Telegram: ${esc(lead.telegram)}`,
     lead.email && `Email: ${esc(lead.email)}`,
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
     `Город: ${esc(lead.city)}${lead.delivery ? ' · ' + esc(lead.delivery) : ''}`,
     lead.want.length && `Интересно: ${lead.want.map((w) => WANT[w]).join(', ')}`,
     lead.items.length && `Корзина: ${lead.items.map((i) => esc(i.n)).join(', ')}`,
-    lead.comment && `💬 ${esc(lead.comment)}`,
+    lead.comment && `✎ ${esc(lead.comment)}`,
     `Источник: ${esc(lead.source)}`,
   ].filter(Boolean);
   const sent = await telegram(lines.join('\n'));

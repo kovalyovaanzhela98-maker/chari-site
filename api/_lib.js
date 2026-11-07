@@ -70,12 +70,34 @@ export async function botApi(method, body) {
   } catch (e) { console.error('clientbot_net', method, e.message); return { ok: false }; }
 }
 // Подключает вебхук один раз (и после смены адреса/токена) и возвращает ник бота.
+// Стикерпак чари: создаётся ботом один раз, владелица — ты (TELEGRAM_CHAT_ID).
+export const STICKERS = [['s16', '😊'], ['s08', '☕'], ['s13', '⏳'], ['s02', '🍅'], ['s06', '✨'], ['s12', '🍵'], ['s05', '🛋'],
+  ['s01', '😎'], ['s03', '🌙'], ['s04', '🔋'], ['s07', '😴'], ['s09', '💤'], ['s10', '💻'], ['s11', '🎵'], ['s14', '📚'], ['s15', '🐌'], ['s17', '⏸'], ['s18', '🙌'],
+  ['c-cat', '🐱'], ['c-wizard', '🧙'], ['c-tree', '🎄']];
+async function ensurePack(bot, host) {
+  const [tried] = await redis(['SET', 'cb:stk_try', '1', 'EX', 600, 'NX']);
+  if (!tried) return;
+  const name = `chari_by_${bot}`;
+  let set = await botApi('getStickerSet', { name });
+  if (!set.ok) {
+    const owner = Number(String(process.env.TELEGRAM_CHAT_ID || '').split(',')[0]);
+    if (!owner) return;
+    const made = await botApi('createNewStickerSet', { user_id: owner, name, title: 'чари · почтовый клуб', sticker_type: 'regular',
+      stickers: STICKERS.map(([f, e]) => ({ sticker: `https://${host}/img/tg/${f}.webp`, format: 'static', emoji_list: [e] })) });
+    if (!made.ok) return;
+    set = await botApi('getStickerSet', { name });
+  }
+  if (!set.ok) return;
+  const map = {};
+  set.result.stickers.forEach((st, i) => { if (STICKERS[i]) map[STICKERS[i][0]] = st.file_id; });
+  await redis(['SET', 'cb:stk', JSON.stringify(map)], ['SET', 'cb:pack', name]);
+}
 export async function ensureClientBot(host) {
   if (!clientBotOn() || !hasStore() || !host) return '';
   const url = `https://${host}/api/tgbot`;
-  const sig = 'v5|' + url + '|' + hookSecret();
-  const [cur, name] = await redis(['GET', 'cb:hook'], ['GET', 'cb:name']);
-  if (cur === sig && name) return name;
+  const sig = 'v6|' + url + '|' + hookSecret();
+  const [cur, name, stk] = await redis(['GET', 'cb:hook'], ['GET', 'cb:name'], ['GET', 'cb:stk']);
+  if (cur === sig && name) { if (!stk) await ensurePack(name, host).catch((e) => console.error('pack', e.message)); return name; }
   const me = await botApi('getMe');
   const hook = await botApi('setWebhook', { url, secret_token: hookSecret(), allowed_updates: ['message', 'callback_query'], drop_pending_updates: true });
   // меню со слэш-командами не нужно: внизу у клиента постоянные кнопки «Мои заявки» / «Отменить заявку»
@@ -83,5 +105,6 @@ export async function ensureClientBot(host) {
   await botApi('setChatMenuButton', { menu_button: { type: 'web_app', text: 'Сайт', web_app: { url: 'https://chari-site.vercel.app' } } });
   if (!me.ok || !hook.ok) return '';
   await redis(['SET', 'cb:hook', sig], ['SET', 'cb:name', me.result.username]);
+  await ensurePack(me.result.username, host).catch((e) => console.error('pack', e.message));
   return me.result.username;
 }
