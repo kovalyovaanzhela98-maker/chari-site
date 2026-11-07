@@ -787,6 +787,10 @@ footer{background:var(--blue);color:#fff}
 .apx-cart .total span:last-child{color:var(--hpd)}
 .apx-cart .hint,.apx-cart .muted{color:rgba(3,3,3,.66)}
 .apx-cart .muted a{color:var(--hpd)}
+.apx-warn{color:#B0144F;font-size:15px}
+.apx .check:has(#consent:not(:checked)) input[aria-invalid],.apx-shake input{outline:2px solid #FF0088;outline-offset:2px}
+.apx-shake{animation:apxSh .4s}
+@keyframes apxSh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 </style></head><body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="logo" viewBox="255 130 335 330">
@@ -1139,12 +1143,16 @@ function validate(){
   return ok;
 }
 ['tg','cityOther'].forEach(id=>$('#'+id).addEventListener('input',()=>{ if($('#'+id).getAttribute('aria-invalid')==='true') validate(); }));
-$('#consent').addEventListener('change',()=>{ if($('#e-consent').textContent) validate(); });
+$('#consent').addEventListener('change',()=>{ if($('#e-consent').textContent) validate(); if($('#consent').checked) $('#sendNote').textContent=''; });
 function src(){ try{ let s=sessionStorage.getItem('chari-src'); if(!s){ const u=new URLSearchParams(location.search).get('utm_source'); const r=document.referrer&&!document.referrer.includes(location.host)?new URL(document.referrer).hostname.replace(/^www\./,''):''; s=u||r||'прямой заход'; sessionStorage.setItem('chari-src',s);} return s; }catch(e){ return 'неизвестно'; } }
 src();
 $('#form').addEventListener('submit',async e=>{
   e.preventDefault();
-  if(!validate()){ const el=$('[aria-invalid="true"]')||$('#consent'); el.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(()=>el.focus({preventScroll:true}),300); return; }
+  if(!validate()){ const el=$('#form [aria-invalid="true"]')||$('#consent'); const f=$('#form [aria-invalid="true"]');
+    $('#sendNote').innerHTML='<b class="apx-warn">'+(f&&f.id==='tg'?'Впиши почту или Telegram — и отправим':f?'Напиши свой город — и отправим':'Отметь галочку согласия выше — и отправим')+'</b>';
+    if(!f){ const c=$('#consent').closest('.check'); c.classList.remove('apx-shake'); void c.offsetWidth; c.classList.add('apx-shake'); }
+    el.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(()=>el.focus({preventScroll:true}),300); return; }
+  $('#sendNote').textContent='';
   const cv=$('#tg').value.trim(), mail=isMail(cv)?cv.toLowerCase():'', tg=mail?'':'@'+tgNorm(cv);
   const hasSt=cart.some(id=>id!==CLUB.id), want=[];
   if(cart.includes(CLUB.id)||!hasSt) want.push('club'); if(hasSt) want.push('stickers');
