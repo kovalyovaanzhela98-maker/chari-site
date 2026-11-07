@@ -34,6 +34,7 @@ function card(l) {
   return lines.join('\n');
 }
 const LINE = '— — — — — — — — —';
+const KB = { keyboard: [[{ text: '📄 Мои заявки' }, { text: '✖️ Отменить заявку' }]], resize_keyboard: true, is_persistent: true };
 function menu() {
   return { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }], [{ text: '✖️ Отменить мою заявку', callback_data: 'cancel' }]] };
 }
@@ -56,10 +57,11 @@ async function askCancel(chat, username, no) {
   const ls = await leadsOf(chat, username);
   const a = active(ls);
   if (!a.length) return send(chat, ls.length ? 'Все твои заявки уже отменены.' : `Не нашли твоих заявок. Оставить можно на сайте: ${SITE}`);
-  if (!no && a.length > 1) return send(chat, 'Какую заявку отменить?', { reply_markup: { inline_keyboard: [...a.slice(0, 6).map((l) => [{ text: `№${l.no} · ${l.city}${(l.items || []).length ? ' · ' + (l.items || []).reduce((t, i) => t + (Number(i.p) || 0), 0) + ' BYN' : ''}`, callback_data: `cancel:${l.no}` }]), [{ text: 'Не отменять', callback_data: 'no' }]] } });
+  if (!no && a.length > 1) return send(chat, ['<b>Какую заявку отменить?</b>', LINE, a.slice(0, 6).map(card).join(`\n${LINE}\n`), LINE, 'Выбери кнопкой ниже 👇'].join('\n'),
+    { reply_markup: { inline_keyboard: [...a.slice(0, 6).map((l) => [{ text: `✖️ Отменить заявку №${l.no}`, callback_data: `cancel:${l.no}` }]), [{ text: 'Не отменять', callback_data: 'no' }]] } });
   const l = a.find((x) => String(x.no) === String(no || a[0].no));
   if (!l) return send(chat, 'Эта заявка уже отменена.');
-  return send(chat, `Точно отменить заявку №${esc(l.no)}? Место в первом выпуске освободится.`,
+  return send(chat, [`<b>Точно отменить эту заявку?</b>`, LINE, card(l), LINE, 'Место в первом выпуске освободится.'].join('\n'),
     { reply_markup: { inline_keyboard: [[{ text: 'Да, отменить', callback_data: `yes:${l.no}` }, { text: 'Нет, оставить', callback_data: 'no' }]] } });
 }
 
@@ -87,7 +89,7 @@ export default async function handler(req, res) {
         l.status = 'declined'; l.clientCancelled = true; l.cancelledAt = new Date().toISOString(); l.updated = l.cancelledAt;
         if (!l.clientChat) { l.clientChat = chat; l.clientTg = uname ? '@' + uname : ''; }
         await redis(['HSET', 'leads', String(l.no), JSON.stringify(l)]);
-        await botApi('editMessageText', { chat_id: chat, message_id: mid, parse_mode: 'HTML', disable_web_page_preview: true, text: `Заявка №${esc(l.no)} отменена. Жаль! Если передумаешь — оставь новую на сайте: ${SITE}` });
+        await botApi('editMessageText', { chat_id: chat, message_id: mid, parse_mode: 'HTML', disable_web_page_preview: true, text: [`<b>Заявка отменена</b>`, LINE, card(l), LINE, `Жаль! Если передумаешь — оставь новую на сайте: ${SITE}`].join('\n') });
         await telegram(`❌ Заявка №${esc(l.no)} отменена клиентом в боте${uname ? ' — @' + esc(uname) : ''}`);
       }
       return ok();
@@ -98,7 +100,7 @@ export default async function handler(req, res) {
     const chat = m.chat.id, uname = m.from?.username || '';
     const who = uname ? '@' + uname : (m.from?.first_name || 'без ника');
     const text = String(m.text || '').trim();
-    const low = text.toLowerCase().replace(/@\w+$/, '');
+    const low = text.toLowerCase().replace(/@\w+$/, '').replace(/^[^\p{L}\/]+/u, '').trim();
     const st = text.match(/^\/start(?:\s+([A-Za-z0-9_-]{6,64}))?$/);
     const isStatus = /^\/(status|orders?|myorders?|my_?orders?|my|zakaz\w*|zayavk\w*|moi\w*|menu)$/.test(low) || /^(мои?|моя)\s+(заказ|заявк)/.test(low);
     const isCancel = /^\/(cancel|otmen\w*)$/.test(low) || /^отмен/.test(low);
@@ -111,7 +113,8 @@ export default async function handler(req, res) {
         const first = !lead.clientChat;
         lead.clientChat = chat; lead.clientTg = uname ? '@' + uname : '';
         await redis(['HSET', 'leads', String(no), JSON.stringify(lead)], ['SADD', 'cb:subs', String(chat)]);
-        await showOrders(chat, uname, `Привет! Это чари 💌\nЗаявка №${esc(no)} принята.\n\n`);
+        await send(chat, 'Привет! Это чари 💌 Кнопки «Мои заявки» и «Отменить заявку» — внизу, под полем ввода.', { reply_markup: KB });
+        await showOrders(chat, uname, `Заявка №${esc(no)} принята.\n\n`);
         if (first) await telegram(`✅ Заявка №${esc(no)}: клиент подключил бота — ${esc(who)}`);
         return ok();
       }
@@ -119,6 +122,7 @@ export default async function handler(req, res) {
     if (st && hasStore()) {
       await redis(['SADD', 'cb:subs', String(chat)]);
       const ls = await leadsOf(chat, uname);
+      await send(chat, 'Привет! Это чари 💌 Кнопки «Мои заявки» и «Отменить заявку» — внизу, под полем ввода.', { reply_markup: KB });
       if (active(ls).length) await showOrders(chat, uname);
       else await send(chat, `Привет! Это чари — почтовый клуб стикеров 💌\nОставить заявку на первый выпуск: ${SITE}\nА пока мы в Instagram: ${IG}`);
       return ok();
@@ -128,7 +132,7 @@ export default async function handler(req, res) {
     if (isCancel && hasStore()) { await askCancel(chat, uname); return ok(); }
 
     if (!low.startsWith('/')) await telegram(`💬 Сообщение в боте для клиентов от ${esc(who)}:\n${esc(text || '[не текст]')}`);
-    await send(chat, 'Спасибо, сообщение получили 💌 Ответим совсем скоро.\nТвои заявки — по команде /myorders.');
+    await send(chat, 'Спасибо, сообщение получили 💌 Ответим совсем скоро.', { reply_markup: KB });
   } catch (e) { console.error('tgbot', e.message); }
   return ok();
 }
