@@ -21,34 +21,42 @@ async function leadsOf(chat, username) {
   }
   return out.sort((a, b) => Number(b.no) - Number(a.no));
 }
+const dt = (iso) => new Intl.DateTimeFormat('ru-RU', { timeZone: 'Europe/Minsk', day: 'numeric', month: 'long' }).format(new Date(iso));
+const plural = (n, a, b, c) => { const m = n % 10, h = n % 100; return m === 1 && h !== 11 ? a : m >= 2 && m <= 4 && (h < 10 || h >= 20) ? b : c; };
 function card(l) {
-  const items = (l.items || []).map((i) => esc(i.n)).join(', ');
-  return [
-    `<b>Заявка №${esc(l.no)}</b>${cancelled(l) ? ' — отменена' : ''}`,
-    `Город: ${esc(l.city)}${l.delivery ? ' · ' + esc(l.delivery) : ''}`,
-    items ? `В корзине: ${items}` : 'Корзина пустая — место в первом выпуске',
-  ].join('\n');
+  const items = l.items || [];
+  const lines = [`<b>Заявка №${esc(l.no)}</b> · ${dt(l.created)}`, `📍 ${esc(l.city)}${l.delivery ? ' · ' + esc(l.delivery) : ''}`];
+  if (items.length) {
+    lines.push('🛒 В корзине:');
+    items.forEach((i) => lines.push(`   • ${esc(i.n)} — ${Number(i.p) || 0} BYN${String(i.id).startsWith('club') ? ' в месяц' : ''}`));
+    lines.push(`<b>Итого ≈ ${items.reduce((t, i) => t + (Number(i.p) || 0), 0)} BYN</b>`);
+  } else lines.push('🛒 Корзина пустая — место в первом выпуске');
+  return lines.join('\n');
 }
-function menu(ls) {
-  const rows = [[{ text: '📄 Мои заказы', callback_data: 'status' }]];
-  const a = active(ls);
-  if (a.length === 1) rows.push([{ text: '✖️ Отменить заявку', callback_data: `cancel:${a[0].no}` }]);
-  else a.slice(0, 6).forEach((l) => rows.push([{ text: `✖️ Отменить заявку №${l.no}`, callback_data: `cancel:${l.no}` }]));
-  return { inline_keyboard: rows };
+const LINE = '— — — — — — — — —';
+function menu() {
+  return { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }], [{ text: '✖️ Отменить мою заявку', callback_data: 'cancel' }]] };
 }
-async function showOrders(chat, username) {
+async function showOrders(chat, username, hello = '') {
   const ls = await leadsOf(chat, username);
-  if (!ls.length) return send(chat, `Пока не нашли твоих заявок. Оставить заявку можно на сайте: ${SITE}`);
-  const a = active(ls);
-  const head = a.length ? (a.length === 1 ? 'Твоя заявка 💌' : `Твои заявки — ${a.length} 💌`) : 'Все твои заявки отменены.';
-  const tail = a.length ? 'Всё в силе. Напишем сюда, когда откроем запись.' : `Передумаешь — оставь новую на сайте: ${SITE}`;
-  return send(chat, [head, '', ls.slice(0, 8).map(card).join('\n\n'), '', tail].join('\n'), a.length ? { reply_markup: menu(ls) } : {});
+  if (!ls.length) return send(chat, `${hello}Пока не нашли твоих заявок. Оставить заявку можно на сайте 👇`, { reply_markup: { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }]] } });
+  const a = active(ls), off = ls.filter(cancelled);
+  if (!a.length) return send(chat, `${hello}Все твои заявки отменены (${off.map((l) => '№' + esc(l.no)).join(', ')}).\nПередумаешь — оставь новую на сайте 👇`, { reply_markup: { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }]] } });
+  const parts = [
+    `${hello}📮 <b>${a.length === 1 ? 'У тебя 1 заявка' : `У тебя ${a.length} ${plural(a.length, 'заявка', 'заявки', 'заявок')}`}</b> на первый выпуск`,
+    LINE,
+    a.slice(0, 6).map(card).join(`\n${LINE}\n`),
+    LINE,
+    off.length ? `Отменённые: ${off.map((l) => '№' + esc(l.no)).join(', ')}` : null,
+    'Оплата — только после запуска. Напишем сюда, когда откроем запись 💌',
+  ].filter(Boolean);
+  return send(chat, parts.join('\n'), { reply_markup: menu() });
 }
 async function askCancel(chat, username, no) {
   const ls = await leadsOf(chat, username);
   const a = active(ls);
   if (!a.length) return send(chat, ls.length ? 'Все твои заявки уже отменены.' : `Не нашли твоих заявок. Оставить можно на сайте: ${SITE}`);
-  if (!no && a.length > 1) return send(chat, 'Какую заявку отменить?', { reply_markup: { inline_keyboard: a.slice(0, 6).map((l) => [{ text: `№${l.no} · ${l.city}`, callback_data: `cancel:${l.no}` }]) } });
+  if (!no && a.length > 1) return send(chat, 'Какую заявку отменить?', { reply_markup: { inline_keyboard: [...a.slice(0, 6).map((l) => [{ text: `№${l.no} · ${l.city}${(l.items || []).length ? ' · ' + (l.items || []).reduce((t, i) => t + (Number(i.p) || 0), 0) + ' BYN' : ''}`, callback_data: `cancel:${l.no}` }]), [{ text: 'Не отменять', callback_data: 'no' }]] } });
   const l = a.find((x) => String(x.no) === String(no || a[0].no));
   if (!l) return send(chat, 'Эта заявка уже отменена.');
   return send(chat, `Точно отменить заявку №${esc(l.no)}? Место в первом выпуске освободится.`,
@@ -69,7 +77,7 @@ export default async function handler(req, res) {
       await botApi('answerCallbackQuery', { callback_query_id: cq.id });
       if (act === 'status') await showOrders(chat, uname);
       else if (act === 'cancel') await askCancel(chat, uname, arg);
-      else if (act === 'no') await botApi('editMessageText', { chat_id: chat, message_id: mid, text: 'Отлично, заявка в силе 💌' });
+      else if (act === 'no') await botApi('editMessageText', { chat_id: chat, message_id: mid, text: 'Отлично, всё в силе 💌' });
       else if (act === 'yes') {
         const l = (await leadsOf(chat, uname)).find((x) => String(x.no) === String(arg));
         if (!l || cancelled(l)) { await botApi('editMessageText', { chat_id: chat, message_id: mid, text: 'Эта заявка уже отменена.' }); return ok(); }
@@ -100,8 +108,7 @@ export default async function handler(req, res) {
         const first = !lead.clientChat;
         lead.clientChat = chat; lead.clientTg = uname ? '@' + uname : '';
         await redis(['HSET', 'leads', String(no), JSON.stringify(lead)], ['SADD', 'cb:subs', String(chat)]);
-        const all = await leadsOf(chat, uname);
-        await send(chat, `Привет! Это чари 💌\n${card(lead)}\n\nЗаявка принята. Напишем сюда, когда откроем запись. Оплата — только после запуска.`, { reply_markup: menu(all) });
+        await showOrders(chat, uname, `Привет! Это чари 💌\nЗаявка №${esc(no)} принята.\n\n`);
         if (first) await telegram(`✅ Заявка №${esc(no)}: клиент подключил бота — ${esc(who)}`);
         return ok();
       }
