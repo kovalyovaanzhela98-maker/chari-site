@@ -279,15 +279,15 @@ function render(){
 }
 function rows(){
   const q=$('#q').value.trim().toLowerCase(), fs=$('#fStatus').value, fc=$('#fCity').value;
-  const list=DATA.leads.filter(l=>(!fs||l.status===fs)&&(!fc||l.city===fc)&&(!q||[l.name,l.telegram,l.phone,l.comment].join(' ').toLowerCase().includes(q)));
+  const list=DATA.leads.filter(l=>(!fs||l.status===fs)&&(!fc||l.city===fc)&&(!q||[l.name,l.telegram,l.email,l.phone,l.comment].join(' ').toLowerCase().includes(q)));
   $('#cnt').textContent=`· ${list.length}`;
   $('#rows').innerHTML=list.length?list.map(l=>{
-    const d=new Date(l.created); const tg=l.telegram?`<a href="https://t.me/${esc(l.telegram.slice(1))}" target="_blank" rel="noopener">${esc(l.telegram)}</a>`:''; const ph=l.phone?`<a href="tel:${esc(l.phone.replace(/[^\d+]/g,''))}">${esc(l.phone)}</a>`:'';
+    const d=new Date(l.created); const tg=l.telegram?`<a href="https://t.me/${esc(l.telegram.slice(1))}" target="_blank" rel="noopener">${esc(l.telegram)}</a>`:''; const em=l.email?`<a href="mailto:${esc(l.email)}">${esc(l.email)}</a>`:''; const ph=l.phone?`<a href="tel:${esc(l.phone.replace(/[^\d+]/g,''))}">${esc(l.phone)}</a>`:'';
     return `<tr data-no="${esc(l.no)}">
       <td class="no">№${esc(l.no)}</td>
       <td class="full"><span>${d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})}</span><span class="sub">${d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})}</span></td>
-      <td class="full"><b>${esc(l.name)}</b><span class="sub">${esc(l.source)}</span></td>
-      <td class="full">${tg}${tg&&ph?'<br>':''}${ph}</td>
+      <td class="full"><b>${esc(l.name||l.telegram||l.email||'—')}</b><span class="sub">${esc(l.source)}</span></td>
+      <td class="full">${[tg,em,ph].filter(Boolean).join('<br>')}</td>
       <td class="full">${esc(l.city)}<span class="sub">${esc(l.delivery)}</span></td>
       <td class="full"><div class="tags">${(l.want||[]).map(w=>`<span>${WANT[w]||esc(w)}</span>`).join('')}${(l.items||[]).map(i=>`<span>♥ ${esc(i.n)}</span>`).join('')}</div></td>
       <td class="full cmt">${esc(l.comment)||'—'}</td>
@@ -319,9 +319,9 @@ document.addEventListener('click',async e=>{
 $('#refresh').onclick=()=>{ if(demo){ toast('В демо данные не меняются'); return; } load(); };
 $('#logout').onclick=()=>{ ss.del('chari-admin'); token=null; demo=false; DATA=null; showLogin(''); };
 $('#csv').onclick=()=>{
-  const head=['№','Дата','Имя','Telegram','Телефон','Город','Доставка','Интерес','Корзина','Комментарий','Источник','Статус','Заметка'];
+  const head=['№','Дата','Имя','Telegram','Email','Телефон','Город','Доставка','Интерес','Корзина','Комментарий','Источник','Статус','Заметка'];
   const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
-  const lines=[head.map(q).join(';')].concat(DATA.leads.map(l=>[l.no,new Date(l.created).toLocaleString('ru-RU'),l.name,l.telegram,l.phone,l.city,l.delivery,(l.want||[]).map(w=>WANT[w]).join(', '),(l.items||[]).map(i=>i.n).join(', '),l.comment,l.source,ST[l.status],l.note].map(q).join(';')));
+  const lines=[head.map(q).join(';')].concat(DATA.leads.map(l=>[l.no,new Date(l.created).toLocaleString('ru-RU'),l.name,l.telegram,l.email||'',l.phone,l.city,l.delivery,(l.want||[]).map(w=>WANT[w]).join(', '),(l.items||[]).map(i=>i.n).join(', '),l.comment,l.source,ST[l.status],l.note].map(q).join(';')));
   const url=URL.createObjectURL(new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'}));
   const a=document.createElement('a'); a.href=url; a.download=`chari-zayavki-${day(new Date())}.csv`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
 };

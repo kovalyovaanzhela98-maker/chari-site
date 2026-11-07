@@ -12,19 +12,20 @@ export default async function handler(req, res) {
   if (b.website) return res.status(200).json({ ok: true, no: '—' }); // ловушка для ботов
 
   const name = clip(b.name, 60);
-  let telegramNick = clip(b.telegram, 40).replace(/^@?/, '@');
+  let telegramNick = clip(b.telegram, 60).replace(/^(https?:\/\/)?(www\.)?(t\.me|telegram\.me)\//i, '').replace(/^@?/, '@');
   if (telegramNick === '@') telegramNick = '';
   const phone = clip(b.phone, 22);
   const digits = phone.replace(/\D/g, '');
-  if (name.length < 2) return res.status(400).json({ error: 'Укажи имя' });
-  if (!telegramNick && !digits) return res.status(400).json({ error: 'Укажи Telegram или телефон' });
+  const email = clip(b.email, 80).toLowerCase();
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return res.status(400).json({ error: 'Проверь почту' });
+  if (!telegramNick && !digits && !email) return res.status(400).json({ error: 'Оставь почту или Telegram' });
   if (telegramNick && !/^@[A-Za-z0-9_]{4,32}$/.test(telegramNick)) return res.status(400).json({ error: 'Проверь ник в Telegram' });
   if (digits && !/^(375\d{9}|80\d{9})$/.test(digits)) return res.status(400).json({ error: 'Нужен белорусский номер телефона' });
 
   const lead = {
     created: new Date().toISOString(),
     status: 'new',
-    name, telegram: telegramNick, phone,
+    name, telegram: telegramNick, email, phone,
     city: clip(b.city, 40) || 'не указан',
     cityKnown: CITIES.includes(clip(b.city, 40)),
     delivery: clip(b.delivery, 30),
@@ -53,8 +54,9 @@ export default async function handler(req, res) {
 
   const lines = [
     `🌸 <b>Новая заявка №${esc(no)}</b>`,
-    `<b>${esc(lead.name)}</b>`,
+    `<b>${esc(lead.name || lead.telegram || lead.email)}</b>`,
     lead.telegram && `Telegram: ${esc(lead.telegram)}`,
+    lead.email && `Email: ${esc(lead.email)}`,
     lead.phone && `Телефон: ${esc(lead.phone)}`,
     `Город: ${esc(lead.city)}${lead.delivery ? ' · ' + esc(lead.delivery) : ''}`,
     lead.want.length && `Интересно: ${lead.want.map((w) => WANT[w]).join(', ')}`,
