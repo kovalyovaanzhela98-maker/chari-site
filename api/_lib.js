@@ -73,14 +73,14 @@ export async function botApi(method, body) {
 export async function ensureClientBot(host) {
   if (!clientBotOn() || !hasStore() || !host) return '';
   const url = `https://${host}/api/tgbot`;
-  const sig = 'v4|' + url + '|' + hookSecret();
+  const sig = 'v5|' + url + '|' + hookSecret();
   const [cur, name] = await redis(['GET', 'cb:hook'], ['GET', 'cb:name']);
   if (cur === sig && name) return name;
   const me = await botApi('getMe');
   const hook = await botApi('setWebhook', { url, secret_token: hookSecret(), allowed_updates: ['message', 'callback_query'], drop_pending_updates: true });
   // меню со слэш-командами не нужно: внизу у клиента постоянные кнопки «Мои заявки» / «Отменить заявку»
   await botApi('deleteMyCommands', {});
-  await botApi('setChatMenuButton', { menu_button: { type: 'default' } });
+  await botApi('setChatMenuButton', { menu_button: { type: 'web_app', text: 'Сайт', web_app: { url: 'https://chari-site.vercel.app' } } });
   if (!me.ok || !hook.ok) return '';
   await redis(['SET', 'cb:hook', sig], ['SET', 'cb:name', me.result.username]);
   return me.result.username;
