@@ -1,5 +1,5 @@
 // POST /api/tgbot — вебхук бота для клиентов: подтверждение заявки, «Мои заказы», отмена.
-import { redis, hasStore, telegram, esc, readJson, clientBotOn, hookSecret, botApi } from './_lib.js';
+import { redis, hasStore, telegram, esc, readJson, clientBotOn, hookSecret, botApi, ensureClientBot } from './_lib.js';
 
 const SITE = 'https://chari-site.vercel.app';
 const IG = 'https://www.instagram.com/chari.mail_club/';
@@ -68,6 +68,9 @@ export default async function handler(req, res) {
   if (req.headers['x-telegram-bot-api-secret-token'] !== hookSecret()) return res.status(401).json({ error: 'forbidden' });
   const u = await readJson(req);
   const ok = () => res.status(200).json({ ok: true });
+  // держим вебхук актуальным (кнопки, меню) — один быстрый запрос, если всё уже настроено
+  try { await ensureClientBot(String(req.headers['x-forwarded-host'] || req.headers.host || '')); } catch (e) { console.error('ensure', e.message); }
+  console.log('tgbot_in', u.callback_query ? 'cb:' + u.callback_query.data : 'msg');
 
   try {
     const cq = u.callback_query;
