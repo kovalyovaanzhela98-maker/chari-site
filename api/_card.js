@@ -106,3 +106,29 @@ export async function renderCard(lead) {
   fonts.push({ name: 'Leotaro', data: await asset('leotaro.ttf'), weight: 400, style: 'normal' });
   return new ImageResponse(el, { width: 1080, height: 1080, fonts });
 }
+
+// Настроечные картинки для сообщений без заявки: отмена, «всё в силе», пусто, привет, спасибо.
+const SCENES = {
+  bye: { bg: BLUSH, st: ['c-grumpy', 'c-blur'], kick: 'ЗАЯВКА ОТМЕНЕНА', title: 'Грусть-печаль', text: 'Будем скучать. Захочешь вернуться — оставь новую заявку на сайте.' },
+  stay: { bg: LIME, st: ['c-cat', 'c-wizard'], kick: 'ВСЁ В СИЛЕ', title: 'Ура, остаёмся!', text: 'Заявка на месте. Напишем, когда откроем запись.' },
+  empty: { bg: AQUA, st: ['c-mush', 'c-tree'], kick: 'ЗАЯВОК ПОКА НЕТ', title: 'Тут пустовато', text: 'Оставь заявку на сайте — и она появится здесь.' },
+  hello: { bg: BLUSH, st: ['c-wizard', 'c-cat'], kick: 'ПОЧТОВЫЙ КЛУБ СТИКЕРОВ', title: 'Привет! Это чари', text: 'Здесь твои заявки и новости о первом выпуске.' },
+  thanks: { bg: AQUA, st: ['c-dog', 'c-good'], kick: 'СООБЩЕНИЕ ПОЛУЧЕНО', title: 'Спасибо!', text: 'Прочитаем и ответим совсем скоро.' },
+};
+export async function renderScene(kind, no) {
+  const sc = SCENES[kind] || SCENES.hello;
+  const kick = no && kind === 'bye' ? `ЗАЯВКА №${no} ОТМЕНЕНА` : sc.kick;
+  const el = h('div', { width: 1080, height: 720, background: sc.bg, fontFamily: 'Manrope', color: INK, position: 'relative', overflow: 'hidden' },
+    h('div', { position: 'absolute', left: 64, top: 0, bottom: 0, width: 520, flexDirection: 'column', justifyContent: 'center' },
+      h('div', { alignItems: 'center', gap: 14 }, img(await pic('star'), { width: 56, height: 56 }), h('span', { fontFamily: 'Leotaro', fontSize: 44 }, 'чари')),
+      h('span', { marginTop: 40, fontSize: 24, fontWeight: 800, letterSpacing: 3 }, kick),
+      h('span', { marginTop: 10, fontFamily: 'Leotaro', fontSize: 88, lineHeight: 1.02 }, sc.title),
+      h('span', { marginTop: 26, fontSize: 32, fontWeight: 600, lineHeight: 1.35, maxWidth: 500 }, sc.text),
+      h('span', { marginTop: 34, background: '#fff', borderRadius: 99, padding: '12px 24px', fontSize: 24, fontWeight: 800, alignSelf: 'flex-start' }, 'chari.by')),
+    h('div', { position: 'absolute', right: 50, top: 50, width: 310, height: 310, transform: 'rotate(8deg)' }, img(await pic(sc.st[0]), { width: '100%', height: '100%', objectFit: 'contain' })),
+    h('div', { position: 'absolute', right: 270, bottom: 40, width: 250, height: 250, transform: 'rotate(-9deg)' }, img(await pic(sc.st[1]), { width: '100%', height: '100%', objectFit: 'contain' })));
+  const fonts = [];
+  for (const w of [600, 800]) fonts.push({ name: 'Manrope', data: await asset(`manrope-${w}.ttf`), weight: w, style: 'normal' });
+  fonts.push({ name: 'Leotaro', data: await asset('leotaro.ttf'), weight: 400, style: 'normal' });
+  return new ImageResponse(el, { width: 1080, height: 720, fonts });
+}

@@ -5,6 +5,14 @@ import { cardSig } from './card.js';
 const SITE = 'https://chari-site.vercel.app';
 const IG = 'https://www.instagram.com/chari.mail_club/';
 
+const sceneUrl = (k, no = '') => `${SITE}/api/card?scene=${k}${no ? '&no=' + no : ''}&v=1`;
+const cardUrl = (l) => `${SITE}/api/card?no=${l.no}&s=${cardSig(l.no)}&v=${encodeURIComponent(l.updated || l.created || '')}`;
+// картинка с подписью; если Telegram не принял картинку — отправляем текстом
+async function photo(chat_id, url, caption, extra = {}) {
+  const r = await botApi('sendPhoto', { chat_id, photo: url, caption, parse_mode: 'HTML', ...extra });
+  if (!r.ok) return send(chat_id, caption, extra);
+  return r;
+}
 const send = (chat_id, text, extra = {}) => botApi('sendMessage', { chat_id, text, parse_mode: 'HTML', disable_web_page_preview: true, ...extra });
 const cancelled = (l) => l.status === 'declined';
 const active = (ls) => ls.filter((l) => !cancelled(l));
@@ -41,15 +49,14 @@ function menu() {
 }
 async function showOrders(chat, username, hello = '') {
   const ls = await leadsOf(chat, username);
-  if (!ls.length) return send(chat, `${hello}Пока не нашли твоих заявок. Оставить заявку можно на сайте 👇`, { reply_markup: { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }]] } });
+  if (!ls.length) return photo(chat, sceneUrl('empty'), `${hello}Пока не нашли твоих заявок. Оставить заявку можно на сайте 👇`, { reply_markup: { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }]] } });
   const a = active(ls), off = ls.filter(cancelled);
-  if (!a.length) return send(chat, `${hello}Все твои заявки отменены (${off.map((l) => '№' + esc(l.no)).join(', ')}).\nПередумаешь — оставь новую на сайте 👇`, { reply_markup: { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }]] } });
+  if (!a.length) return photo(chat, sceneUrl('empty'), `${hello}Все твои заявки отменены (${off.map((l) => '№' + esc(l.no)).join(', ')}).\nПередумаешь — оставь новую на сайте 👇`, { reply_markup: { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }]] } });
   // Каждая заявка — картинкой; под последней — итог и кнопки.
   const list = a.slice(0, 5);
   const total = (l) => (l.items || []).reduce((t, i) => t + (Number(i.p) || 0), 0);
   for (let i = 0; i < list.length; i++) {
     const l = list[i], last = i === list.length - 1;
-    const photo = `${SITE}/api/card?no=${l.no}&s=${cardSig(l.no)}&v=${encodeURIComponent(l.updated || l.created || '')}`;
     const cap = last ? [
       `${hello}📮 <b>${a.length === 1 ? 'Твоя заявка' : `У тебя ${a.length} ${plural(a.length, 'заявка', 'заявки', 'заявок')}`}</b> на первый выпуск`,
       a.length > 1 ? 'Отменить можно любую — кнопкой под её картинкой.' : null,
@@ -58,7 +65,7 @@ async function showOrders(chat, username, hello = '') {
     ].filter(Boolean).join('\n') : `Заявка №${esc(l.no)}${(l.items || []).length ? ' · ' + total(l) + ' BYN' : ''}`;
     const kb = [[{ text: a.length > 1 ? `✖️ Отменить заявку №${l.no}` : '✖️ Отменить заявку', callback_data: `cancel:${l.no}` }]];
     if (last) kb.unshift([{ text: '🌐 Перейти на сайт', url: SITE }]);
-    const r = await botApi('sendPhoto', { chat_id: chat, photo, caption: cap, parse_mode: 'HTML', reply_markup: { inline_keyboard: kb } });
+    const r = await botApi('sendPhoto', { chat_id: chat, photo: cardUrl(l), caption: cap, parse_mode: 'HTML', reply_markup: { inline_keyboard: kb } });
     if (!r.ok) { // запасной вариант — текстом
       return send(chat, [`${hello}📮 <b>Твои заявки</b>`, LINE, a.slice(0, 6).map(card).join(`\n${LINE}\n`), LINE, 'Оплата — только после запуска 💌'].join('\n'), { reply_markup: menu() });
     }
@@ -72,7 +79,7 @@ async function askCancel(chat, username, no) {
     { reply_markup: { inline_keyboard: [...a.slice(0, 6).map((l) => [{ text: `✖️ Отменить заявку №${l.no}`, callback_data: `cancel:${l.no}` }]), [{ text: 'Не отменять', callback_data: 'no' }]] } });
   const l = a.find((x) => String(x.no) === String(no || a[0].no));
   if (!l) return send(chat, 'Эта заявка уже отменена.');
-  return send(chat, [`<b>Точно отменить эту заявку?</b>`, LINE, card(l), LINE, 'Место в первом выпуске освободится.'].join('\n'),
+  return photo(chat, cardUrl(l), `<b>Точно отменить заявку №${esc(l.no)}?</b>\nМесто в первом выпуске освободится.`,
     { reply_markup: { inline_keyboard: [[{ text: 'Да, отменить', callback_data: `yes:${l.no}` }, { text: 'Нет, оставить', callback_data: 'no' }]] } });
 }
 
@@ -93,14 +100,19 @@ export default async function handler(req, res) {
       await botApi('answerCallbackQuery', { callback_query_id: cq.id });
       if (act === 'status') await showOrders(chat, uname);
       else if (act === 'cancel') await askCancel(chat, uname, arg);
-      else if (act === 'no') await botApi('editMessageText', { chat_id: chat, message_id: mid, text: 'Отлично, всё в силе 💌' });
+      else if (act === 'no') {
+        const e = await botApi('editMessageMedia', { chat_id: chat, message_id: mid, media: { type: 'photo', media: sceneUrl('stay'), caption: 'Отлично, всё в силе 💌' } });
+        if (!e.ok) await botApi('editMessageText', { chat_id: chat, message_id: mid, text: 'Отлично, всё в силе 💌' });
+      }
       else if (act === 'yes') {
         const l = (await leadsOf(chat, uname)).find((x) => String(x.no) === String(arg));
         if (!l || cancelled(l)) { await botApi('editMessageText', { chat_id: chat, message_id: mid, text: 'Эта заявка уже отменена.' }); return ok(); }
         l.status = 'declined'; l.clientCancelled = true; l.cancelledAt = new Date().toISOString(); l.updated = l.cancelledAt;
         if (!l.clientChat) { l.clientChat = chat; l.clientTg = uname ? '@' + uname : ''; }
         await redis(['HSET', 'leads', String(l.no), JSON.stringify(l)]);
-        await botApi('editMessageText', { chat_id: chat, message_id: mid, parse_mode: 'HTML', disable_web_page_preview: true, text: [`<b>Заявка отменена</b>`, LINE, card(l), LINE, `Жаль! Если передумаешь — оставь новую на сайте: ${SITE}`].join('\n') });
+        const cap = `<b>Заявка №${esc(l.no)} отменена</b>\nГрустим, но всегда ждём обратно 💌`;
+        const e = await botApi('editMessageMedia', { chat_id: chat, message_id: mid, media: { type: 'photo', media: sceneUrl('bye', l.no), caption: cap, parse_mode: 'HTML' }, reply_markup: { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }]] } });
+        if (!e.ok) await photo(chat, sceneUrl('bye', l.no), cap, { reply_markup: { inline_keyboard: [[{ text: '🌐 Перейти на сайт', url: SITE }]] } });
         await telegram(`❌ Заявка №${esc(l.no)} отменена клиентом в боте${uname ? ' — @' + esc(uname) : ''}`);
       }
       return ok();
@@ -124,7 +136,7 @@ export default async function handler(req, res) {
         const first = !lead.clientChat;
         lead.clientChat = chat; lead.clientTg = uname ? '@' + uname : '';
         await redis(['HSET', 'leads', String(no), JSON.stringify(lead)], ['SADD', 'cb:subs', String(chat)]);
-        await send(chat, 'Привет! Это чари 💌', { reply_markup: KB });
+        await photo(chat, sceneUrl('hello'), 'Привет! Это чари 💌 Твои заявки — по кнопке «Мои заявки» внизу.', { reply_markup: KB });
         await showOrders(chat, uname, `Заявка №${esc(no)} принята.\n\n`);
         if (first) await telegram(`✅ Заявка №${esc(no)}: клиент подключил бота — ${esc(who)}`);
         return ok();
@@ -133,7 +145,7 @@ export default async function handler(req, res) {
     if (st && hasStore()) {
       await redis(['SADD', 'cb:subs', String(chat)]);
       const ls = await leadsOf(chat, uname);
-      await send(chat, 'Привет! Это чари 💌', { reply_markup: KB });
+      await photo(chat, sceneUrl('hello'), 'Привет! Это чари 💌 Твои заявки — по кнопке «Мои заявки» внизу.', { reply_markup: KB });
       if (active(ls).length) await showOrders(chat, uname);
       else await send(chat, `Привет! Это чари — почтовый клуб стикеров 💌\nОставить заявку на первый выпуск: ${SITE}\nА пока мы в Instagram: ${IG}`);
       return ok();
@@ -143,7 +155,7 @@ export default async function handler(req, res) {
     if (isCancel && hasStore()) { await askCancel(chat, uname); return ok(); }
 
     if (!low.startsWith('/')) await telegram(`💬 Сообщение в боте для клиентов от ${esc(who)}:\n${esc(text || '[не текст]')}`);
-    await send(chat, 'Спасибо, сообщение получили 💌 Ответим совсем скоро.', { reply_markup: KB });
+    await photo(chat, sceneUrl('thanks'), 'Спасибо, сообщение получили 💌 Ответим совсем скоро.', { reply_markup: KB });
   } catch (e) { console.error('tgbot', e.message); }
   return ok();
 }
