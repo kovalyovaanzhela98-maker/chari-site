@@ -1,5 +1,7 @@
 // POST /api/lead — принять предзаявку: сохранить и прислать в Telegram.
 import crypto from 'node:crypto';
+import {orderItems} from './_catalog.js';
+import {accountSession} from './account.js';
 import { redis, hasStore, telegram, tgConfigured, esc, clip, readJson, clientBotOn, ensureClientBot } from './_lib.js';
 
 const WANT = { club: 'Подписка на выпуски', stickers: 'Стикеры поштучно', gift: 'Подарок другу' };
@@ -17,7 +19,8 @@ export default async function handler(req, res) {
   if (telegramNick === '@') telegramNick = '';
   const phone = clip(b.phone, 22);
   const digits = phone.replace(/\D/g, '');
-  const email = clip(b.email, 80).toLowerCase();
+  const account=await accountSession(req).catch(()=>null);
+  const email = account?.email || clip(b.email, 80).toLowerCase();
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return res.status(400).json({ error: 'Проверь почту' });
   if (!telegramNick && !digits && !email) return res.status(400).json({ error: 'Оставь почту или Telegram' });
   if (telegramNick && !/^@[A-Za-z0-9_]{4,32}$/.test(telegramNick)) return res.status(400).json({ error: 'Проверь ник в Telegram' });
@@ -28,10 +31,11 @@ export default async function handler(req, res) {
     status: 'new',
     name, telegram: telegramNick, email, phone,
     city: clip(b.city, 40) || 'не указан',
+    country: clip(b.country,60) || 'Беларусь',
     cityKnown: CITIES.includes(clip(b.city, 40)),
     delivery: clip(b.delivery, 30),
     want: (Array.isArray(b.want) ? b.want : []).filter((w) => WANT[w]).slice(0, 3),
-    items: (Array.isArray(b.items) ? b.items : []).slice(0, 30).map((i) => ({ id: clip(i.id, 10), n: clip(i.n, 60), p: Number(i.p) || 0 })),
+    items: orderItems(b.items),
     comment: clip(b.comment, 500),
     source: clip(b.source, 60) || 'неизвестно',
     note: '',
@@ -59,6 +63,7 @@ export default async function handler(req, res) {
     lead.telegram && `Telegram: ${esc(lead.telegram)}`,
     lead.email && `Email: ${esc(lead.email)}`,
     lead.phone && `Телефон: ${esc(lead.phone)}`,
+    `Страна: ${esc(lead.country)}`,
     `Город: ${esc(lead.city)}${lead.delivery ? ' · ' + esc(lead.delivery) : ''}`,
     lead.want.length && `Интересно: ${lead.want.map((w) => WANT[w]).join(', ')}`,
     lead.items.length && `Корзина: ${lead.items.map((i) => esc(i.n)).join(', ')}`,
