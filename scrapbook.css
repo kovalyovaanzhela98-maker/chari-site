@@ -1,0 +1,143 @@
+/* Quiet paper palette, based on the supplied chari artwork. */
+:root{--blue:#65794d;--lime2:#dce4c6;--hot:#743e3b;--mint:#b2bc95;--pink:#c38a8d;--blush:#ebd3d0;--blush-2:#f2e5df;--ink:#30352c;--wine:#60343c;--cream:#faf5e9;--cream2:#faf5e9;--stone:#eee9df;--aqua:#8599a7;--slate:#64695f}
+body{background:var(--cream2)}
+:focus-visible{outline-color:#60343c}
+.scrapbook-hero{background:#f5f0e5;color:var(--ink);min-height:min(850px,100svh)}
+.scrapbook-hero h1{color:var(--wine);font-size:clamp(52px,6.2vw,100px)}
+.scrapbook-hero h1 span{color:#6a704b}
+.scrapbook-hero .msg .t{color:#64695f;max-width:38ch}
+.scrapbook-hero .msg .go{background:var(--wine);color:var(--cream)}
+.scrapbook-hero .msg .ln{color:var(--wine);border-color:#a2a78f}
+.scrapbook-hero .msg .go:hover{background:#774951;color:#fff}
+.scrapbook-hero .shp,.scrapbook-hero .xrays,.scrapbook-hero .pixstar{display:none}
+.scrapbook-hero .setcol{isolation:isolate}
+.scrapbook-hero .setcol::before{content:"";position:absolute;inset:8% 0 3%;background:#b4bf9c;z-index:-1;transform:rotate(-4deg);clip-path:polygon(1% 2%,24% 0,52% 2%,79% 0,100% 3%,98% 36%,100% 68%,98% 100%,70% 98%,40% 100%,0 97%,2% 59%)}
+.scrapbook-hero .set{animation:none;filter:drop-shadow(0 15px 20px #3d43262b);transform:rotate(1deg)}
+.hero-tape{position:absolute;width:33%;top:2%;left:34%;z-index:4;transform:rotate(6deg)}
+.hero-butterfly{position:absolute;width:15%;top:7%;right:0;z-index:4;transform:rotate(18deg)}
+.hero-note{position:absolute;bottom:1%;left:3%;z-index:4;font-family:var(--script);font-size:clamp(20px,2.3vw,32px);line-height:1.05;color:var(--wine);background:#fff9ed;padding:14px 22px;transform:rotate(-5deg);box-shadow:0 5px 12px #343d2020}
+.scrap-eyebrow{display:inline-block;font-family:var(--f);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#6a704b;padding-bottom:12px;border-bottom:1px solid #b6bba3}
+#hdr{color:var(--wine)}
+#hdr.scrolled{background:#faf5e9f5;color:var(--wine);border-bottom:1px solid #dedccd;backdrop-filter:blur(14px)}
+.pillbtn,.pillbtn.ghost{color:var(--wine);border-color:#b7b9a5}
+.pillbtn .n{background:#dce4c6;color:var(--ink)}
+.band{background:#dde3ce;padding:9px 0;border-block:1px solid #a1a88c55}
+.band .tr{animation:none;justify-content:center}.band b{font-family:var(--f);font-size:13px;letter-spacing:.04em}.band i{color:#7c8766;font-size:18px}
+.tag{background:#e5dcc7;color:#62694b;font-family:var(--f);font-size:12px;border-radius:2px}
+.inbox .coupon{position:relative;background:#67704d;color:#faf5e9;border-radius:5px;box-shadow:0 18px 35px #40452818}
+.inbox .coupon::before,.f2card::before{content:"";position:absolute;left:32%;top:-22px;width:38%;height:50px;background:url('img/scrap-tape.webp') center/contain no-repeat;transform:rotate(-5deg);pointer-events:none}
+.coupon .pr,.coupon .pr small,.coupon .note{color:#faf5e9}
+.coupon .tag{background:#dce4c6;color:#3b452f}
+.coupon .cut{border-color:#e0dcc080}
+.inbox .coupon li.g,.inbox .coupon li::before{color:#e9dec1}
+.btn-pink,.addb,.hb,.apx-send{background:var(--wine);color:#fff9ed}
+.btn-pink:hover,.addb:hover,.hb:hover,.apx-send:hover{background:#774951;color:#fff}
+.btn-lime,.addb.on{background:#dce4c6;color:#38422d}
+#catalog{background:#fffcf5}
+#sgrid.sgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px 24px;align-items:stretch}
+#sgrid .pi{min-width:0;height:100%;padding:14px;border:1px solid #dedecd;border-radius:5px;background:#f6f3e9}
+#sgrid .pi.big{grid-column:auto;grid-row:auto;align-self:stretch}
+#sgrid .pi .pim,#sgrid .pi.big .pim{flex:none;min-height:0;aspect-ratio:1;width:100%}
+#sgrid .pi .pinfo,#sgrid .pi.big .pinfo{flex:1;margin-top:16px}
+#sgrid .pinfo .pn,#sgrid .pi.big .pinfo .pn{font-size:15px;line-height:1.35;min-height:2.7em;height:2.7em;-webkit-line-clamp:2}
+#sgrid .pinfo .pd,#sgrid .pi.big .pinfo .pd{font-size:12px;line-height:1.5;height:4.5em;-webkit-line-clamp:3;margin-bottom:10px}
+#sgrid .pinfo .pp,#sgrid .pi.big .pinfo .pp{font-size:16px}
+#sgrid .pp small{display:block;font-size:11px}
+#sgrid .addb{font-size:12px;padding:0 12px}
+#sgrid .blob{opacity:.55}
+#sgrid .subscription-card{position:relative;background:#dce4c6;border-color:#89966c;box-shadow:0 8px 20px #39482612}
+#sgrid .subscription-card .pim{margin-top:0}
+.subscription-label{position:absolute;z-index:2;top:10px;left:10px;right:10px;font-family:var(--f);text-transform:uppercase;font-size:10px;letter-spacing:.06em;text-align:center;padding:6px 3px;background:#65744c;color:#fff}
+#sgrid .subscription-card .setimg{margin-top:20px;max-height:80%}
+#sgrid .subscription-card .addb{background:#60343c}
+.chatsec{background:#dde2d1;background-image:none}
+.chathead h2{color:var(--wine)}
+.chathead p{color:#555f4c}
+.chatdeco .cd1,.chatdeco .cd2,.chatdeco .cd3,.chatdeco .cd4,.chatdeco .cd5{display:none}
+.chatdeco .cd6{width:110px;bottom:6%;opacity:.85}
+.chat{border:1px solid #c3c9b5;border-radius:8px;box-shadow:0 20px 40px #323d2420;height:660px;max-height:85svh;min-height:480px}
+.chattop{background:#fffcf5}.chattop span{color:#687250;font-size:11px}
+.chatlog{background:#f6f3e9;min-height:160px;scroll-behavior:auto}
+.cm .bub{white-space:pre-line}
+.cm.me .bub{background:#66744f}
+.cm.bot .bub{background:#fffcf5;box-shadow:inset 0 0 0 1px #e6e4d9}
+.chips{padding:10px 12px;gap:6px;max-height:110px;overflow:auto}
+.chip{height:auto;min-height:32px;font-size:11px;padding:7px 10px;white-space:normal;box-shadow:inset 0 0 0 1px #aab398;color:#4e5d3b}
+.chat-compose{display:flex;gap:8px;padding:12px;background:#fffcf5;border-top:1px solid #e1e4d7}
+.chat-compose input{flex:1;min-width:0;width:100%;border:1px solid #aeb69e;border-radius:4px;background:#fff;padding:12px;font:inherit;font-size:16px;color:var(--ink)}
+.chat-compose button{width:44px;flex:none;border-radius:4px;background:var(--wine);color:#fff;font-size:24px}
+.chat-compose button:disabled{opacity:.5}
+.chat-help{font-size:10px;padding:0 12px 12px;color:#626b58;background:#fffcf5}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.final2{background:#e4d9d1;background-image:none}
+.f2card{border-radius:3px;background:#fffcf3;box-shadow:0 16px 38px #4b42341c}
+.f2card h2{color:var(--wine)}
+.f2perks li{background:#e7ebda;color:#556340}
+.f2btn{height:auto;min-height:56px;padding:15px 24px}
+.f2hint{color:#6a704b}
+.f2load{content:url('img/scrap-bow.webp');width:140px;top:-26px}
+.f2stk .fsk:nth-child(n+5){display:none}
+footer{background:#65704d;color:#faf5e9}
+.fbig{color:#ebe5d2}
+.mbar{background:#faf5e9;color:#3d4733;border-color:#a4ae8c}
+.sheet.bg-wine{background:#65704d;background-image:none;color:#faf5e9}
+.sheet .btn-ghost{color:#faf5e9}
+.scrap-loader{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#dbe0ce;background-image:radial-gradient(ellipse at 15% 10%,#f5f0df 0,transparent 55%),radial-gradient(ellipse at 85% 90%,#c2cbaa 0,transparent 60%);color:var(--wine);pointer-events:none;transition:opacity .4s,visibility .4s;animation:loader-failsafe .4s 3s forwards}
+.scrap-loader.loaded{opacity:0;visibility:hidden}
+.loader-brand{position:absolute;top:max(32px,env(safe-area-inset-top));font-family:var(--f);letter-spacing:.14em;font-size:11px;text-transform:uppercase;color:#677052}
+.loader-copy{text-align:center;padding:28px}
+.loader-copy p{font-family:'Santa Catarina',serif;font-size:clamp(46px,7vw,96px);font-weight:400;line-height:1.1}
+.loader-copy>span{display:block;min-height:2em;margin-top:18px;font-size:clamp(15px,2vw,22px);color:#677052}
+.loader-percent{font-family:var(--f);font-size:24px;margin-top:28px;font-variant-numeric:tabular-nums}
+.loader-caption{position:absolute;bottom:36px;font-family:var(--f);font-size:10px;letter-spacing:.08em;color:#677052}
+@keyframes loader-failsafe{to{opacity:0;visibility:hidden}}
+@media(max-width:980px){#sgrid.sgrid{gap:28px 14px}#sgrid .pbuy{flex-direction:column;align-items:stretch}#sgrid .pp small{display:inline}#sgrid .addb{width:100%}.scrapbook-hero{min-height:auto}}
+@media(max-width:700px){#sgrid.sgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px}#sgrid .pi{padding:10px}#sgrid .pinfo .pn,#sgrid .pi.big .pinfo .pn{font-size:13px}#sgrid .pinfo .pd,#sgrid .pi.big .pinfo .pd{font-size:11px}.subscription-label{font-size:8px;padding:5px 1px;left:5px;right:5px}.hero-note{font-size:21px;bottom:0}.scrapbook-hero .setcol{margin-top:24px}.chat{height:610px;max-height:88svh}.chips{flex-wrap:wrap;-webkit-mask:none;max-height:88px}.cm .ava{width:32px;height:32px}.cm .bub{font-size:13px;padding:10px 12px}.chatlog{padding:12px}.chat-help{font-size:10px}.f2card{padding-top:70px}.f2btn{font-size:14px;max-width:100%}.f2load{width:110px}.scrap-eyebrow{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.scrap-loader{display:none}}
+/* Header controls and email account share the same paper language. */
+#hdr .pillbtn.ghost{color:var(--wine);border:1px solid #b1b69e;background:transparent}
+#hdr .pillbtn.cartbtn{color:var(--wine);background:#ecebdc}
+.currency-control select{font:600 12px var(--f);border:1px solid #b1b69e;background:#faf5e9;color:var(--wine);border-radius:99px;padding:9px 7px;max-width:78px;cursor:pointer}
+.account-link{font-size:13px;font-weight:600;text-decoration:none;color:var(--wine)}
+.currency-note{font-size:12px;color:#636d56;margin:-12px 0 24px;min-height:20px}
+.account-view{background:#f1eee2;min-height:90svh;padding:64px 0 96px}
+.account-wrap{max-width:1120px}.account-wrap h1{font-size:clamp(42px,6vw,78px);color:var(--wine);margin-top:20px}
+.account-intro{margin:20px 0}.account-message{padding:12px 0;min-height:48px;max-width:70ch;font-size:14px;color:#60343c}
+.account-paper{background:#fffaf0;border:1px solid #d3d6bf;border-radius:4px;padding:clamp(22px,3vw,36px);box-shadow:0 12px 24px #4045280a}
+#accountLogin{max-width:500px;position:relative}#accountLogin::before{content:"";position:absolute;right:20px;top:-20px;width:110px;height:40px;background:url('img/scrap-tape.webp') center/contain no-repeat;rotate:8deg}
+.account-paper h2{font-size:32px;color:var(--wine)}.account-paper p{font-size:14px;color:#626b58;margin-top:14px}.account-paper form{display:grid;gap:12px;margin:22px 0}
+.account-paper label{font-size:13px;font-weight:600}.account-paper input,.country-field input{width:100%;border:1px solid #afb89c;border-radius:4px;padding:12px;background:#fffdf8;font:inherit;color:var(--ink)}
+.account-paper .btn{height:auto;min-height:46px;font-size:14px;padding:12px 20px}
+.account-paper button:disabled{opacity:.5;cursor:default}
+.account-secondary{font:600 12px var(--f);text-decoration:underline;text-underline-offset:3px;color:#626b58;display:inline-block;padding:8px 0}
+.account-toolbar{display:flex;gap:20px;align-items:center;justify-content:space-between;margin-bottom:24px;font-size:14px;overflow-wrap:anywhere}
+.account-columns{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px}
+.account-order{padding:20px 0;border-block-end:1px solid #d9ddc9;font-size:13px}
+.account-order>div{display:flex;gap:12px;justify-content:space-between;align-items:center}.account-order>div span{font-size:11px;color:#526344;background:#e5ead9;padding:5px 8px;border-radius:3px}
+.account-order small{display:block;color:#6c7362;margin-top:6px}.account-order ul{padding-left:18px;margin-bottom:0}.account-empty{padding:20px 0}
+.country-field{display:grid;gap:10px}.country-field>label{font-size:14px;font-weight:600}
+@media(max-width:900px){.account-columns{grid-template-columns:1fr}.account-view{padding:36px 0 60px}#hdr .hr{gap:9px}#hdr .pillbtn.ghost{display:none}.account-link{font-size:12px}.currency-control select{font-size:11px;padding:8px 5px}#hdr .cartbtn{padding-inline:10px}.account-order>div{align-items:flex-start;flex-direction:column;gap:6px}}
+#hdr .iconbtn{color:var(--wine);background:#ecebdc;border-color:#b1b69e}
+#faq,#catalog,#box{scroll-margin-top:90px}
+.chat-active #mbar{display:none}
+
+/* Brand fonts: Santa Catarina / Geist Mono / TT2020 Style E only. */
+@font-face{font-family:'Santa Catarina';src:url('fonts/santa-catarina.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Geist Mono';src:url('fonts/geist-mono.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'TT2020 Style E';src:url('fonts/tt2020-style-e.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+:root{--disp:'Santa Catarina',serif;--f:'Geist Mono',monospace;--script:'TT2020 Style E',monospace}
+h1,h2,h3,.hero h1,.loader-copy p{font-family:var(--disp);font-weight:400;font-style:normal;text-transform:none;letter-spacing:0;line-height:1.08}
+body,button,input,select,textarea{font-family:var(--f)}
+.btn,.pillbtn,.tag,.sheet nav a{font-family:var(--f);font-style:normal;text-transform:none}
+.hero-note,.scrap-eyebrow,.loader-brand,.loader-caption{font-family:var(--script)}
+.scrapbook-hero h1{font-size:clamp(60px,6.8vw,112px);line-height:1.03}
+.scrapbook-hero h1 span{white-space:normal}
+.scrapbook-hero .msg .t{font-size:15px;line-height:1.6}
+.hero-note{font-size:clamp(15px,1.8vw,23px);line-height:1.25}
+.loader-copy p{font-size:clamp(60px,8vw,112px)}
+#sgrid .pinfo .pn,#sgrid .pi.big .pinfo .pn{font-size:13px;min-height:2.9em;height:2.9em}
+#sgrid .pinfo .pd,#sgrid .pi.big .pinfo .pd{font-size:11px}
+#sgrid .addb{font-size:11px;padding-inline:10px}
+.chathead p{font-size:15px}.cm .bub{font-size:13px}
+@media(max-width:700px){.scrapbook-hero h1{font-size:64px}.scrapbook-hero .msg .t{font-size:13px}#sgrid .pinfo .pn,#sgrid .pi.big .pinfo .pn{font-size:12px}#sgrid .pinfo .pd,#sgrid .pi.big .pinfo .pd{font-size:10px}#sgrid .addb{font-size:10px;padding-inline:6px}.account-link{font-size:11px}}
+#sgrid .subscription-card .addb.on{background:#f6f3e9;color:#38422d}

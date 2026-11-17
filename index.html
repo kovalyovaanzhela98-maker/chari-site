@@ -1,26 +1,20 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="чари — почтовый клуб стикеров. Конверт со стикерами и маленькими ритуалами раз в месяц по Беларуси."><meta property="og:title" content="чари — почтовый клуб стикеров"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png"><link rel="apple-touch-icon" href="/img/apple-touch-icon.png"><title>чари — почтовый клуб стикеров</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preload" as="image" href="img/set-frame.webp" imagesrcset="img/set-frame-800.webp 800w, img/set-frame.webp 1400w" imagesizes="(max-width:900px) 92vw, 640px" fetchpriority="high">
-<link rel="preload" as="font" href="fonts/leotaro.woff2" type="font/woff2" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,800;1,900&family=Manrope:wght@400;500;600;700&family=Onest:wght@400;500;600;700&family=Marck+Script&display=swap">
+
 <title>чари — почтовый клуб стикеров</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preload" as="image" href="img/set-frame.webp" imagesrcset="img/set-frame-800.webp 800w, img/set-frame.webp 1400w" imagesizes="(max-width:900px) 92vw, 640px" fetchpriority="high">
-<link rel="preload" as="font" href="fonts/leotaro.woff2" type="font/woff2" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,800;1,900&family=Manrope:wght@400;500;600;700&family=Onest:wght@400;500;600;700&family=Marck+Script&display=swap">
+
 <style>
 /* Стиль набора: винный лист с крестиком и лучами, зелёный конверт, постер с повторяющейся прописью, карточка с красной штриховкой, жирный курсив.
    Цвета — розовый чари и комплементарные к нему: винный, тёмно-зелёный; бренд-аква для прописи, лайм — точечно. */
 :root{
   --pink:#F3709C; --blush:#FAC2DF; --blush-2:#FDE6F0; --aqua:#8CEDF6; --lime:#9DC502; --slate:#657187; --ink:#030303;
   --wine:#3D0B1F; --wine-2:#55142D; --forest:#21423A; --forest-2:#2D5A4C; --stone:#ECE9E4; --cream:#FBF5EC; --card:#FFFFFF;
-  --f:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --disp:'Exo 2','Arial Black',system-ui,sans-serif;
-  --script:'Marck Script','Brush Script MT',cursive;
+  --f:'Geist Mono',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --disp:'Santa Catarina',serif;
+  --script:'TT2020 Style E',monospace;
   --gut:max(20px,env(safe-area-inset-left,0px)); --gutr:max(20px,env(safe-area-inset-right,0px));
   --cross:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M7 7l8 8M15 7l-8 8' stroke='%23FAC2DF' stroke-opacity='.13' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");
   color-scheme:light;
@@ -99,17 +93,17 @@ header.scrolled .pillbtn.ghost{background:transparent;color:var(--ink)}
 .sheet .bottom{margin-top:auto;display:grid;gap:12px}
 
 /* HERO: оборот почтовой открытки. Leotaro — главный, Manrope — второстепенный. тихо, воздушно */
-@font-face{font-family:'Leotaro';src:url(fonts/leotaro.woff2) format('woff2');font-display:swap}
-header{color:var(--ink);font-family:'Manrope',var(--f)}
-header .pillbtn{font-family:'Manrope',var(--f)}
+
+header{color:var(--ink);font-family:'Geist Mono',var(--f)}
+header .pillbtn{font-family:'Geist Mono',var(--f)}
 .pillbtn{background:var(--ink);color:#fff}
-.hero{--paper:#F8F2E9;overflow:hidden;--ln:rgba(61,11,31,.22);position:relative;min-height:max(100svh,700px);background:var(--paper);color:var(--wine);font-family:'Manrope',var(--f);isolation:isolate;overflow:hidden}
+.hero{--paper:#F8F2E9;overflow:hidden;--ln:rgba(61,11,31,.22);position:relative;min-height:max(100svh,700px);background:var(--paper);color:var(--wine);font-family:'Geist Mono',var(--f);isolation:isolate;overflow:hidden}
 .hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.55;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .35 0 0 0 0 .3 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .pcard{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;min-height:inherit;padding:calc(110px + env(safe-area-inset-top,0px)) clamp(20px,5vw,80px) clamp(40px,7vh,72px)}
 
 .msg{padding-right:clamp(24px,5vw,80px);display:flex;flex-direction:column;justify-content:center}
 .lab{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--wine);opacity:.65}
-.hero h1{font-family:'Leotaro',serif;font-weight:400;font-style:normal;text-transform:none;letter-spacing:-.01em;line-height:.98;font-size:clamp(50px,6.3vw,112px);margin-top:22px;color:var(--wine)}
+.hero h1{font-family:'Santa Catarina',serif;font-weight:400;font-style:normal;text-transform:none;letter-spacing:-.01em;line-height:.98;font-size:clamp(50px,6.3vw,112px);margin-top:22px;color:var(--wine)}
 .hero h1 span{display:block;color:var(--pink);white-space:nowrap}
 .msg .t{margin-top:26px;font-size:clamp(16px,1.3vw,19px);line-height:1.6;color:#4A3540;max-width:38ch}
 .msg .cta{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:34px}
@@ -349,9 +343,9 @@ body.has-mbar footer{padding-bottom:76px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 /* ===== вся страница в стиле hero: голубой, лайм, розовый; Leotaro + Manrope ===== */
-:root{--blue:#0090FF;--lime2:#D4FF00;--hot:#FF0A8C;--mint:#B4F8C8;--cream2:#FBF8F2;--disp:'Leotaro',serif;--f:'Manrope',system-ui,sans-serif}
+:root{--blue:#0090FF;--lime2:#D4FF00;--hot:#FF0A8C;--mint:#B4F8C8;--cream2:#FBF8F2;--disp:'Santa Catarina',serif;--f:'Geist Mono',system-ui,sans-serif}
 body{background:var(--cream2);font-family:var(--f)}
-h1,h2,h3{font-family:'Leotaro',serif;font-style:normal;font-weight:400;text-transform:none;letter-spacing:-.01em;line-height:1}
+h1,h2,h3{font-family:'Santa Catarina',serif;font-style:normal;font-weight:400;text-transform:none;letter-spacing:-.01em;line-height:1}
 .btn{font-family:var(--f);font-style:normal;font-weight:600;text-transform:none;letter-spacing:0}
 .btn-pink{background:var(--blue);color:#fff}
 .btn-pink:hover{background:#0078D6}
@@ -360,7 +354,7 @@ h1,h2,h3{font-family:'Leotaro',serif;font-style:normal;font-weight:400;text-tran
 .muted{color:#5A6170}
 /* бегущая строка */
 .band{background:var(--lime2);padding:14px 0}
-.band b{font-family:'Leotaro',serif;font-size:clamp(34px,4vw,54px);color:var(--ink);-webkit-text-stroke:0}
+.band b{font-family:'Santa Catarina',serif;font-size:clamp(34px,4vw,54px);color:var(--ink);-webkit-text-stroke:0}
 .band i{color:var(--blue);font-size:28px;font-weight:700}
 /* что в конверте */
 .bg-stone{background:var(--cream2)}
@@ -376,7 +370,7 @@ h1,h2,h3{font-family:'Leotaro',serif;font-style:normal;font-weight:400;text-tran
 .coupon li i{font-family:var(--f);font-weight:700;background:#fff;color:var(--blue)}
 .coupon li.g i{background:var(--lime2);color:var(--ink)}
 .coupon .cut{border-top-color:rgba(255,255,255,.5)}
-.coupon .pr{font-family:'Leotaro',serif;font-style:normal;font-weight:400;color:var(--lime2)}
+.coupon .pr{font-family:'Santa Catarina',serif;font-style:normal;font-weight:400;color:var(--lime2)}
 .coupon .pr small{color:rgba(255,255,255,.75)}
 .coupon .note{color:rgba(255,255,255,.75)}
 .coupon .btn-pink{background:var(--lime2);color:var(--ink)}
@@ -393,7 +387,7 @@ h1,h2,h3{font-family:'Leotaro',serif;font-style:normal;font-weight:400;text-tran
 .st.big .im img.setimg{position:absolute;left:50%;top:50%;width:min(86%,520px);height:auto;translate:-50% -50%;filter:drop-shadow(0 18px 24px rgba(0,30,70,.35));box-shadow:none}
 .st.big:hover .im img.setimg{transform:scale(1.03)}
 .st.big .im .tag{z-index:3}
-.st.big .nm b{font-family:'Leotaro',serif;font-weight:400;font-size:clamp(28px,2.6vw,36px)}
+.st.big .nm b{font-family:'Santa Catarina',serif;font-weight:400;font-size:clamp(28px,2.6vw,36px)}
 /* вопросы — на лайме */
 .poster{background:var(--lime2)}
 .poster .bgtext{display:none}
@@ -429,7 +423,7 @@ footer{background:var(--blue);color:#fff}
 .fwrap{border-top-color:rgba(255,255,255,.3)}
 /* меню, плашка, тост */
 .sheet.bg-wine{background:var(--blue);background-image:none;color:#fff}
-.sheet nav a{font-family:'Leotaro',serif;font-style:normal;font-weight:400;text-transform:none;font-size:38px;border-bottom-color:rgba(255,255,255,.25)}
+.sheet nav a{font-family:'Santa Catarina',serif;font-style:normal;font-weight:400;text-transform:none;font-size:38px;border-bottom-color:rgba(255,255,255,.25)}
 .sheet .btn-pink{background:var(--lime2);color:var(--ink)}
 .sheet .btn-ghost{color:#fff}
 @media (max-width:640px){.final .fn-star{display:none}}
@@ -506,9 +500,9 @@ footer{background:var(--blue);color:#fff}
 .pi.big .blob{inset:-4%;width:108%;height:108%}
 .pi.big .setimg{max-width:84%;max-height:88%}
 .hit{position:absolute;right:2%;bottom:6%;z-index:3;width:clamp(96px,9vw,124px);aspect-ratio:1;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-content:center;text-align:center;font-size:11px;line-height:1.2;transform:rotate(-10deg)}
-.hit b{display:block;font-family:'Leotaro',serif;font-weight:400;font-size:clamp(22px,2vw,28px);line-height:1.05;color:var(--lime2)}
-.pi.big .pn{font-family:'Leotaro',serif;font-weight:400;font-size:clamp(28px,2.6vw,38px)}
-.pi.big .pp{font-family:'Leotaro',serif;font-weight:400;font-size:clamp(24px,2.2vw,32px)}
+.hit b{display:block;font-family:'Santa Catarina',serif;font-weight:400;font-size:clamp(22px,2vw,28px);line-height:1.05;color:var(--lime2)}
+.pi.big .pn{font-family:'Santa Catarina',serif;font-weight:400;font-size:clamp(28px,2.6vw,38px)}
+.pi.big .pp{font-family:'Santa Catarina',serif;font-weight:400;font-size:clamp(24px,2.2vw,32px)}
 .pi.big .pd{font-size:14px;min-height:0}
 .pact{display:flex;align-items:center;gap:16px;margin-top:14px}
 .pl{font-weight:600;font-size:14px;color:var(--ink)}
@@ -525,7 +519,7 @@ footer{background:var(--blue);color:#fff}
 .mtx .btn{align-self:stretch}
 .mtx h3{font-size:clamp(30px,3vw,40px)}
 .mtx p{color:#5A6170}
-.mpr{font-family:'Leotaro',serif;font-size:34px;color:var(--blue)}
+.mpr{font-family:'Santa Catarina',serif;font-size:34px;color:var(--blue)}
 @media (max-width:700px){.mcard{grid-template-columns:1fr}.mtx{padding:0 22px 24px}}
 
 /* ровная сетка: больше воздуха, одинаковые карточки и кнопки */
@@ -839,8 +833,32 @@ footer{background:var(--blue);color:#fff}
   .dn-ig,.dn-home{justify-content:center;padding:0 12px}
 }
 @media (max-width:360px){.dn-links{grid-template-columns:1fr}}
-</style></head><body>
-
+</style><link rel="preload" as="font" href="fonts/santa-catarina.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="fonts/geist-mono.woff2" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="scrapbook.css">
+</head><body>
+<div class="scrap-loader" id="scrapLoader" role="status" aria-label="Загружаем чари">
+ <span class="loader-brand">чари / почтовый клуб</span>
+ <div class="loader-copy"><p>Ещё чуть-чуть,</p><span id="loaderWords">и можно выдохнуть</span></div>
+ <span class="loader-percent" id="loaderPercent" aria-hidden="true">0%</span>
+ <span class="loader-caption">маленькие радости уже близко</span>
+</div>
+<script>
+(function(){
+ const el=document.getElementById('scrapLoader'),percent=document.getElementById('loaderPercent'),words=document.getElementById('loaderWords');
+ const phrases=['и можно выдохнуть','и отложим суету','и будет время для себя','тебе письмо ♡'];
+ let closed=false,finished=0;
+ const close=()=>{if(closed)return;closed=true;el.classList.add('loaded');setTimeout(()=>el.remove(),450)};
+ const deadline=setTimeout(close,2800);
+ const step=()=>{if(closed)return;finished++;percent.textContent=Math.round(finished/3*100)+'%';words.textContent=phrases[Math.min(finished,3)];if(finished===3){clearTimeout(deadline);setTimeout(close,300)}};
+ document.addEventListener('DOMContentLoaded',()=>{
+  step();
+  const hero=document.querySelector('.hero .set');
+  if(!hero||hero.complete)step();else {let done=false;const ready=()=>{if(done)return;done=true;step()};hero.addEventListener('load',ready,{once:true});hero.addEventListener('error',ready,{once:true})}
+  if(document.fonts)document.fonts.ready.then(step,step);else step();
+ },{once:true});
+})();
+</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="logo" viewBox="255 130 335 330">
       <path fill="#F3709C" stroke="#030303" stroke-width="9" d="M369.394 178.484C387.679 131.47 453.363 130.63 472.144 177.114C477.474 190.309 480.569 205.125 485.714 218.48C499.909 219.559 514.814 217.795 528.929 218.705C578.059 221.88 598.773 282.91 562.144 315.35L525.724 341.625V341.635L539.328 384.114C550.733 432.469 497.599 469.904 456.014 443.475L421.073 418.149L384.839 444.17C350.154 466.135 303.313 440.69 300.998 400.25C299.908 381.15 312.243 360.395 315.908 341.92L280.788 316.08C242.943 284.06 263.383 221.855 313.233 218.705C327.298 217.815 342.199 219.415 356.349 218.63C361.109 205.57 364.374 191.389 369.394 178.484Z"/>
       <g fill="#CEECF6">
@@ -861,7 +879,7 @@ footer{background:var(--blue);color:#fff}
       <path d="M306.528 243.051C311.253 238.026 325.623 238.686 327.108 246.456C327.978 251.046 325.053 264.666 331.158 266.526C348.258 263.691 369.948 260.316 383.223 274.341C396.138 287.991 390.813 305.016 390.078 321.351C389.958 324.021 391.938 326.946 391.638 330.291C390.378 344.361 366.438 343.791 357.138 339.426C338.838 330.831 358.698 283.311 336.888 283.401C309.018 283.506 341.838 337.641 317.373 338.766C308.508 339.171 305.328 335.751 304.578 327.501C302.823 307.986 302.913 270.441 304.578 250.866C304.788 248.391 304.773 244.926 306.528 243.066V243.051Z"/>
       <path d="M223.365 332.176C208.935 317.746 207.105 288.196 225.075 275.701C239.925 265.381 271.41 267.301 282.825 282.466C292.23 294.946 283.605 300.016 270.75 296.041C265.11 294.301 259.185 281.311 250.5 289.126C246.78 292.486 242.13 319.576 244.575 323.731C251.1 334.816 268.98 317.251 276.435 316.516C294.165 314.776 285.33 332.326 276.09 338.716C261.66 348.706 235.5 344.311 223.365 332.176Z"/>
     </symbol>
-    
+
 <symbol id="logo2" viewBox="0 0 240 233"><path d="M81.125 26.8145C94.8387 -8.44671 144.102 -9.07735 158.188 25.7861C162.185 35.6824 164.506 46.7943 168.364 56.8105C179.01 57.6205 190.189 56.2971 200.775 56.9795C237.623 59.3607 253.16 105.133 225.688 129.463L198.372 149.169V149.177L208.576 181.036C217.13 217.302 177.279 245.379 146.09 225.557L119.885 206.562L92.708 226.078C66.6943 242.552 31.5644 223.468 29.8281 193.138C29.0107 178.813 38.2619 163.247 41.0107 149.391L14.6709 130.011C-13.7129 105.996 1.61738 59.342 39.0049 56.9795C49.5535 56.312 60.7284 57.5116 71.3408 56.9229C74.9108 47.1279 77.36 36.4932 81.125 26.8145Z" fill="#F3709C"/>
 <path d="M136.842 131.895L142.758 127.627C148.709 122.357 145.344 112.442 137.362 111.926C135.069 111.779 132.648 112.065 130.342 111.89C129.506 109.72 129.003 107.313 128.137 105.17C125.087 97.6183 114.416 97.7548 111.445 105.392C110.63 107.489 110.099 109.793 109.326 111.914C107.027 112.042 104.607 111.782 102.322 111.926C94.2238 112.438 90.9032 122.543 97.0512 127.745L102.757 131.943C102.161 134.944 100.157 138.316 100.334 141.419C100.71 147.988 108.32 152.122 113.954 148.554L119.841 144.327L125.517 148.441C132.273 152.735 140.905 146.653 139.052 138.798L136.842 131.897V131.895Z" fill="white"/>
 <path d="M77.6322 172.156C78.9674 173.508 81.8698 184.437 82.3974 186.98C83.189 190.754 84.5722 198.125 83.8526 201.595C82.0536 210.286 69.8207 210.206 63.4005 206.768C62.425 205.705 60.3143 190.937 60.1943 188.395C60.0504 185.381 60.3383 173.595 62.6489 172.388C64.9596 171.181 75.8412 170.333 77.6322 172.156Z" fill="white"/>
@@ -883,7 +901,7 @@ footer{background:var(--blue);color:#fff}
 <header id="hdr">
   <div class="wrap">
     <a class="logo" href="#home" aria-label="чари — на главную">
-      
+
       <svg class="word" viewBox="205 238 432 122" fill="currentColor" aria-hidden="true"><use href="#word" x="205" y="238" width="432" height="122"/></svg>
     </a>
     <nav class="main" aria-label="Разделы">
@@ -892,6 +910,8 @@ footer{background:var(--blue);color:#fff}
       <a href="#faq">Вопросы</a>
     </nav>
     <div class="hr">
+      <label class="currency-control"><span class="sr-only">Валюта отображения цен</span><select id="currencySelect" aria-label="Валюта отображения цен"><option>BYN</option><option disabled>RUB</option><option disabled>USD</option><option disabled>EUR</option></select></label>
+      <a class="account-link" href="#account" aria-label="Личный кабинет">Кабинет</a>
       <a class="pillbtn ghost" href="#apply">Оставить заявку</a>
       <a class="pillbtn cartbtn" href="#apply" aria-label="Корзина"><svg><use href="#i-bag"/></svg><span class="n" id="cartN"></span></a>
       <button class="iconbtn burger" id="menuBtn" aria-label="Меню"><svg><use href="#i-menu"/></svg></button>
@@ -900,17 +920,34 @@ footer{background:var(--blue);color:#fff}
 </header>
 
 <main>
+<section id="v-account" hidden class="account-view">
+ <div class="wrap account-wrap"><span class="scrap-eyebrow">чари / личный кабинет</span><h1>Твоё место<br>в почтовом клубе</h1>
+ <p class="muted account-intro">Заявки, любимый город и маленькие радости — в одном месте.</p>
+ <p id="accountMessage" role="status" class="account-message"></p>
+ <div id="accountLogin" class="account-paper">
+  <h2>Войти по почте</h2><p>Пришлём одноразовый код. Пароль придумывать не нужно.</p>
+  <form id="emailForm"><label for="accountEmail">Email</label><input id="accountEmail" type="email" autocomplete="email" required maxlength="80" placeholder="anya@mail.ru"><button type="submit" class="btn btn-pink" id="sendCode">Получить код</button><p class="hint">Нажимая «Получить код», ты просишь создать кабинет для этой почты и отправить письмо для входа.</p></form>
+  <form id="codeForm" hidden><label for="accountCode">Код из письма</label><input id="accountCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" minlength="6" maxlength="10" required placeholder="Код из письма"><button type="submit" class="btn btn-pink">Войти</button><button type="button" class="account-secondary" id="changeEmail">Другая почта / запросить новый код</button></form>
+  <a class="account-secondary" href="#apply">Оставить заявку без входа →</a>
+ </div>
+ <div id="accountDashboard" hidden>
+  <div class="account-toolbar"><p>Ты вошла как <b id="accountIdentity"></b></p><button id="logout" class="account-secondary" type="button">Выйти</button></div>
+  <div class="account-columns"><div class="account-paper"><h2>Город и страна</h2><p>Сохраним для следующих заявок. Это не адрес доставки.</p>
+   <form id="profileForm"><label for="profileCountry">Страна</label><input id="profileCountry" maxlength="60" autocomplete="country-name"><label for="profileCity">Город</label><input id="profileCity" maxlength="60" autocomplete="address-level2"><button type="submit" class="btn btn-pink">Сохранить</button></form>
+  </div><div class="account-paper"><h2>Твои заявки</h2><p class="hint">Показываем заявки с этой почтой. Заказы, оставленные только через Telegram, команда поможет найти лично.</p><div id="accountLeads"></div><a class="btn btn-pink" href="#catalog">Посмотреть каталог</a></div></div>
+ </div></div>
+</section>
 <div id="v-home">
-  <section class="hero vB">
+  <section class="hero scrapbook-hero">
     <div class="xrays" aria-hidden="true"></div>
     <img class="shp bg1" src="img/sh-lime.webp" alt="" aria-hidden="true">
     <div class="pcard">
-      <div class="msg">
+      <div class="msg"><span class="scrap-eyebrow">почтовый клуб · Беларусь</span>
         <h1>Выдохни. <span>Тебе письмо</span></h1>
         <p class="t">Раз в месяц — конверт со стикерами и маленькими ритуалами, чтобы отложить телефон и побыть с собой.</p>
         <div class="cta"><a class="go" href="#apply">Хочу конверт <svg><use href="#i-arr"/></svg></a><a class="ln" href="#box">Что внутри</a></div>
       </div>
-      <div class="setcol">
+      <div class="setcol"><img class="hero-tape" src="img/scrap-tape.webp" alt="" aria-hidden="true"><img class="hero-butterfly" src="img/scrap-butterfly.webp" alt="" aria-hidden="true"><span class="hero-note">маленькая пауза<br>в большом дне ♡</span>
         <div class="pixstar" aria-hidden="true"><i></i></div>
         <img class="shp burst" src="img/sh-burst.webp" alt="" aria-hidden="true">
         <img class="shp mint" src="img/sh-mint.webp" alt="" aria-hidden="true">
@@ -952,9 +989,9 @@ footer{background:var(--blue);color:#fff}
           </div>
           <div class="cut"></div>
           <div class="bot">
-            <div class="pr">50 BYN <small>/ месяц</small></div>
+            <div class="pr">35 BYN <small>/ месяц</small></div>
             <span class="clubBtn"></span>
-            <p class="note">По отдельности то же самое — 63 BYN. Доставка по Беларуси, оплата после запуска.</p>
+            <p class="note">Доставка по Беларуси, оплата после запуска.</p>
           </div>
         </div>
       </div>
@@ -964,6 +1001,7 @@ footer{background:var(--blue);color:#fff}
   <section class="sec" id="catalog">
     <div class="wrap">
       <div class="sh"><span class="tag">предзаказ</span><h2>Каталог</h2><p class="muted">Подписка на набор каждый месяц — или всё из набора по отдельности.</p></div>
+      <p class="currency-note" id="currencyNote" role="status">Цены и оформление — в BYN.</p>
       <div id="stickers"><div class="sgrid" id="sgrid"></div></div>
     </div>
   </section>
@@ -978,25 +1016,31 @@ footer{background:var(--blue);color:#fff}
     <div class="wrap chatw">
       <div class="chathead">
         <h2>Спроси у чари</h2>
-        <p>Выбирай вопрос — персонажи ответят. Не нашёл нужного? Пиши нам в <a href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener">Instagram</a>.</p>
+        <p>Напиши свой вопрос или выбери подсказку — персонажи помогут разобраться. Не нашёл нужного? Пиши нам в <a href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener">Instagram</a>.</p>
       </div>
       <div class="chat" aria-live="polite">
-        <div class="chattop"><div class="ava-stack"><img src="img/c-cat.webp" alt=""><img src="img/c-tree.webp" alt=""><img src="img/c-wizard.webp" alt=""></div><div><b>чари</b><span>обычно отвечаем сразу</span></div></div>
-        <div class="chatlog" id="chatlog"></div>
+        <div class="chattop"><div class="ava-stack"><img src="img/c-cat.webp" alt=""><img src="img/c-tree.webp" alt=""><img src="img/c-wizard.webp" alt=""></div><div><b>чари</b><span>помощник по вопросам о клубе</span></div></div>
+        <div class="chatlog" id="chatlog" role="log" aria-label="Переписка с чари"></div>
         <div class="chips" id="chips" role="group" aria-label="Вопросы"></div>
+        <form class="chat-compose" id="chatForm">
+          <label class="sr-only" for="chatQuestion">Твой вопрос о чари</label>
+          <input id="chatQuestion" type="text" placeholder="Напиши свой вопрос…" maxlength="500" autocomplete="off" aria-describedby="chatHelp" required>
+          <button id="chatSend" type="submit" aria-label="Отправить вопрос">↑</button>
+        </form>
+        <p class="chat-help" id="chatHelp">Ответы из справочника чари. Личные вопросы — <a href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener">команде в Instagram ↗</a></p>
       </div>
     </div>
   </section>
 
   <section class="final2" id="join">
-    <div class="f2stk" aria-hidden="true"><img class="fsk fsk0" src="img/chill/s01.webp" alt="" draggable="false" style="left:4%;top:10%;--r:-10deg"><img class="fsk fsk1" src="img/chill/s15.webp" alt="" draggable="false" style="left:16%;top:70%;--r:8deg"><img class="fsk fsk2" src="img/chill/s07.webp" alt="" draggable="false" style="left:30%;top:2%;--r:-6deg"><img class="fsk fsk3" src="img/chill/s12.webp" alt="" draggable="false" style="left:2%;top:48%;--r:12deg"><img class="fsk fsk4" src="img/chill/s09.webp" alt="" draggable="false" style="left:82%;top:6%;--r:10deg"><img class="fsk fsk5" src="img/chill/s18.webp" alt="" draggable="false" style="left:86%;top:40%;--r:-12deg"><img class="fsk fsk6" src="img/chill/s16.webp" alt="" draggable="false" style="left:76%;top:70%;--r:6deg"><img class="fsk fsk7" src="img/chill/s08.webp" alt="" draggable="false" style="left:93%;top:76%;--r:-8deg"><img class="fsk fsk8" src="img/chill/s11.webp" alt="" draggable="false" style="left:60%;top:84%;--r:-4deg"><img class="fsk fsk9" src="img/chill/s05.webp" alt="" draggable="false" style="left:28%;top:82%;--r:9deg"><img class="fsk fsk10" src="img/chill/s13.webp" alt="" draggable="false" style="left:76%;top:16%;--r:14deg"><img class="fsk fsk11" src="img/chill/s03.webp" alt="" draggable="false" style="left:58%;top:4%;--r:-10deg"></div>
+    <div class="f2stk" aria-hidden="true"><img class="fsk fsk0" src="img/scrap-flower.webp" alt="" draggable="false" style="left:4%;top:10%;--r:-10deg"><img class="fsk fsk1" src="img/chill/s15.webp" alt="" draggable="false" style="left:16%;top:70%;--r:8deg"><img class="fsk fsk2" src="img/chill/s07.webp" alt="" draggable="false" style="left:30%;top:2%;--r:-6deg"><img class="fsk fsk3" src="img/chill/s12.webp" alt="" draggable="false" style="left:2%;top:48%;--r:12deg"><img class="fsk fsk4" src="img/chill/s09.webp" alt="" draggable="false" style="left:82%;top:6%;--r:10deg"><img class="fsk fsk5" src="img/chill/s18.webp" alt="" draggable="false" style="left:86%;top:40%;--r:-12deg"><img class="fsk fsk6" src="img/chill/s16.webp" alt="" draggable="false" style="left:76%;top:70%;--r:6deg"><img class="fsk fsk7" src="img/chill/s08.webp" alt="" draggable="false" style="left:93%;top:76%;--r:-8deg"><img class="fsk fsk8" src="img/chill/s11.webp" alt="" draggable="false" style="left:60%;top:84%;--r:-4deg"><img class="fsk fsk9" src="img/chill/s05.webp" alt="" draggable="false" style="left:28%;top:82%;--r:9deg"><img class="fsk fsk10" src="img/chill/s13.webp" alt="" draggable="false" style="left:76%;top:16%;--r:14deg"><img class="fsk fsk11" src="img/chill/s03.webp" alt="" draggable="false" style="left:58%;top:4%;--r:-10deg"></div>
     <div class="f2card">
       <img class="f2load" src="img/chill/s17.webp" alt="" aria-hidden="true">
       <h2>Займи место в&nbsp;первом выпуске</h2>
       <p>Конверт со стикерами и маленькими ритуалами — раз в месяц. Оставь заявку, и мы напишем первым.</p>
-      <ul class="f2perks"><li>бесплатно</li><li>без оплаты сейчас</li><li>+3 стикера первым</li></ul>
-      <a class="btn btn-pink f2btn" href="#apply">Оставить заявку</a>
-      <span class="f2note">займёт минуту · можно передумать</span>
+      <ul class="f2perks"><li>без оплаты сейчас</li><li>+3 стикера первым</li></ul>
+      <a class="btn btn-pink f2btn" href="#apply">Оставить заявку бесплатно</a>
+
     </div>
     <span class="f2hint" aria-hidden="true">стикеры можно потаскать ✦</span>
   </section>
@@ -1007,7 +1051,7 @@ footer{background:var(--blue);color:#fff}
   <div class="wrap apx" id="applyMain">
     <div class="apx-hd">
       <h1>Заявка на первый выпуск</h1>
-      <p class="muted">Просто и быстро — места в первом выпуске заканчиваются. Оставь почту или Telegram, и мы напишем, когда откроем запись.</p>
+      <p class="muted">Оставь почту или Telegram, и мы напишем, когда откроем запись.</p>
     </div>
     <form class="apx-form" id="form" novalidate>
       <div class="hp" aria-hidden="true"><label>Сайт<input id="website" tabindex="-1" autocomplete="off"></label></div>
@@ -1017,6 +1061,7 @@ footer{background:var(--blue);color:#fff}
         <span class="err" id="e-tg"></span>
         <p class="hint" id="h-tg">Напишем на почту или в Telegram — куда удобнее.</p>
       </div>
+      <div class="apx-step country-field"><label for="country">Страна</label><input id="country" value="Беларусь" maxlength="60" autocomplete="country-name"><p class="hint" id="locationHint">Доставка на старте — по Беларуси. Страну и город можно исправить.</p></div>
       <div class="apx-step">
         <div class="apx-lbl"><span class="apx-n">2</span><span id="cityL">Город</span><span class="apx-sub">пока только Беларусь</span></div>
         <div class="dd" id="dd">
@@ -1034,6 +1079,7 @@ footer{background:var(--blue);color:#fff}
           <label><input type="radio" name="ship" value="Пока не знаю"><span><b>Решу позже</b><small>уточним в чате</small></span></label>
         </div>
       </fieldset>
+      <label class="check small"><input type="checkbox" id="gift"><span>Это подарок</span></label>
       <div class="apx-end">
         <label class="check small"><input type="checkbox" id="consent"><span>Согласен на обработку моих данных, чтобы со мной связались по заявке. <span class="err" id="e-consent"></span></span></label>
         <button class="apx-send" type="submit" id="sendBtn">Оставить заявку бесплатно</button>
@@ -1079,21 +1125,22 @@ footer{background:var(--blue);color:#fff}
 </footer>
 <div id="layer"></div>
 
+<script src="answers.js"></script>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const IMG=n=>`img/${n}.webp`;
 const LIVE=location.protocol==='https:'&&!/claude|claudeusercontent|anthropic/.test(location.hostname);
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 
-const CLUB={id:'club01',n:'Набор для отправки · выпуск №01',img:'flatlay',p:50,per:'месяц',club:1};
+const CLUB={id:'club01',n:'Набор для отправки · выпуск №01',img:'flatlay',p:35,per:'месяц',club:1};
 const ST=[
-  ['k1','Котик с какао','c-cat',5,'стикер','Ворчит, но греется. Виниловый, не боится воды.'],
-  ['k2','Ёлочка','c-tree',5,'стикер','Нарядился и недоволен. Виниловый стикер.'],
-  ['k3','Волшебник','c-wizard',5,'стикер','Чародей с книжкой и котом в сумке.'],
-  ['k4','Лист стикеров №01','c-sheet',20,'стикерпак','Зимний лист из первого выпуска: 8 стикеров.'],
-  ['k5','Постер «Диджитал детокс»','c-detox',15,'постер A5','Напоминание отложить телефон. Плотная бумага.'],
-  ['k6','Судоку','c-sudoku',8,'карточка','Карточка с судоку на вечер без экрана.'],
-  ['k7','«21 день»','c-21',10,'карточка-челлендж','Трекер привычки на 21 день.'],
+  ['k1','Котик с какао','c-cat',4,'стикер','Ворчит, но греется. Виниловый, не боится воды.'],
+  ['k2','Ёлочка','c-tree',4,'стикер','Нарядился и недоволен. Виниловый стикер.'],
+  ['k3','Волшебник','c-wizard',4,'стикер','Чародей с книжкой и котом в сумке.'],
+  ['k4','Лист стикеров №01','c-sheet',14,'стикерпак','Зимний лист из первого выпуска: 8 стикеров.'],
+  ['k5','Постер «Диджитал детокс»','c-detox',12,'постер A5','Напоминание отложить телефон. Плотная бумага.'],
+  ['k6','Судоку','c-sudoku',5,'карточка','Карточка с судоку на вечер без экрана.'],
+  ['k7','«21 день»','c-21',5,'карточка-челлендж','Трекер привычки на 21 день.'],
   ['o1','Ворчун','c-grumpy',7,'открытка','Для тех, кто сегодня не в духе.'],
   ['o2','Good things','c-good',7,'открытка','Slow days make big plans.'],
   ['o3','Можно. А зачем?','c-mozhno',7,'открытка','Открытка-коллаж с вопросом на все случаи.'],
@@ -1107,14 +1154,7 @@ const BLOBS=["M90.8 44.6 C90.5 54.3 86.7 74.8 78.3 81.1 C69.9 87.4 50.9 82.9 40.
 const BCOL=['#F7DCEA','#EBF3C4','#DCEBF8','#E9DEF6','#DDF3E4','#FBE6D6'];
 const TINT={"c-cat": "#F0E1DB", "c-tree": "#E4ECD6", "c-wizard": "#E9EFD2", "c-sheet": "#EEDDE1", "c-detox": "#F4D7D9", "c-sudoku": "#EDE0DE", "c-21": "#EDDEE5", "c-grumpy": "#F3D9D8", "c-good": "#E6DEF3", "c-mozhno": "#EBE0E0", "c-mush": "#EFE3DC", "c-newyear": "#F4DAD7", "c-blur": "#F4DFD7", "c-treedraw": "#EFDFDC", "c-dog": "#F4D8D7", "set-frame-800": "#EEDDDE"};
 const ALL=[CLUB,...ST];
-const FAQ=[
-  ['Вы уже отправляете конверты?','Пока нет — собираем первый выпуск. Когда откроем запись, напишем всем, кто оставил заявку.'],
-  ['Заявка — это оплата?','Нет. Заявка ни к чему не обязывает: про оплату расскажем перед запуском, передумать можно в любой момент.'],
-  ['Сколько стоит подписка?','50 BYN в месяц за конверт. Если покупать всё из набора по отдельности — 63 BYN.'],
-  ['Можно пропустить месяц или отменить?','Да, когда захотите — просто напишите нам.'],
-  ['Куда доставляете?','Пока только по Беларуси — Европочтой или Белпочтой.'],
-  ['Можно в подарок?','Конечно. В заявке отметьте «Это подарок» — адрес получателя уточним перед отправкой.'],
-];
+const FAQ=ChariAnswers.entries.map(x=>[x.q,x.a]);
 let cart=store.get('chari-cart2',[]).filter(id=>ALL.some(p=>p.id===id));
 
 const bw=['письма','стикеры','открытки','чари','календарики'];
@@ -1128,11 +1168,11 @@ function blobSvg(i,col,cls){ return `<svg class="blob ${cls||''}" viewBox="0 0 1
 function render(){
   $$('.clubBtn').forEach(e=>e.innerHTML=clubBtn());
   const onC=cart.includes(CLUB.id);
-  const big=`<article class="pi big"><div class="pim">${blobSvg(2,TINT['set-frame-800'],'b-big')}<img class="setimg" src="img/set-frame-800.webp" loading="lazy" alt="Набор для отправки"></div>
+  const big=`<article class="pi big subscription-card"><span class="subscription-label">конверт месяца · подписка</span><div class="pim">${blobSvg(2,TINT['set-frame-800'],'b-big')}<img class="setimg" src="img/set-frame-800.webp" loading="lazy" alt="Набор для отправки"></div>
     <div class="pinfo">
       <b class="pn">Набор для отправки</b>
-      <p class="pd">Подписка: каждый месяц лист стикеров, письмо, постер, судоку и карточка «21 день». По отдельности — 63 BYN.</p>
-      <div class="pbuy"><span class="pp">50 BYN<small> / месяц</small></span><button type="button" class="addb ${onC?'on':''}" data-add="${CLUB.id}" aria-pressed="${onC}">${onC?'✓ В корзине':'В корзину'}</button></div>
+      <p class="pd">Подписка: каждый месяц лист стикеров, письмо, постер, судоку и карточка «21 день».</p>
+      <div class="pbuy"><span class="pp">35 BYN<small> / месяц</small></span><button type="button" class="addb ${onC?'on':''}" data-add="${CLUB.id}" aria-pressed="${onC}">${onC?'✓ В корзине':'В корзину'}</button></div>
     </div></article>`;
   $('#sgrid').innerHTML=big+ST.map((x,i)=>{const on=cart.includes(x.id);return `<article class="pi${on?' on':''}">
     <div class="pim">${blobSvg(i+3,TINT[x.img]||BCOL[i%BCOL.length])}<img loading="lazy" class="${x.kind==='стикер'?'stk':'card'}" src="${IMG(x.img)}" alt="${x.n}">
@@ -1215,7 +1255,8 @@ $('#form').addEventListener('submit',async e=>{
   const cv=$('#tg').value.trim(), mail=isMail(cv)?cv.toLowerCase():'', tg=mail?'':'@'+tgNorm(cv);
   const hasSt=cart.some(id=>id!==CLUB.id), want=[];
   if(cart.includes(CLUB.id)||!hasSt) want.push('club'); if(hasSt) want.push('stickers');
-  const data={telegram:tg,email:mail,city:city.value==='Другой город'?$('#cityOther').value.trim():city.value,delivery:$('input[name=ship]:checked').value,want,
+  const data={telegram:tg,email:mail,city:city.value==='Другой город'?$('#cityOther').value.trim():city.value,delivery:$('input[name=ship]:checked').value,country:$('#country').value.trim(),want,
+    comment:$('#gift').checked?'Это подарок':'',
     items:cart.map(id=>{const p=ALL.find(x=>x.id===id);return {id,n:p.n,p:p.p}}),source:src(),website:$('#website').value};
   const b=$('#sendBtn'); b.disabled=true; b.textContent='Отправляем…'; $('#sendNote').textContent='';
   let no=null, bot='', start='';
@@ -1243,15 +1284,16 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLayer(); });
 addEventListener('scroll',()=>{ $('#hdr').classList.toggle('scrolled',scrollY>20||route.cur!=='home'); $('#mbar').classList.toggle('on',route.cur==='home'&&(scrollY>420||cart.length>0)); },{passive:true});
 
-const VIEWS=['home','apply'];
+const VIEWS=['home','apply','account'];
 function route(){
   const h=(location.hash||'#home').slice(1);
   const el=!VIEWS.includes(h)&&document.getElementById(h);
   const anchor=el&&$('#v-home').contains(el)?h:null;
-  const v=h==='apply'?'apply':'home';
+  const v=h==='account'?'account':h==='apply'?'apply':'home';
   route.cur=v; VIEWS.forEach(n=>$('#v-'+n).hidden=n!==v);
   $('#hdr').classList.toggle('scrolled',scrollY>20||v!=='home');
   document.body.classList.toggle('has-mbar',v==='home');
+  document.body.classList.toggle('chat-active',h==='faq');
   $('#mbar').classList.toggle('on',v==='home'&&(scrollY>420||cart.length>0));
   if(v==='apply'){ $('#applyMain').hidden=false; $('#applyDone').hidden=true; }
   closeLayer(); $('.toast')?.remove();
@@ -1306,36 +1348,35 @@ if(LIVE){ try{ navigator.sendBeacon('/api/track',new Blob([JSON.stringify({src:s
   sp.querySelectorAll('.pt').forEach(img=>img.addEventListener('pointerenter',()=>{ if(img.complete) burst(img); }));
 })();
 
-/* FAQ-чат: отвечают персонажи */
+/* FAQ: свободный ввод, известные ответы и безопасная передача команде. */
 (function(){
-  const WHO=[['Котик','c-cat'],['Ёлочка','c-tree'],['Волшебник','c-wizard']];
-  const log=document.getElementById('chatlog'), chips=document.getElementById('chips'); if(!log) return;
-  const asked=new Set(); let busy=false;
-  const esc=t=>t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-  function add(html,cls){ const d=document.createElement('div'); d.className='cm '+cls; d.innerHTML=html; log.appendChild(d); log.scrollTop=log.scrollHeight; return d; }
-  function bot(i,text,instant){ const [n,img]=WHO[i%WHO.length];
-    const row=add(`<img class="ava" src="img/${img}.webp" alt=""><div class="bub"><b>${n}</b><span class="typing"><i></i><i></i><i></i></span></div>`,'bot');
-    const fill=()=>{ row.querySelector('.bub').innerHTML=`<b>${n}</b>${esc(text)}`; log.scrollTop=log.scrollHeight; busy=false; renderChips(); };
-    instant?fill():setTimeout(fill,700+Math.min(900,text.length*8));
-  }
-  function ask(i){ if(busy||asked.has(i)) return; busy=true; asked.add(i); renderChips();
-    add(`<div class="bub">${esc(FAQ[i][0])}</div>`,'me'); setTimeout(()=>bot(i,FAQ[i][1]),250); }
-  function renderChips(){
-    const left=FAQ.map((f,i)=>i).filter(i=>!asked.has(i));
-    chips.innerHTML=left.length?left.map(i=>`<button type="button" class="chip" data-q="${i}" ${busy?'disabled':''}>${esc(FAQ[i][0])}</button>`).join('')
-      :`<a class="chip end" href="https://www.instagram.com/chari.mail_club/" target="_blank" rel="noopener">Задать свой вопрос в Instagram →</a>`;
-  }
-  chips.addEventListener('click',e=>{ const c=e.target.closest('[data-q]'); if(c) ask(+c.dataset.q); });
-  add(`<div class="bub">Привет! Что хочешь узнать о чари?</div>`,'bot first');
-  log.querySelector('.first').insertAdjacentHTML('afterbegin','<img class="ava" src="img/c-cat.webp" alt="">');
-  asked.add(0); add(`<div class="bub">${esc(FAQ[0][0])}</div>`,'me'); bot(0,FAQ[0][1],true);
-  renderChips();
+ const WHO=[['Котик','c-cat'],['Ёлочка','c-tree'],['Волшебник','c-wizard']];
+ const log=$('#chatlog'),chips=$('#chips'),form=$('#chatForm'),input=$('#chatQuestion'),send=$('#chatSend');
+ let busy=false,turn=0;
+ const esc=t=>t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function add(text,me=false){
+  const row=document.createElement('div');row.className='cm '+(me?'me':'bot');
+  const [name,img]=WHO[turn++%WHO.length];
+  row.innerHTML=(me?'':'<img class="ava" src="img/'+img+'.webp" alt="">')+'<div class="bub">'+(me?'':'<b>'+name+'</b>')+esc(text)+'</div>';
+  log.appendChild(row);while(log.children.length>60)log.firstElementChild.remove();log.scrollTop=log.scrollHeight;
+ }
+ function ask(text){
+  text=text.trim().slice(0,500);if(!text||busy)return;
+  busy=true;send.disabled=true;chips.querySelectorAll('button').forEach(b=>b.disabled=true);
+  add(text,true);input.value='';
+  const result=ChariAnswers.answer(text);
+  setTimeout(()=>{add(result);busy=false;send.disabled=false;chips.querySelectorAll('button').forEach(b=>b.disabled=false);},matchMedia('(prefers-reduced-motion: reduce)').matches?0:350);
+ }
+ chips.innerHTML=[0,2,3,4,5,6].map(i=>'<button class="chip" type="button" data-q="'+i+'">'+esc(FAQ[i][0])+'</button>').join('');
+ chips.addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(b)ask(FAQ[+b.dataset.q][0]);});
+ form.addEventListener('submit',e=>{e.preventDefault();ask(input.value);});
+ add('Привет! Я помогу с вопросами о чари: что в конверте, сколько стоит подписка, как оставить заявку и получить выпуск. Что хочешь узнать?');
 })();
-
 /* стикеры в финальном блоке можно таскать */
 document.querySelectorAll('.fsk').forEach(el=>{let sx,sy,ox=0,oy=0;
   el.addEventListener('pointerdown',e=>{el.setPointerCapture(e.pointerId);sx=e.clientX-ox;sy=e.clientY-oy;el.style.zIndex=5;});
   el.addEventListener('pointermove',e=>{if(!el.hasPointerCapture(e.pointerId))return;ox=e.clientX-sx;oy=e.clientY-sy;el.style.translate=`${ox}px ${oy}px`;});
   el.addEventListener('pointerup',e=>el.releasePointerCapture(e.pointerId));});
 </script>
+<script src="customer.js"></script>
 </body></html>
